@@ -1,0 +1,133 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="API overview"
+  path="/api/api-overview"
+  section="api"
+  description="The tested public API contract for KoAkademy — base URL, authentication, and errors."
+>
+  <p>
+    KoAkademy's API is <strong>beta</strong>. Only the routes listed in this
+    reference are a documented integration surface. Anything else in the
+    application is internal and may change without a public compatibility
+    guarantee — in particular, KoAkademy does not publish a student CRUD API
+    contract.
+  </p>
+
+  <h2>Endpoints</h2>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/v1/public/settings</code>
+      <span class="api-status">Public · optional feature</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Selected public website settings for the institution. Requires the
+        operator to enable the public API and the public-settings feature and
+        to choose the allowed fields. See
+        <a href="/api/authenticated-settings#public-website-settings"
+          >Public website settings</a
+        >.
+      </p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/settings</code>
+      <span class="api-status">Sanctum</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Collection of general setting resources. Returns <code>404</code> when
+        empty. See
+        <a href="/api/authenticated-settings">Authenticated settings</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-post">POST</span>
+      <code class="api-endpoint-path">/api/students/verify</code>
+      <span class="api-status">Sanctum</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Checks whether one student ID and email address match the same record.
+        See
+        <a href="/api/student-verification">Student verification</a>.
+      </p>
+    </div>
+  </div>
+
+  <h2>Base URL</h2>
+  <p>
+    Use the configured application origin with <code>/api</code>, for example
+    <code>https://school.example/api</code>. There is no shared KoAkademy API
+    hostname — self-hosted installations serve their own API.
+  </p>
+
+  <h2>Authentication</h2>
+  <p>
+    Protected routes use Laravel Sanctum. Clients with a token provisioned by
+    their operator send:
+  </p>
+  <pre><code>Authorization: Bearer YOUR_TOKEN
+Accept: application/json</code></pre>
+  <p>
+    Token issuance and revocation are deployment responsibilities. No public
+    token-creation endpoint is documented in this release. Never put tokens in
+    source code, browser logs, URLs, or public issue reports.
+  </p>
+
+  <h2>Status codes</h2>
+  <p>All requests and responses use JSON and normal HTTP status codes:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="api-status">200</span> · <span class="api-status">201</span></td>
+        <td>Success. <code>201</code> is returned on creation.</td>
+      </tr>
+      <tr>
+        <td><span class="api-status">401</span></td>
+        <td>Missing or invalid Sanctum authentication.</td>
+      </tr>
+      <tr>
+        <td><span class="api-status">403</span></td>
+        <td>Authenticated but denied.</td>
+      </tr>
+      <tr>
+        <td><span class="api-status">404</span></td>
+        <td>Resource missing or feature disabled.</td>
+      </tr>
+      <tr>
+        <td><span class="api-status">422</span></td>
+        <td>Validation failure, with an <code>errors</code> object.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Stability</h2>
+  <p>
+    Field-level compatibility is limited to the examples covered by endpoint
+    tests. Pin the latest stable KoAkademy version and verify integrations in
+    staging before upgrades.
+  </p>
+  <p>
+    Continue with
+    <a href="/api/authenticated-settings">Authenticated settings</a> or
+    <a href="/api/student-verification">Student verification</a>.
+  </p>
+</DocsLayout>

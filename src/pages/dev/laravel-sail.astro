@@ -1,0 +1,100 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Laravel Sail (Docker)"
+  path="/dev/laravel-sail"
+  section="dev"
+  description="Run KoAkademy locally with Laravel Sail's per-project Docker environment."
+>
+  <p>
+    Sail is a lightweight per-project Docker environment for Laravel: PHP,
+    Composer, Node, and the services you choose (PostgreSQL, Redis, and more)
+    all run in containers controlled with <code>vendor/bin/sail</code>. On
+    Windows, everything runs through WSL2.
+  </p>
+
+  <h2>1. Install Sail</h2>
+  <p>From the KoAkademy checkout, add Sail and choose its services:</p>
+  <pre><code>composer require laravel/sail --dev
+php artisan sail:install --with=pgsql,redis</code></pre>
+  <p>
+    The <code>--with</code> option selects PostgreSQL and Redis non-interactively;
+    running <code>php artisan sail:install</code> without it shows the service
+    menu. This publishes a <code>docker-compose.yml</code> in the project root
+    and a PHP image folder (for example <code>docker/8.5</code>) that the
+    compose file references.
+  </p>
+
+  <h2>2. Configure .env</h2>
+  <p>
+    Point KoAkademy at Sail's containers. These values match Sail's default
+    container credentials:
+  </p>
+  <pre><code>DB_CONNECTION=pgsql
+DB_HOST=pgsql
+DB_PORT=5432
+DB_DATABASE=koakademy
+DB_USERNAME=sail
+DB_PASSWORD=password
+
+REDIS_HOST=redis
+CACHE_STORE=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis</code></pre>
+  <p>
+    <code>DB_HOST=pgsql</code> is the compose service name, exactly like
+    <code>postgres</code> in the production topology.
+  </p>
+
+  <h2>3. Start and migrate</h2>
+  <pre><code>./vendor/bin/sail up -d
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate</code></pre>
+  <p>
+    The first <code>sail up</code> builds the image and takes a few minutes.
+    Sail serves the application on port 80, so open
+    <code>http://localhost/setup</code> to create development data and the first
+    administrator.
+  </p>
+
+  <h2>4. Frontend work</h2>
+  <pre><code>./vendor/bin/sail npm ci
+./vendor/bin/sail npm run dev</code></pre>
+  <p>or build once with <code>./vendor/bin/sail npm run build</code>.</p>
+
+  <h2>5. Gotenberg (optional)</h2>
+  <p>
+    Sail has no Gotenberg service by default. If you work on PDF generation,
+    add it to the published <code>docker-compose.yml</code>:
+  </p>
+  <pre><code>  gotenberg:
+    image: gotenberg/gotenberg:8
+    restart: unless-stopped
+    ports:
+      - '3000:3000'</code></pre>
+  <p>
+    then set <code>GOTENBERG_URL=http://gotenberg:3000</code> in <code>.env</code>
+    and run <code>./vendor/bin/sail up -d</code> again.
+  </p>
+
+  <h2>6. Validation and daily commands</h2>
+  <pre><code>./vendor/bin/sail composer test
+./vendor/bin/sail artisan test --compact
+./vendor/bin/sail down</code></pre>
+  <p>
+    Add a shell alias so <code>sail</code> works from the project root:
+  </p>
+  <pre><code>alias sail='[ -f sail ] &amp;&amp; sh sail || sh vendor/bin/sail'</code></pre>
+
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">Windows and WSL2</p>
+    <p>
+      On Windows, install Docker Desktop with the WSL2 backend and run every
+      command inside a WSL2 distribution. Keep the project on the WSL
+      filesystem — not <code>/mnt/c</code> — for acceptable file I/O
+      performance.
+    </p>
+  </div>
+</DocsLayout>

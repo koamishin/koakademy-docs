@@ -1,0 +1,98 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Laravel Valet (macOS)"
+  path="/dev/laravel-valet"
+  section="dev"
+  description="Run KoAkademy locally with Valet's classic minimal PHP environment on macOS."
+>
+  <p>
+    Valet is the lightweight classic: PHP and Nginx on macOS with automatic
+    <code>.test</code> domains and no database management. Herd is the newer,
+    actively developed alternative that bundles PHP, Node, and database
+    services — most macOS users should prefer
+    <a href="/dev/laravel-herd">Herd</a>. This guide covers Valet
+    for those who already use it.
+  </p>
+
+  <h2>1. Install</h2>
+  <pre><code>brew install php
+composer global require laravel/valet
+valet install</code></pre>
+  <p>
+    Valet requires PHP 8.3 or newer; KoAkademy targets PHP 8.5, which
+    <code>brew install php</code> provides. Make sure the Composer
+    <code>vendor/bin</code> directory is on your <code>PATH</code>.
+  </p>
+
+  <h2>2. Park and clone</h2>
+  <pre><code>mkdir -p ~/Sites
+valet park ~/Sites
+cd ~/Sites
+git clone https://github.com/yukazakiri/koakademy.git
+cd koakademy
+composer install
+npm ci
+cp .env.example .env
+php artisan key:generate</code></pre>
+  <p>
+    Every folder inside a parked directory becomes a site, so KoAkademy is
+    served at <code>http://koakademy.test</code>. Projects outside a parked
+    directory can be registered with <code>valet link</code>.
+  </p>
+
+  <h2>3. Database</h2>
+  <p>Valet does not manage databases. Two options:</p>
+  <ul>
+    <li>
+      <strong>SQLite (simplest):</strong>
+      <pre><code>touch database/database.sqlite</code></pre>
+      In <code>.env</code>, set <code>DB_CONNECTION=sqlite</code>.
+    </li>
+    <li>
+      <strong>PostgreSQL via Homebrew:</strong>
+      <pre><code>brew install postgresql@16
+brew services start postgresql@16
+createdb koakademy</code></pre>
+      In <code>.env</code>, set <code>DB_CONNECTION=pgsql</code>,
+      <code>DB_HOST=127.0.0.1</code>, <code>DB_PORT=5432</code>,
+      <code>DB_DATABASE=koakademy</code>, <code>DB_USERNAME</code> to your macOS
+      username, and an empty password for the default local trust setup.
+    </li>
+  </ul>
+  <p>
+    For queues, cache, or sessions, install Redis the same way
+    (<code>brew install redis</code> and
+    <code>brew services start redis</code>) and point
+    <code>REDIS_HOST=127.0.0.1</code>.
+  </p>
+
+  <h2>4. Migrate, secure, and serve</h2>
+  <pre><code>php artisan migrate
+valet secure</code></pre>
+  <p>
+    <code>valet secure</code> serves the site over HTTPS with a trusted local
+    certificate (<code>https://koakademy.test</code>). Run
+    <code>npm run dev</code> for Vite during frontend work, or
+    <code>npm run build</code> once. Open
+    <code>https://koakademy.test/setup</code> to create development data and the
+    first administrator.
+  </p>
+
+  <h2>5. Validate</h2>
+  <pre><code>composer test
+vendor/bin/pint --test
+npm run build</code></pre>
+
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">Sharing and PDFs</p>
+    <p>
+      <code>valet share</code> exposes a public tunnel and requires an external
+      tunnel tool or account. PDF generation needs Gotenberg, which Valet does
+      not provide — run the Gotenberg Docker image if you work on PDFs, or skip
+      that work locally.
+    </p>
+  </div>
+</DocsLayout>

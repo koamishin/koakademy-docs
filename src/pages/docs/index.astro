@@ -1,0 +1,112 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+import { docsTree } from "@/data/docs"
+---
+
+<DocsLayout
+  title="Documentation"
+  path="/docs"
+  description="Everything you need to understand, run, and extend KoAkademy — rewritten and reorganized for clarity."
+>
+  <h2>Pick a path</h2>
+  <p>
+    The documentation lives in three sections, switchable from the tabs above:
+  </p>
+  <ul>
+    <li>
+      <strong>Docs</strong> — the product, self-hosting, and operations.
+      Operator self-hosting the platform, school staff using it day to day, and
+      repository maintainers all live here.
+    </li>
+    <li>
+      <a href="/api">API reference</a> — the tested integration surface for
+      developers building against KoAkademy.
+    </li>
+    <li>
+      <a href="/dev">Developers</a> — local development setup, environments
+      like Herd and Sail, and extension contracts.
+    </li>
+  </ul>
+
+  <div
+    class="mt-8 grid gap-6 sm:grid-cols-2"
+    style="display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))"
+  >
+    {
+      docsTree.map((group) => (
+        <div class="rounded-xl border border-line bg-paper p-6">
+          <p
+            class="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brass-deep"
+          >
+            {group.label}
+          </p>
+          <ul class="mt-4 space-y-2.5">
+            {
+              group.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="group/link flex items-start gap-2.5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="mt-[7px] size-1 shrink-0 rotate-45 bg-brass transition-colors group-hover/link:bg-ink"
+                    ></span>
+                    <span class="min-w-0">
+                      <span
+                        class="block text-[14.5px] font-medium text-ink transition-colors group-hover/link:text-brass-deep"
+                        >{link.title}</span
+                      >
+                      <span class="mt-0.5 block text-[12.5px] leading-relaxed text-ink-soft"
+                        >{link.blurb}</span
+                      >
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2>Reading order</h2>
+  <p>
+    New to KoAkademy? Start with the <a href="/docs/start-here/introduction">Introduction</a>,
+    then follow <a href="/docs/self-hosting/installation">Installation</a> to stand up a
+    staging instance. Operators continue through <a href="/docs/self-hosting/deployment">Deployment</a>
+    and <a href="/docs/self-hosting/configuration">Configuration</a>. School staff move on
+    to the <a href="/docs/user-guide/introduction">User Guide</a>. Developers and maintainers
+    finish with the <a href="/docs/system/architecture-domain">System Internals</a> and the
+    <a href="/docs/maintainers/ci">Maintainers</a> sections.
+  </p>
+  <p>
+    Prefer a PaaS or a plain server over the installer? Jump straight to a
+    platform guide — <a href="/docs/self-hosting/dokploy">Dokploy</a>,
+    <a href="/docs/self-hosting/coolify">Coolify</a>,
+    <a href="/docs/self-hosting/caprover">CapRover</a>, or a
+    <a href="/docs/self-hosting/vps">bare-metal VPS</a>. Setting up locally?
+    Switch to the <a href="/dev">Developers</a> section and try
+    <a href="/dev/laravel-herd">Laravel Herd</a>,
+    <a href="/dev/laravel-sail">Sail</a>, or
+    <a href="/dev/laravel-valet">Valet</a>. Building an integration?
+    See the <a href="/api">API reference</a>.
+  </p>
+
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">A note on the original docs</p>
+    <p>
+      This section is a rewritten edition of the official documentation. The
+      canonical source of truth remains the repository at
+      <a href="https://github.com/yukazakiri/koakademy" target="_blank" rel="noreferrer"
+        >github.com/yukazakiri/koakademy</a
+      >
+      and the hosted docs at
+      <a href="https://yukazakiri.github.io/koakademy" target="_blank" rel="noreferrer"
+        >yukazakiri.github.io/koakademy</a
+      >. If something here disagrees with what the software does, the software
+      and the canonical docs win.
+    </p>
+  </div>
+</DocsLayout>

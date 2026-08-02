@@ -1,0 +1,113 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Contributing"
+  path="/docs/start-here/contributing"
+  description="Contribution workflow, validation, and documentation ownership."
+>
+  <p>
+    Thank you for improving KoAkademy. Contributions should be
+    <strong>focused, testable, and safe</strong> for institutions that self-host
+    the application.
+  </p>
+
+  <h2>Before opening work</h2>
+  <ul>
+    <li>Search existing issues and pull requests first.</li>
+    <li>
+      Use a GitHub issue for substantial behavior or architecture changes so
+      maintainers can confirm direction.
+    </li>
+    <li>
+      Do not use a public issue for vulnerabilities; follow
+      <a href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md" target="_blank" rel="noreferrer">SECURITY.md</a>.
+    </li>
+    <li>
+      Keep product changes separate from formatting, generated files, or
+      unrelated refactors.
+    </li>
+  </ul>
+  <p>No response-time or merge-time SLA is promised.</p>
+
+  <h2>Development setup</h2>
+  <p>
+    Follow <a href="/dev/development-setup">Development</a>. Use PHP 8.5,
+    Node.js 22, Composer 2, and the locked dependencies. The default automated
+    test environment uses SQLite; production-specific database behavior should
+    also be tested with PostgreSQL.
+  </p>
+
+  <h2>Pull request checklist</h2>
+  <p>Before submitting, run the validation that CI will run:</p>
+  <pre><code>vendor/bin/pint --test
+php artisan test --parallel --compact
+npm run build
+npm run docs:check
+npm --prefix docs run build
+KOAKADEMY_ENV_FILE=.env.production.example \
+  docker compose --env-file .env.production.example -f compose.production.yaml config --quiet</code></pre>
+  <ul>
+    <li>Add or update Pest tests for behavior changes.</li>
+    <li>Add migrations for schema changes; do not rewrite released migration history.</li>
+    <li>Update canonical root docs when installation, configuration, architecture, or operations change.</li>
+    <li>Run <code>npm run docs:sync</code> and commit the generated MDX mirrors.</li>
+    <li>Keep API examples limited to tested routes and real response shapes.</li>
+    <li>Avoid new services, dependencies, network calls, or telemetry without explaining the tradeoff.</li>
+    <li>Confirm no credentials, personal data, production logs, or generated <code>.env</code> files are included.</li>
+    <li>
+      Give the pull request a clear topic-focused title. Automation converts
+      non-conventional titles to a Conventional Commit title such as
+      <code>fix(installer): preserve swarm state</code> or
+      <code>feat(enrollments): add fee overrides</code>; review the inferred type
+      and scope before merge.
+    </li>
+    <li>
+      Keep the branch current with <code>master</code> so the merge queue can
+      validate the exact candidate.
+    </li>
+  </ul>
+
+  <h2>Code style</h2>
+  <p>
+    PHP follows Laravel conventions and Laravel Pint. New PHP files use
+    <code>declare(strict_types=1);</code>. Tests use Pest. React code should be
+    typed, accessible, and use established components and generated route
+    helpers where practical.
+  </p>
+  <p>
+    Prefer small commits with imperative messages. KoAkademy squash-merges pull
+    requests, so the automatically normalized and maintainer-reviewed
+    Conventional Commit PR title becomes the <code>master</code> commit and the
+    Release Please changelog/version input. Pull request descriptions should
+    explain the problem, solution, validation performed, user-visible impact,
+    migration or rollback concerns, and screenshots for interface changes.
+  </p>
+
+  <h2>Documentation ownership</h2>
+  <p>
+    Root <code>README.md</code>, <code>GETTING_STARTED.md</code>,
+    <code>DEPLOYMENT.md</code>, <code>CONFIGURATION.md</code>,
+    <code>TROUBLESHOOTING.md</code>, <code>DEVELOPMENT.md</code>,
+    <code>CONTRIBUTING.md</code>, <code>ARCHITECTURE.md</code>, and
+    <code>FAQ.md</code> are canonical. Their generated MDX mirrors contain a
+    warning header and must not be edited by hand. Operator guides, enrollment
+    blueprints, and API pages remain native under
+    <code>docs/src/content/docs/</code>.
+  </p>
+
+  <h2>License</h2>
+  <p>
+    By contributing, you agree that your contribution is licensed under the
+    repository's
+    <a href="https://github.com/yukazakiri/koakademy/blob/master/LICENSE.md" target="_blank" rel="noreferrer">GNU AGPL-3.0-or-later license</a>.
+    Ensure you have the right to submit the work and preserve required notices
+    for third-party material.
+  </p>
+  <p>
+    The project has not adopted a Code of Conduct yet — an explicit maintainer
+    decision still to be made. Contributors should nevertheless communicate
+    respectfully and keep discussion focused on the work.
+  </p>
+</DocsLayout>

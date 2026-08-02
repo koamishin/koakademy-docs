@@ -1,0 +1,142 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Troubleshooting and deployment safety"
+  path="/docs/enrollment-policies/troubleshooting-deployment"
+  description="Diagnose policy validation, inheritance, simulation, migration, rollout, and extension problems without changing existing enrollments."
+>
+  <h2>Rollout states</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>Meaning</th>
+        <th>Recommended action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Legacy active</td>
+        <td>New enrollments use deployed legacy settings.</td>
+        <td>Finish the global blueprint and compatibility report.</td>
+      </tr>
+      <tr>
+        <td>Ready to activate</td>
+        <td>Global policy and validations are ready.</td>
+        <td>Run representative simulations, then activate deliberately.</td>
+      </tr>
+      <tr>
+        <td>Policy engine active</td>
+        <td>New enrollments use matching published policies.</td>
+        <td>Monitor events and keep legacy aliases for the compatibility release.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Common operator problems</h2>
+
+  <h3>"Publish the global blueprint first"</h3>
+  <p>
+    A scoped inheriting draft needs an active published global ancestor. Create
+    or publish the global blueprint, then retry the scoped policy.
+  </p>
+
+  <h3>Inherited value is not what I expected</h3>
+  <p>
+    Check the source badge and the strict ancestor list. Then run a simulation
+    with the actual school, student type, program, period, and year level to see
+    every matching layer.
+  </p>
+
+  <h3>Simulation says a required fact is unavailable</h3>
+  <p>
+    The rule failed closed. Confirm that the representative student has the data
+    and that its integration handler is registered. Remove or override the rule
+    only if the school intentionally does not enforce it.
+  </p>
+
+  <h3>Simulation checksum changed</h3>
+  <p>
+    The saved draft, an inherited active version, or publication permission
+    candidate changed. Save and run simulation again. Never reuse an older
+    checksum.
+  </p>
+
+  <h3>Workflow validation reports a cycle or unreachable step</h3>
+  <p>
+    Keep all destinations forward, confirm the entry is the first card, make at
+    least one final card, and ensure each non-final card has the protected
+    Otherwise destination.
+  </p>
+
+  <h3>Extension is read-only</h3>
+  <p>
+    The handler is compatible but does not implement operator metadata. It can
+    run and be restored from backup. Ask the extension maintainer to implement
+    <code>EnrollmentOperatorSchemaProvider</code>.
+  </p>
+
+  <h2>Deployment-safety checklist</h2>
+  <ol>
+    <li>Apply additive migrations before enabling UI access.</li>
+    <li>Keep the Pennant rollout flag off during import and backfill.</li>
+    <li>Confirm original <code>student_enrollment.status</code> strings are unchanged.</li>
+    <li>Review unknown-status and duplicate-enrollment migration warnings.</li>
+    <li>Publish and simulate a legacy-compatible global preset.</li>
+    <li>Test public, continuing, administrator, API, Filament, College, and TESDA paths while legacy remains active.</li>
+    <li>Activate only after the compatibility report is clear.</li>
+    <li>Monitor workflow failure and retry events after activation.</li>
+    <li>Keep legacy route adapters and read-only settings for the compatibility release.</li>
+  </ol>
+  <p>
+    The enrollment revamp migration creates an <strong>unpublished compatibility
+    draft</strong> with the explicit default actions. It does not publish that
+    draft, change the active version, or activate
+    <code>DynamicEnrollmentPolicies</code>. Review and simulate it like any other
+    draft.
+  </p>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Do not rewrite deployed migrations</p>
+    <p>
+      Policy rollout uses additive forward migrations. Existing status data,
+      duplicates, and active enrollment behavior are preserved and reported —
+      not deleted or silently merged.
+    </p>
+  </div>
+
+  <h2>Runtime guarantees</h2>
+  <ul>
+    <li>Existing rows default to <code>legacy</code>.</li>
+    <li>Rollout changes only the runtime assigned to future enrollments.</li>
+    <li>Every policy enrollment pins an immutable compiled snapshot.</li>
+    <li>Controllers and Filament actions advance through the coordinator; they do not directly mutate workflow state.</li>
+    <li>The legacy <code>status</code> value remains the API/reporting projection.</li>
+    <li>Legacy department and cashier routes adapt to semantic policy actions for one compatibility release.</li>
+    <li>No-receipt and quick-enroll behavior on the policy runtime exists only when the current blueprint has an authorized payment transition configured for it; the transition requires an audited reason.</li>
+    <li>New payments link directly to one enrollment. Legacy payment backfill links only unambiguous matches, and destructive reversal fails closed when an exact enrollment payment cannot be established.</li>
+  </ul>
+
+  <h2>Production operations</h2>
+  <p>
+    After configuration or code deployment under Octane/FrankenPHP, reload
+    long-running workers so new registry metadata and environment-backed
+    documentation URLs are visible. Cache only immutable compiled snapshots;
+    publication invalidates policy-list metadata.
+  </p>
+  <p>Set the contextual help base URL with:</p>
+  <pre><code>DOCUMENTATION_URL=https://your-docs.example.edu</code></pre>
+  <p>
+    The default points to the hosted KoAkademy documentation. Self-hosted
+    schools can override it without changing application code.
+  </p>
+
+  <h2>Escalation evidence</h2>
+  <p>
+    When reporting a failure, include the enrollment ID, workflow runtime,
+    snapshot/version ID, current step, event type, handler key, retry count,
+    actor, and structured failure metadata. Do not include student secrets in
+    public issue reports.
+  </p>
+</DocsLayout>

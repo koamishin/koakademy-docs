@@ -1,0 +1,538 @@
+/* ==========================================================================
+   Documentation styles — prose, code, tables, callouts, sidebar, pager.
+   Tokens are inlined here to keep this file self-contained.
+   ========================================================================== */
+
+/* ---- Page title block (rendered by DocsLayout) ------------------------- */
+
+.doc-title {
+  font-family: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  font-variation-settings: "opsz" 40;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  color: #1a2a21;
+  text-wrap: balance;
+  margin: 0.6rem 0 0;
+}
+.doc-lede {
+  color: #5d6a60;
+  font-size: 15.5px;
+  line-height: 1.7;
+  margin-top: 0.9rem;
+  max-width: 60ch;
+}
+
+/* ---- Prose -------------------------------------------------------------- */
+
+.doc-prose {
+  color: #5d6a60;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.doc-prose h2 {
+  font-family: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  font-variation-settings: "opsz" 40;
+  font-weight: 500;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: #1a2a21;
+  margin: 3rem 0 0.9rem;
+  padding-top: 0.4rem;
+  scroll-margin-top: 6rem;
+}
+.doc-prose h2::before {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 2px;
+  background: #a37b26;
+  margin-bottom: 0.75rem;
+}
+.doc-prose h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1a2a21;
+  margin: 2.1rem 0 0.6rem;
+  scroll-margin-top: 6rem;
+}
+.doc-prose h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1a2a21;
+  margin: 1.6rem 0 0.5rem;
+}
+.doc-prose p {
+  margin: 0.85rem 0;
+}
+.doc-prose a {
+  color: #7c5b14;
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 91, 20, 0.35);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.doc-prose a:hover {
+  color: #1a2a21;
+}
+.doc-prose strong {
+  color: #1a2a21;
+  font-weight: 600;
+}
+
+.doc-prose ul {
+  list-style: none;
+  margin: 0.85rem 0;
+  padding-left: 0;
+}
+.doc-prose ul > li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin: 0.35rem 0;
+}
+.doc-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.66em;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  background: #a37b26;
+}
+
+.doc-prose ol {
+  list-style: none;
+  counter-reset: docstep;
+  margin: 0.85rem 0;
+  padding-left: 0;
+}
+.doc-prose ol > li {
+  position: relative;
+  padding-left: 2.1rem;
+  margin: 0.45rem 0;
+  counter-increment: docstep;
+}
+.doc-prose ol > li::before {
+  content: counter(docstep, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.06em;
+  font-family: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  font-size: 0.8rem;
+  color: #a37b26;
+}
+.doc-prose li > ul,
+.doc-prose li > ol {
+  margin: 0.4rem 0;
+}
+
+/* ---- Inline & block code ------------------------------------------------- */
+
+.doc-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+    monospace;
+  font-size: 0.84em;
+  background: #ece9dc;
+  border: 1px solid #e0dcc9;
+  border-radius: 5px;
+  padding: 0.12em 0.4em;
+  color: #1a2a21;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.doc-prose pre {
+  background: #14211a;
+  color: #e9ebdf;
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  margin: 1.1rem 0;
+  box-shadow: 0 24px 44px -32px rgba(26, 42, 33, 0.55);
+  border: 1px solid rgba(201, 164, 76, 0.18);
+}
+.doc-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: 0.81rem;
+  line-height: 1.75;
+  white-space: pre;
+}
+
+/* ---- Tables -------------------------------------------------------------- */
+
+.doc-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.15rem 0;
+  font-size: 0.865rem;
+  line-height: 1.6;
+}
+.doc-prose th {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #7c5b14;
+  text-align: left;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid #1a2a21;
+}
+.doc-prose td {
+  padding: 0.62rem 0.85rem;
+  border-bottom: 1px solid #e0dcc9;
+  vertical-align: top;
+  color: #5d6a60;
+}
+.doc-prose tr:last-child td {
+  border-bottom: 0;
+}
+.doc-prose table code {
+  white-space: normal;
+}
+@media (max-width: 639px) {
+  .doc-prose table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ---- Callouts ------------------------------------------------------------- */
+
+.doc-callout {
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  margin: 1.15rem 0;
+  border: 1px solid;
+  font-size: 0.895rem;
+  line-height: 1.65;
+  color: #4c574e;
+}
+.doc-callout .doc-callout-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.35rem;
+}
+.doc-callout .doc-callout-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.doc-callout-note {
+  border-color: #c2cbbc;
+  background: #eef0e6;
+}
+.doc-callout-note .doc-callout-label {
+  color: #5d6a60;
+}
+.doc-callout-note .doc-callout-label::before {
+  background: #7d8a7c;
+}
+.doc-callout-tip {
+  border-color: #e3cd97;
+  background: #f6f0de;
+}
+.doc-callout-tip .doc-callout-label {
+  color: #7c5b14;
+}
+.doc-callout-tip .doc-callout-label::before {
+  background: #a37b26;
+}
+.doc-callout-caution {
+  border-color: #e2b39c;
+  background: #f7ece4;
+}
+.doc-callout-caution .doc-callout-label {
+  color: #a84b2e;
+}
+.doc-callout-caution .doc-callout-label::before {
+  background: #a84b2e;
+}
+
+/* ---- Keyboard -------------------------------------------------------------- */
+
+.doc-kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.74em;
+  background: #ece9dc;
+  border: 1px solid #d3cfbd;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0.08em 0.45em;
+  color: #1a2a21;
+}
+
+/* ---- Sidebar --------------------------------------------------------------- */
+
+.doc-sidebar {
+  position: sticky;
+  top: 4rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d5d1c0 transparent;
+}
+.doc-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.doc-sidebar::-webkit-scrollbar-thumb {
+  background: #d5d1c0;
+  border-radius: 999px;
+}
+.doc-side-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.63rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #7c5b14;
+  margin: 1.15rem 0 0.4rem;
+}
+.doc-side-label:first-child {
+  margin-top: 0;
+}
+.doc-side-link {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: #5d6a60;
+  padding: 0.26rem 0 0.26rem 0.8rem;
+  border-left: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.doc-side-link:hover {
+  color: #1a2a21;
+}
+.doc-side-link.is-active {
+  color: #1a2a21;
+  border-left-color: #a37b26;
+  font-weight: 500;
+}
+
+/* ---- Pager (previous / next) -------------------------------------------------- */
+
+.doc-pager {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+@media (min-width: 640px) {
+  .doc-pager {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.doc-pager a {
+  border: 1px solid #e0dcc9;
+  border-radius: 12px;
+  padding: 0.9rem 1.15rem;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.doc-pager a:hover {
+  border-color: rgba(26, 42, 33, 0.35);
+  background: #ece9dc;
+  transform: translateY(-1px);
+}
+.doc-pager .doc-pager-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #7c5b14;
+}
+.doc-pager .doc-pager-title {
+  margin-top: 0.35rem;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1a2a21;
+}
+.doc-pager .doc-pager-next {
+  text-align: right;
+}
+
+/* ---- Section switcher (Docs / API reference / Developers) ------------------ */
+
+.doc-tabs {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.doc-tabs::-webkit-scrollbar {
+  display: none;
+}
+.doc-tab {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0.72rem 1.1rem 0.85rem;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #5d6a60;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+.doc-tab:hover {
+  color: #1a2a21;
+}
+.doc-tab::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: transparent;
+}
+.doc-tab-active {
+  color: #1a2a21;
+}
+.doc-tab-active::after {
+  background: #a37b26;
+}
+@media (max-width: 639px) {
+  .doc-tab {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-size: 12.5px;
+  }
+}
+
+/* ---- Code copy buttons ------------------------------------------------------- */
+
+.doc-prose pre {
+  position: relative;
+}
+.doc-prose pre.copy-zone {
+  padding-top: 2.5rem;
+}
+.copy-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #e9ebdf;
+  background: rgba(20, 33, 26, 0.85);
+  border: 1px solid rgba(201, 164, 76, 0.35);
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.copy-btn:hover {
+  border-color: #c9a44c;
+  color: #ffffff;
+}
+.copy-btn:focus-visible {
+  outline: 2px solid #c9a44c;
+  outline-offset: 2px;
+}
+.copy-btn.is-copied {
+  color: #c9a44c;
+  border-color: #c9a44c;
+}
+
+/* ---- API reference ------------------------------------------------------------ */
+
+.api-method {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.22rem 0.5rem;
+  border: 1px solid;
+  border-radius: 6px;
+  line-height: 1;
+}
+.api-method-get {
+  color: #4c6b52;
+  border-color: #9fb8a4;
+  background: #eef0e6;
+}
+.api-method-post {
+  color: #7c5b14;
+  border-color: #c9a44c;
+  background: #f6f0de;
+}
+.api-method-put,
+.api-method-patch {
+  color: #8a6d1f;
+  border-color: #d5c48a;
+  background: #faf5e6;
+}
+.api-method-delete {
+  color: #a84b2e;
+  border-color: #d8a08a;
+  background: #f7ece4;
+}
+.api-status {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #5d6a60;
+  border: 1px dashed #c6c2ae;
+  border-radius: 6px;
+  padding: 0.2rem 0.45rem;
+  line-height: 1;
+}
+.api-endpoint {
+  border: 1px solid #e0dcc9;
+  border-radius: 12px;
+  background: #f5f3ec;
+  margin: 1.25rem 0;
+  overflow: hidden;
+}
+.api-endpoint-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #e0dcc9;
+  background: #ece9dc;
+}
+.api-endpoint-path {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  color: #1a2a21;
+  overflow-wrap: break-word;
+}
+.api-endpoint-body {
+  padding: 1rem 1.15rem 1.15rem;
+}
+.api-endpoint-body > :first-child {
+  margin-top: 0;
+}
+.api-endpoint-body > :last-child {
+  margin-bottom: 0;
+}

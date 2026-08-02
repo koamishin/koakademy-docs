@@ -1,0 +1,112 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Laravel Herd (Windows & macOS)"
+  path="/dev/laravel-herd"
+  section="dev"
+  description="Run KoAkademy locally with Herd's native PHP — no Docker required."
+>
+  <p>
+    Herd is a native local PHP environment for Windows and macOS: pre-compiled
+    PHP, Nginx, DNS, Composer, Node, and the Laravel installer — no Docker, no
+    Homebrew juggling. The free tier covers PHP and the toolchain; PostgreSQL,
+    MySQL, and Redis are Herd Pro services. Projects in a parked folder are
+    served automatically at <code>*.test</code> domains.
+  </p>
+
+  <h2>1. Install Herd</h2>
+  <ul>
+    <li>
+      <strong>macOS:</strong> download the <code>.dmg</code>, drag Herd into
+      Applications, and complete the onboarding. Herd installs a privileged
+      helper for Nginx and Dnsmasq.
+    </li>
+    <li>
+      <strong>Windows:</strong> run the installer as administrator. The
+      <code>HerdHelper</code> service manages the hosts file and maps parked
+      directories to <code>.test</code> domains.
+    </li>
+  </ul>
+  <p>Confirm PHP 8.5 is available and set it as the default:</p>
+  <pre><code>herd use 8.5
+php -v</code></pre>
+  <p>
+    Composer, the Laravel installer, and nvm for Node come bundled. On Windows,
+    add an exclusion in Windows Security for the Herd configuration folder to
+    keep PHP fast.
+  </p>
+
+  <h2>2. Get the code</h2>
+  <pre><code>cd ~/Herd
+git clone https://github.com/yukazakiri/koakademy.git
+cd koakademy
+composer install
+npm ci
+cp .env.example .env
+php artisan key:generate</code></pre>
+  <p>
+    Because <code>~/Herd</code> is a parked folder, the project is immediately
+    available at <code>http://koakademy.test</code>. If you clone it anywhere
+    else, register it with <code>herd link koakademy</code>.
+  </p>
+
+  <h2>3. Database</h2>
+  <p>Two options, both fine for local development:</p>
+  <ul>
+    <li>
+      <strong>SQLite (free):</strong>
+      <pre><code>touch database/database.sqlite</code></pre>
+      In <code>.env</code>, set <code>DB_CONNECTION=sqlite</code>.
+    </li>
+    <li>
+      <strong>PostgreSQL (Herd Pro):</strong> create and start the service,
+      <pre><code>herd services:create postgresql
+herd services:start postgresql</code></pre>
+      then in <code>.env</code> set <code>DB_CONNECTION=pgsql</code>,
+      <code>DB_HOST=127.0.0.1</code>, <code>DB_PORT=5432</code>,
+      <code>DB_DATABASE=koakademy</code>, and the username and password Herd
+      shows for the service (the default local user is <code>herd</code>).
+      Create the <code>koakademy</code> database from the Herd GUI or with the
+      <code>herd services</code> CLI commands your version provides.
+    </li>
+  </ul>
+  <p>
+    Working on queues, cache, or sessions? Add Redis the same way
+    (<code>herd services:create redis</code>) and point
+    <code>REDIS_HOST=127.0.0.1</code>.
+  </p>
+
+  <h2>4. Migrate and serve</h2>
+  <pre><code>php artisan migrate</code></pre>
+  <p>
+    Run the Vite dev server for frontend work with <code>npm run dev</code>, or
+    build once with <code>npm run build</code>. Open
+    <code>http://koakademy.test/setup</code> to create development data and the
+    first administrator.
+  </p>
+
+  <h2>5. HTTPS and sharing</h2>
+  <ul>
+    <li><code>herd secure</code> serves the site over a trusted local HTTPS certificate.</li>
+    <li><code>herd share</code> publishes a public tunnel URL for webhooks or device testing (backed by Expose).</li>
+    <li><code>herd isolate 8.5</code> pins a PHP version per project when the global default differs.</li>
+  </ul>
+
+  <h2>6. Validate</h2>
+  <pre><code>composer test
+vendor/bin/pint --test
+npm run build
+npm run format:check</code></pre>
+
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">PDF features need Gotenberg</p>
+    <p>
+      Herd does not bundle Gotenberg. If you work on PDF generation, run
+      <code>docker run -d -p 3000:3000 gotenberg/gotenberg:8</code> and set
+      <code>GOTENBERG_URL=http://127.0.0.1:3000</code> in <code>.env</code> — or
+      skip PDF work locally.
+    </p>
+  </div>
+</DocsLayout>

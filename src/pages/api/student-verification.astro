@@ -1,0 +1,102 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Student verification API"
+  path="/api/student-verification"
+  section="api"
+  description="Test whether a student ID and email match an existing record."
+>
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-post">POST</span>
+      <code class="api-endpoint-path">/api/students/verify</code>
+      <span class="api-status">Sanctum · 200 · 404 · 401 · 422</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Checks whether one student ID and email address match the same record.
+        It requires Laravel Sanctum authentication. It is
+        <strong>not</strong> authentication for the student and must not be
+        used as proof of identity by itself.
+      </p>
+    </div>
+  </div>
+
+  <h2>Request</h2>
+  <pre><code>POST /api/students/verify
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN
+
+&#123;
+  "student_id": "2024001",
+  "email": "student@example.edu"
+&#125;</code></pre>
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Validation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>student_id</code></td>
+        <td>Required string, maximum 50 characters</td>
+      </tr>
+      <tr>
+        <td><code>email</code></td>
+        <td>Required valid email, maximum 255 characters</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Match found</h2>
+  <p>HTTP <code>200</code>:</p>
+  <pre><code>&#123;
+    "message": "Student verified successfully",
+    "data": &#123;
+      "exists": true,
+      "student_id": 2024001,
+      "email": "student@example.edu",
+      "full_name": "Example Student",
+      "status": "enrolled",
+      "student_type": "college"
+  &#125;
+&#125;</code></pre>
+  <p>
+    The current model serializes a matched <code>student_id</code> as an
+    integer. The request field remains a string; unmatched responses echo the
+    submitted string. Clients should accept this existing distinction until a
+    future version explicitly announces a normalized response contract.
+  </p>
+
+  <h2>No matching record</h2>
+  <p>HTTP <code>404</code>:</p>
+  <pre><code>&#123;
+  "message": "Student not found",
+  "data": &#123;
+    "exists": false,
+    "student_id": "2024001",
+    "email": "student@example.edu"
+  &#125;
+&#125;</code></pre>
+  <p>
+    The same not-found response is used when the ID exists but belongs to a
+    different email. Clients should not infer which submitted value was
+    incorrect.
+  </p>
+
+  <h2>Other responses</h2>
+  <ul>
+    <li><span class="api-status">401</span> when Sanctum authentication is missing or invalid</li>
+    <li><span class="api-status">422</span> with field errors when either input fails validation</li>
+  </ul>
+  <p>
+    Because this endpoint handles personal data, integrations should minimize
+    retention, avoid logging submitted identifiers, use HTTPS, protect tokens,
+    and rate-limit callers at the operator-managed edge where appropriate.
+  </p>
+</DocsLayout>

@@ -1,0 +1,161 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Modules & feature flags"
+  path="/docs/system/modules-flags"
+  description="The six optional modules, the Pennant feature-flag system, and institution settings — and when to use each."
+>
+  <p>
+    KoAkademy composes optional functionality at three levels: <strong>modules</strong>
+    (code-level, deployed), <strong>feature flags</strong> (runtime, per
+    installation), and <strong>institution settings</strong> (runtime, per
+    school). This page inventories all three and explains which mechanism to
+    reach for.
+  </p>
+
+  <h2>Modules</h2>
+  <p>
+    Modules use <strong>nwidart/laravel-modules</strong> and are registered into
+    the Filament admin panel through <code>coolsam/modules</code>
+    (<code>ModulesPlugin</code> in <code>AdminPanelProvider</code>). Enabled
+    state lives in <code>modules_statuses.json</code>; all six ship enabled.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Registers</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Announcement</strong></td>
+        <td>Model + policy, Filament resource, admin &amp; student-portal endpoints, banner render hook</td>
+        <td>School-wide announcements</td>
+      </tr>
+      <tr>
+        <td><strong>Cashier</strong></td>
+        <td>Shield-protected Filament page, controllers, notifications</td>
+        <td>Student balance lookup and payment posting for cashiers</td>
+      </tr>
+      <tr>
+        <td><strong>Inventory</strong></td>
+        <td>Filament resources (products, categories, suppliers, borrowings, stock movements, amendments), ledger service</td>
+        <td>Property and equipment management</td>
+      </tr>
+      <tr>
+        <td><strong>LibrarySystem</strong></td>
+        <td>Filament resources (books, authors, categories, borrow records), research papers</td>
+        <td>Library operations</td>
+      </tr>
+      <tr>
+        <td><strong>NotificationCenter</strong></td>
+        <td>Template model + service, 12 template notification classes, bulk-send job, admin UI</td>
+        <td>Template-based messaging</td>
+      </tr>
+      <tr>
+        <td><strong>StudentMedicalRecords</strong></td>
+        <td>Model with confidentiality flags, Filament cluster + resource, stats widget, policy</td>
+        <td>Clinic visit records</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    A module can contain migrations, models, policies, Filament
+    resources/pages/widgets, routes, controllers, jobs, and its own tests — the
+    same conventions as <code>app/</code>. Module Filament resources appear in
+    the admin panel automatically once the module is enabled.
+  </p>
+
+  <h2>Feature flags (Pennant)</h2>
+  <p>
+    Runtime flags use <strong>Laravel Pennant</strong> with the database store.
+    Flags are <strong>class-based toggles</strong> in
+    <code>app/Features/Toggles</code>, catalogued in
+    <code>FeatureToggleRegistry</code> and enforced by the
+    <code>EnsureFeatureEnabled</code> middleware. There are 36 toggles in three
+    families:
+  </p>
+  <ul>
+    <li>
+      <strong><code>faculty-*</code> (19)</strong> — dashboard, classes, grades,
+      attendance, schedule, action center, at-risk alerts, assessments, inbox,
+      office hours, requests/approvals, insights, resources, forms, toolkit,
+      announcements, help, settings, developer mode.
+    </li>
+    <li>
+      <strong><code>student-*</code> (12)</strong> — dashboard, classes, tuition,
+      schedule, announcements, settings, information updates, help, grades
+      preview, attendance tracker, developer mode — plus signature-pad and
+      avatar-upload capabilities.
+    </li>
+    <li>
+      <strong>Administrative/enrollment</strong> —
+      <code>admin-developer-mode</code>, <code>online-college-enrollment</code>,
+      <code>online-tesda-enrollment</code>, and
+      <code>DynamicEnrollmentPolicies</code>. The dynamic-policy flag defaults
+      to <code>false</code>: while off, future enrollments use the legacy
+      runtime; after deliberate activation, future enrollments resolve published
+      database-backed blueprints.
+    </li>
+  </ul>
+  <p>
+    Operators manage flags from the <strong>Feature Toggles</strong> page in the
+    admin workspace (daacreators/pennant-manager plus a custom plugin); portal
+    middleware hides disabled areas without deleting data.
+  </p>
+
+  <h2>Institution settings</h2>
+  <p>
+    <code>GeneralSetting</code> (spatie/laravel-settings) holds institution-wide
+    booleans distinct from Pennant flags: the student portal, online enrollment,
+    clearances, signature capture, QR codes, the inventory and library modules,
+    the support page, and transfer e-mails. These are edited in
+    <strong>General Settings</strong> and seeded by the setup wizard's final
+    step.
+  </p>
+
+  <h2>Which mechanism should you use?</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>If the capability…</th>
+        <th>Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Is a whole optional domain (new models, screens, jobs)</td>
+        <td>A <strong>module</strong></td>
+      </tr>
+      <tr>
+        <td>Turns an existing screen/flow on or off at runtime</td>
+        <td>A <strong>Pennant flag</strong> + <code>EnsureFeatureEnabled</code></td>
+      </tr>
+      <tr>
+        <td>Is institution configuration an operator edits</td>
+        <td>A <strong><code>GeneralSetting</code></strong> value</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Adding a new toggle</h2>
+  <ol>
+    <li>Create a class in <code>app/Features/Toggles</code> with a <code>resolve()</code> method.</li>
+    <li>Register it in <code>FeatureToggleRegistry</code> under the right family.</li>
+    <li>Guard routes/pages with <code>EnsureFeatureEnabled</code> (backend) — not just conditional rendering (frontend).</li>
+    <li>Cover enabled and disabled behavior with Pest tests.</li>
+  </ol>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Resolver defaults matter</p>
+    <p>
+      A flag's <code>resolve()</code> decides the default for every
+      installation. Hard-coded <code>false</code> (like
+      <code>DynamicEnrollmentPolicies</code>) keeps a feature dark even when code
+      ships — say so explicitly when you do this.
+    </p>
+  </div>
+</DocsLayout>

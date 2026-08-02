@@ -1,0 +1,185 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Installation"
+  path="/docs/self-hosting/installation"
+  description="Install KoAkademy with the supported production topology."
+>
+  <p>
+    This guide installs KoAkademy with Docker Swarm, PostgreSQL, Redis,
+    Gotenberg, and S3-compatible storage. KoAkademy is a production-capable
+    beta: start in a staging environment and keep a tested recovery path.
+  </p>
+  <div class="doc-callout doc-callout-tip">
+    <p class="doc-callout-label">Prefer a platform or a bare server?</p>
+    <p>
+      The Swarm installer and manual Compose are the supported paths, but
+      KoAkademy runs wherever Docker does. See the
+      <a href="/docs/self-hosting/dokploy">Dokploy</a>,
+      <a href="/docs/self-hosting/coolify">Coolify</a>,
+      <a href="/docs/self-hosting/caprover">CapRover</a>, and
+      <a href="/docs/self-hosting/vps">bare-metal VPS</a> guides for
+      platform-specific steps built on the same production Compose file.
+    </p>
+  </div>
+
+  <h2>Prerequisites</h2>
+  <ul>
+    <li>Linux host with Bash and Docker Engine, or Windows x64 with PowerShell and Docker Desktop using Linux containers</li>
+    <li>Docker daemon access from the account running the installer</li>
+    <li>4 GB RAM minimum for a small evaluation; size from observed workload</li>
+    <li>Free host port <code>8000</code>; local RustFS also uses host port <code>9000</code></li>
+    <li>Outbound access to GitHub, GitHub Container Registry, Docker Hub, and any external object-storage endpoint</li>
+  </ul>
+  <p>
+    Only PostgreSQL is supported by the prebuilt production image. SQLite is
+    available for native development and tests.
+  </p>
+
+  <h2>One-line Docker Swarm installation</h2>
+  <p>
+    The installer initializes a single-node Swarm when Docker is inactive. If
+    Swarm is already active, it preserves the cluster, requires the current node
+    to be a manager, and pins KoAkademy's stateful services to that manager.
+  </p>
+  <p><strong>Linux</strong> — copy and run:</p>
+  <pre><code>bash -c "$(curl -fsSL https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh)"</code></pre>
+  <p><strong>Windows</strong> — open PowerShell and copy and run:</p>
+  <pre><code>& ([scriptblock]::Create((irm https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.ps1)))</code></pre>
+  <p>
+    The installer resolves the newest stable KoAkademy tag from GitHub,
+    rejecting development and preview tags; generates the application key and
+    database, Redis, and storage credentials as Docker secrets; prompts for
+    either local RustFS or an external S3-compatible service such as Cloudflare
+    R2; creates an attachable overlay network with manager-pinned services;
+    creates or validates the storage bucket, runs migrations as a one-off Swarm
+    job, starts KoAkademy, and verifies <code>/up</code>; then prints the
+    application, <code>/setup</code>, and <code>/admin</code> URLs.
+  </p>
+
+  <h3>What to know before running it</h3>
+  <ul>
+    <li>
+      Local RustFS uses a dedicated public-read upload bucket and persistent
+      Docker volume — a single-node convenience topology without storage
+      redundancy. Back it up, and use a redundant external S3 service for higher
+      availability. The RustFS console is not published.
+    </li>
+    <li>
+      The default application URL is <code>http://&lt;detected-ip&gt;:8000</code>.
+      HTTP is suitable only for local or LAN evaluation. Before production use,
+      put an HTTPS reverse proxy or tunnel in front of port <code>8000</code>. If
+      local RustFS is used with HTTPS, also provide an HTTPS edge for port
+      <code>9000</code> and set <code>KOAKADEMY_S3_PUBLIC_URL</code>.
+    </li>
+    <li>
+      The scripts accept environment overrides for automation, including
+      <code>KOAKADEMY_VERSION</code>, <code>RUSTFS_VERSION</code>,
+      <code>KOAKADEMY_APP_URL</code>, <code>KOAKADEMY_APP_PORT</code>,
+      <code>KOAKADEMY_STORAGE=rustfs|external</code>, and the
+      <code>KOAKADEMY_S3_*</code> values. Without <code>KOAKADEMY_VERSION</code>,
+      version discovery fails closed if GitHub cannot return a stable tag; it
+      never silently falls back to a mutable image.
+    </li>
+  </ul>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Running remote code is privileged</p>
+    <p>
+      To inspect the Linux installer first:
+      <code>curl -fsSLO https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh</code>,
+      then <code>less install.sh</code>, then <code>bash install.sh</code>. On
+      Windows, download <code>install.ps1</code> with
+      <code>Invoke-WebRequest</code>, read it with <code>Get-Content</code>, then
+      run <code>&amp; .\install.ps1</code>.
+    </p>
+  </div>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">The edge channel is unsupported</p>
+    <p>
+      An explicit <code>KOAKADEMY_VERSION=edge</code> selects the unsupported
+      rolling channel and prints a warning. Use it only for disposable
+      evaluation or pre-release compatibility testing. Automatic discovery never
+      selects <code>edge</code>, and production installations should pin an exact
+      <code>vX.Y.Z</code> stable tag.
+    </p>
+  </div>
+
+  <h2>Manual Docker Compose installation</h2>
+  <p>
+    Use this path when an operator-managed Compose topology is preferred over the
+    default Swarm installer.
+  </p>
+
+  <h3>1. Obtain a supported release</h3>
+  <pre><code>git clone https://github.com/yukazakiri/koakademy.git
+cd koakademy
+git fetch --tags
+git checkout &lt;latest-stable-tag&gt;</code></pre>
+  <p>
+    Replace <code>&lt;latest-stable-tag&gt;</code> with the latest
+    non-prerelease tag shown on the GitHub Releases page. KoAkademy supports
+    only the latest stable release; do not deploy <code>edge</code>,
+    <code>-dev</code>, prerelease, or arbitrary branch images as production
+    releases.
+  </p>
+
+  <h3>2. Configure the environment</h3>
+  <pre><code>cp .env.production.example .env
+chmod 600 .env</code></pre>
+  <p>At minimum, replace:</p>
+  <ul>
+    <li><code>APP_URL</code>, <code>PORTAL_HOST</code>, and <code>ADMIN_HOST</code> with the same production hostname</li>
+    <li><code>DB_PASSWORD</code> and <code>REDIS_PASSWORD</code> with unique random values</li>
+    <li>every <code>AWS_*</code> value with credentials for a dedicated S3-compatible bucket</li>
+    <li><code>MAIL_*</code> when real email delivery is required</li>
+    <li><code>KOAKADEMY_VERSION</code> with the matching stable image tag</li>
+  </ul>
+  <p>Generate the application key:</p>
+  <pre><code>docker compose --env-file .env -f compose.production.yaml run --rm app php artisan key:generate --show</code></pre>
+  <p>
+    Copy the complete output into <code>APP_KEY</code>. Never reuse a key from
+    another installation or commit <code>.env</code>. Validate configuration
+    before starting anything:
+  </p>
+  <pre><code>docker compose --env-file .env -f compose.production.yaml config --quiet</code></pre>
+
+  <h3>3. Start dependencies and migrate</h3>
+  <pre><code>docker compose --env-file .env -f compose.production.yaml pull
+docker compose --env-file .env -f compose.production.yaml up -d postgres redis gotenberg
+docker compose --env-file .env -f compose.production.yaml run --rm app php artisan migrate --force</code></pre>
+  <p>
+    Migrations are intentionally separate from container startup. Review release
+    notes and take a database backup before the same command during upgrades.
+  </p>
+
+  <h3>4. Start and verify KoAkademy</h3>
+  <pre><code>docker compose --env-file .env -f compose.production.yaml up -d app
+docker compose --env-file .env -f compose.production.yaml ps
+curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
+  <p>
+    If <code>/up</code> fails, inspect
+    <code>docker compose --env-file .env -f compose.production.yaml logs app</code>
+    and use <a href="/docs/self-hosting/troubleshooting">Troubleshooting</a>.
+  </p>
+
+  <h3>5. Add HTTPS and complete setup</h3>
+  <p>
+    Forward your HTTPS edge to <code>http://127.0.0.1:8000</code> and preserve
+    <code>Host</code>, <code>X-Forwarded-For</code>, <code>X-Forwarded-Host</code>,
+    and <code>X-Forwarded-Proto</code> headers. Then visit
+    <code>https://school.example/setup</code>. The one-time wizard creates the
+    institution, initial academic period, and first super administrator. After
+    completion, verify <code>https://school.example/admin</code>. The setup route
+    returns <code>403</code> after the application is initialized.
+  </p>
+
+  <h2>Next steps</h2>
+  <ul>
+    <li>Finish the production checklist in <a href="/docs/self-hosting/deployment">Deployment</a>.</li>
+    <li>Review every variable in <a href="/docs/self-hosting/configuration">Configuration</a>.</li>
+    <li>Configure scheduled backups for PostgreSQL and external object storage.</li>
+    <li>Subscribe to security and release notifications for the repository.</li>
+  </ul>
+</DocsLayout>

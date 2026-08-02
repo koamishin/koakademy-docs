@@ -1,0 +1,269 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Architecture & domain model"
+  path="/docs/system/architecture-domain"
+  description="How KoAkademy's runtime, entry points, core entities, and multi-school tenancy fit together."
+>
+  <p>
+    This page is the map. It explains which moving parts exist, where requests
+    enter, and how the core school entities relate — read it before the other
+    System Internals pages.
+  </p>
+
+  <h2>Runtime shape</h2>
+  <p>
+    KoAkademy is a <strong>modular monolith</strong>. One Laravel 12 application
+    serves everything — admin panel, portals, public pages, and API — running on
+    <strong>PHP 8.5 under Laravel Octane with FrankenPHP</strong> in production.
+    The long-running worker means application boot happens once per worker, not
+    per request; code must not leak mutable state between requests (Octane-safe
+    patterns are expected in contributions).
+  </p>
+  <p>
+    The production container image is a multi-stage build
+    (<code>docker/Dockerfile</code>): Composer dependencies → Wayfinder route
+    generation → Bun/Vite asset build → a
+    <code>dunglas/frankenphp:1.9-php8.5</code> runtime. Supervisord variants in
+    the image can run the web worker, queue workers ("station"), scheduler, and
+    Pulse processes; alternative nginx/php-fpm, RoadRunner, and Swoole
+    configurations ship for operators who need them.
+  </p>
+  <p>
+    Supporting services are external: <strong>PostgreSQL</strong> (primary data),
+    <strong>Redis</strong> (cache, sessions, queues), <strong>Gotenberg</strong>
+    (PDF rendering), and <strong>S3-compatible object storage</strong> (uploads
+    via media library).
+  </p>
+
+  <h2>Entry points</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Entry</th>
+        <th>Path / guard</th>
+        <th>Implementation</th>
+        <th>Audience</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Administration panel</td>
+        <td><code>/admin</code> (web guard)</td>
+        <td>Filament 5 panel, SPA mode</td>
+        <td>Administrative staff</td>
+      </tr>
+      <tr>
+        <td>Admin workspace</td>
+        <td><code>/administrators/*</code></td>
+        <td>Inertia + React pages</td>
+        <td>Administrative staff</td>
+      </tr>
+      <tr>
+        <td>Faculty portal</td>
+        <td>faculty routes</td>
+        <td>Inertia + React pages</td>
+        <td>Teaching staff</td>
+      </tr>
+      <tr>
+        <td>Student portal</td>
+        <td>student routes</td>
+        <td>Inertia + React pages</td>
+        <td>Students</td>
+      </tr>
+      <tr>
+        <td>Public pages</td>
+        <td><code>/</code>, <code>/enrollment*</code>, <code>/setup</code>, <code>/docs</code>, <code>/changelog</code>, <code>/id-card/verify/&#123;token&#125;</code></td>
+        <td>Inertia + React pages</td>
+        <td>Everyone</td>
+      </tr>
+      <tr>
+        <td>API</td>
+        <td><code>/api/*</code> (<code>auth:sanctum</code>)</td>
+        <td>Laravel API routes</td>
+        <td>Integrations</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Two things to know about this table:</p>
+  <ol>
+    <li>
+      <strong>There is no separate admin application.</strong> The Filament panel
+      and the three React portals share the same models, policies, and services.
+    </li>
+    <li>
+      A second Filament panel (<code>portal</code>, <code>/portal</code>) exists
+      but is intentionally a stub — the real student/faculty experiences are the
+      Inertia/React portals. Do not build new features into the stub panel.
+    </li>
+  </ol>
+
+  <h2>Core domain entities</h2>
+  <p>The domain is school administration. The principal entities and their relationships:</p>
+  <ul>
+    <li>
+      <strong>School</strong> — the tenant. Most records carry a
+      <code>school_id</code> (see Multi-school tenancy below).
+    </li>
+    <li>
+      <strong>Student</strong> — a person enrolled or enrollable; holds
+      documents, signature, clearances, medical records (module), and a generated
+      institutional <strong>identifier</strong> (configurable format).
+    </li>
+    <li><strong>Faculty</strong> — teaching staff; assigned to classes and departments.</li>
+    <li>
+      <strong>Course / Department / Program</strong> — the curriculum structure
+      students enroll into. Senior High is modeled as its own cluster (SHS
+      strands and SHS students).
+    </li>
+    <li>
+      <strong>Class</strong> — a taught section of a subject: schedule, room,
+      capacity, assigned faculty, roster. Timetable conflict detection guards
+      scheduling.
+    </li>
+    <li>
+      <strong>StudentEnrollment</strong> — a student's enrollment for an academic
+      period; moves through the verification pipeline (see
+      <a href="/docs/system/enrollment-engine">Enrollment engine</a>).
+    </li>
+    <li>
+      <strong>ClassEnrollment / SubjectEnrollment</strong> — the join between an
+      enrollment and the classes/subjects it includes; <strong>grades</strong>
+      live at this level and follow a submit → finalize → verify workflow.
+    </li>
+    <li>
+      <strong>Transactions / Invoices</strong> — assessments, payments, and
+      statements of account issued to students.
+    </li>
+    <li>
+      <strong>Events, Announcements, NotificationTemplates</strong> — calendar,
+      broadcast messaging, and templated notifications.
+    </li>
+  </ul>
+  <p>
+    Around these sit cross-cutting records: <code>User</code> accounts with
+    roles, activity-log entries, media attachments, export jobs, and
+    enrollment-policy records.
+  </p>
+
+  <h2>Multi-school tenancy</h2>
+  <p>
+    Tenancy is <strong>lightweight and school-scoped</strong> — there is no
+    stancl/tenancy package and no database-per-tenant:
+  </p>
+  <ul>
+    <li>
+      A <code>SchoolScope</code> global scope applies <code>school_id</code>
+      filtering to tenant-owned models.
+    </li>
+    <li>
+      <code>TenantContext</code> resolves the active school from the session
+      (<code>current_school_id</code>), falling back to the user's default
+      school; super administrators bypass the scope.
+    </li>
+    <li>
+      <code>SetTenantContext</code> middleware establishes the context per
+      request; the <code>/organizations</code> API (list, current, switch, store,
+      clear-context) powers the organization switcher in the UI.
+    </li>
+  </ul>
+  <p>
+    When you add a tenant-owned model, give it a <code>school_id</code> and the
+    global scope — never filter by school manually in controllers.
+  </p>
+
+  <h2>Data planes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Plane</th>
+        <th>Store</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Relational data</td>
+        <td>PostgreSQL</td>
+        <td>Single source of truth; SQLite supported for dev/tests</td>
+      </tr>
+      <tr>
+        <td>Cache / sessions / queues</td>
+        <td>Redis</td>
+        <td>Separate <code>redis</code> and <code>redis-pdf</code> queue connections (see Queues &amp; PDF)</td>
+      </tr>
+      <tr>
+        <td>Files</td>
+        <td>S3-compatible storage</td>
+        <td>spatie/laravel-medialibrary; <strong>required</strong> in production</td>
+      </tr>
+      <tr>
+        <td>Search</td>
+        <td>Scout, <code>database</code> driver by default</td>
+        <td>Meilisearch optional</td>
+      </tr>
+      <tr>
+        <td>Settings</td>
+        <td>Database via spatie/laravel-settings</td>
+        <td><code>GeneralSetting</code> holds institution-wide configuration</td>
+      </tr>
+      <tr>
+        <td>Feature flags</td>
+        <td>Database via Laravel Pennant</td>
+        <td>See Modules &amp; feature flags</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Where things live in the repo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Path</th>
+        <th>Contents</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>app/</code></td>
+        <td>Services, models, middleware, jobs, policies, Filament panel, enrollment engine (<code>app/Enrollment/</code>)</td>
+      </tr>
+      <tr>
+        <td><code>Modules/</code></td>
+        <td>Six optional domain modules (Laravel Modules)</td>
+      </tr>
+      <tr>
+        <td><code>routes/</code></td>
+        <td>Web route files split per audience, <code>api.php</code>, <code>channels.php</code></td>
+      </tr>
+      <tr>
+        <td><code>resources/js/</code></td>
+        <td>Inertia React pages and components (~184 pages)</td>
+      </tr>
+      <tr>
+        <td><code>database/</code></td>
+        <td>Migrations, factories, seeders</td>
+      </tr>
+      <tr>
+        <td><code>docker/</code></td>
+        <td>Production image, supervisord variants, runtime scripts</td>
+      </tr>
+      <tr>
+        <td><code>docs/</code></td>
+        <td>The documentation site</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Reading guide for the rest of this section</h2>
+  <ol>
+    <li><a href="/docs/system/auth-authorization">Auth, roles &amp; permissions</a> — who can do what, and how sign-in is hardened.</li>
+    <li><a href="/docs/system/modules-flags">Modules &amp; feature flags</a> — how optional functionality is composed and toggled.</li>
+    <li><a href="/docs/system/enrollment-engine">The enrollment engine</a> — the deepest subsystem: pipeline, policies, blueprints.</li>
+    <li><a href="/docs/system/queues-pdf">Queues, jobs &amp; PDF</a> — background work and document generation.</li>
+    <li><a href="/docs/system/frontend">Frontend architecture</a> — Inertia, React, Wayfinder, and the design system.</li>
+    <li><a href="/dev/enrollment-policy-extensions">Extending the enrollment engine</a> — contracts for custom rules and actions.</li>
+  </ol>
+</DocsLayout>

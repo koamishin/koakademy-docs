@@ -1,0 +1,114 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Simulation, publication, activation, rollback, and backup"
+  path="/docs/enrollment-policies/simulation-publication"
+  description="Test resolved student journeys and safely manage immutable policy versions and rollout state."
+>
+  <p>
+    The last stage separates four different operations so an administrator
+    always knows what changes live behavior.
+  </p>
+
+  <h2>Simulation</h2>
+  <p>
+    Choose an existing enrollment ID or describe a representative sample
+    student. The server resolves every matching policy layer while substituting
+    the current saved draft at its scope.
+  </p>
+  <p>The visual journey reports:</p>
+  <ul>
+    <li>Matched blueprint names, scopes, and versions</li>
+    <li>Source provenance</li>
+    <li>Checks that passed</li>
+    <li>Blockers with <strong>Review setting</strong> links</li>
+    <li>Selected subject and class strategy</li>
+    <li>Fee estimate and payment gate</li>
+    <li>Expected approval route</li>
+    <li>Notifications</li>
+    <li>A deterministic checksum</li>
+  </ul>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      Simulation performs no writes. The same deterministic publication
+      candidate is used for simulation and publishing, including generated
+      workflow permission names. If the saved draft changes, run simulation
+      again.
+    </p>
+  </div>
+
+  <h2>Publication readiness</h2>
+  <p>The publish action requires:</p>
+  <ul>
+    <li>All draft changes saved</li>
+    <li>Full validation completed</li>
+    <li>A successful representative simulation with no blockers</li>
+    <li>A meaningful change note</li>
+    <li>The exact simulated checksum</li>
+  </ul>
+  <p>
+    A published version is <strong>immutable</strong>. Editing a published policy
+    creates a new draft.
+  </p>
+
+  <h2>Activation</h2>
+  <p>Activation controls which runtime <strong>future enrollments</strong> receive:</p>
+  <ul>
+    <li>Flag off: new enrollments remain legacy.</li>
+    <li>Flag on: new enrollments use the active compiled policy.</li>
+    <li>Existing policy enrollments continue through their pinned snapshot even after deactivation.</li>
+  </ul>
+  <p>
+    Activation requires an active published global blueprint, a successful
+    compatibility report, full validation, and representative simulation.
+  </p>
+
+  <h2>Rollback</h2>
+  <p>
+    Rollback selects an older immutable published version for future matching
+    enrollments. It does not rewrite the current version, snapshots, statuses,
+    events, or existing enrollments.
+  </p>
+
+  <h2>Backup export</h2>
+  <p>
+    Use <strong>Download backup</strong> to export schema-versioned
+    configuration. The file contains stable handler keys and data only — never
+    PHP class names, scripts, closures, or arbitrary formulas.
+  </p>
+
+  <h2>Backup import</h2>
+  <p>Import is under Advanced:</p>
+  <ol>
+    <li>Choose a trusted KoAkademy JSON backup.</li>
+    <li>Review the human-readable count of checks, documents, and workflow steps.</li>
+    <li>Import it as a new draft.</li>
+    <li>Review every guided section.</li>
+    <li>Save, simulate, and publish normally.</li>
+  </ol>
+  <p>
+    Unknown handlers, unsupported schema versions, executable classes, scripts,
+    code fields, arbitrary URLs, and unapproved option sources are rejected.
+  </p>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Backups are not a bypass</p>
+    <p>
+      An imported file never activates itself and never bypasses validation.
+      Extensions without visual metadata remain read-only but executable only
+      when their stable keys are registered.
+    </p>
+  </div>
+
+  <h2>Recommended simulation set</h2>
+  <ul>
+    <li>A typical passing student</li>
+    <li>A student blocked by one academic requirement</li>
+    <li>A student with an outstanding balance</li>
+    <li>A student at class capacity</li>
+    <li>A student matching the most specific combined scope</li>
+    <li>Each public, administrator, continuing, and API channel the school supports</li>
+  </ul>
+</DocsLayout>

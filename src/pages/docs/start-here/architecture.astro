@@ -1,0 +1,149 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Architecture"
+  path="/docs/start-here/architecture"
+  description="Runtime services, application boundaries, and data flows."
+>
+  <p>
+    KoAkademy is a <strong>modular Laravel monolith</strong>. The production
+    application is one deployable image with background workers and a scheduler
+    managed alongside the HTTP server.
+  </p>
+
+  <h2>Runtime view</h2>
+  <pre><code>Browser
+  -&gt; operator-managed HTTPS edge
+  -&gt; Swarm manager host port 8000
+  -&gt; KoAkademy (Laravel + FrankenPHP + workers + scheduler)
+       -&gt; PostgreSQL (source of record)
+       -&gt; Redis (cache, sessions, queues)
+       -&gt; Gotenberg (PDF rendering)
+       -&gt; local RustFS + persistent volume
+          or external S3-compatible storage (uploads)
+       -&gt; optional operator-configured mail and observability providers</code></pre>
+  <p>
+    The default installer creates manager-pinned Docker Swarm services on a
+    private overlay. PostgreSQL, Redis, Gotenberg, and the RustFS console are
+    <strong>not published</strong>; only KoAkademy and, when selected, the
+    RustFS S3 API receive host ports. Pinning keeps local volumes attached to
+    one node, so this is not a multi-node high-availability design.
+  </p>
+  <p>
+    The manual <code>compose.production.yaml</code> topology binds KoAkademy to
+    <code>127.0.0.1:8000</code> and uses external S3-compatible storage. In both
+    topologies the HTTPS edge remains operator-managed, so Caddy, Nginx,
+    Traefik, or an existing tunnel or certificate platform can be used.
+  </p>
+
+  <h2>Application layers</h2>
+  <ul>
+    <li>
+      <strong>HTTP and UI</strong> — Laravel routes and middleware, Filament
+      administration, and Inertia React portal pages.
+    </li>
+    <li>
+      <strong>Application workflows</strong> — services, actions, jobs,
+      policies, and settings objects coordinate use cases.
+    </li>
+    <li>
+      <strong>Domain/data</strong> — Eloquent models, enums, relationships,
+      validation, and database constraints.
+    </li>
+    <li>
+      <strong>Infrastructure adapters</strong> — filesystems, mail, queues,
+      broadcasting, search, PDF rendering, and integrations.
+    </li>
+    <li>
+      <strong>Optional modules</strong> — packages under <code>Modules/</code>
+      extend the monolith while sharing its authentication, database, and
+      deployment lifecycle.
+    </li>
+  </ul>
+  <p>
+    Dependencies should point inward: HTTP handlers translate requests into
+    application workflows; reusable domain work should not depend on a
+    controller or React page. Infrastructure details belong behind Laravel
+    contracts or focused services where feasible.
+  </p>
+
+  <h2>Request and tenancy context</h2>
+  <p>
+    Web requests pass through setup enforcement, Inertia handling, online
+    tracking, and tenant-context middleware. Host-header validation accepts
+    exact hosts derived from <code>APP_URL</code>, <code>PORTAL_HOST</code>,
+    <code>ADMIN_HOST</code>, and optional <code>TRUSTED_HOSTS</code>. Forwarded
+    headers are interpreted only according to <code>TRUSTED_PROXIES</code>.
+  </p>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Tenancy is not compliance isolation</p>
+    <p>
+      KoAkademy contains organization and school context, but operators should
+      not infer a compliance-grade isolation guarantee. Review authorization,
+      storage paths, exports, and integrations for the intended deployment and
+      data-governance model.
+    </p>
+  </div>
+
+  <h2>Authentication and authorization</h2>
+  <p>
+    Browser authentication uses Laravel's web guard. API authentication uses
+    Sanctum where routes declare <code>auth:sanctum</code>. Application roles,
+    policies, middleware, and Filament Shield permissions constrain actions.
+    Route authentication alone is not a substitute for object-level
+    authorization.
+  </p>
+  <p>
+    The initial super administrator and institution are created only through
+    <code>/setup</code>. Subsequent identity lifecycle and role assignment occur
+    through the running application.
+  </p>
+
+  <h2>Data and state</h2>
+  <ul>
+    <li>PostgreSQL is the durable relational source of record in the production image.</li>
+    <li>S3-compatible storage is the durable upload store. Local RustFS is convenient but only as durable as its single host and backups.</li>
+    <li>Redis contains disposable operational state and queued work; it is not the backup source of truth.</li>
+    <li>Container-local <code>storage/</code> holds runtime files and temporary artifacts, not supported durable uploads.</li>
+  </ul>
+  <p>
+    Schema changes use versioned Laravel migrations. Production startup does not
+    automatically migrate; install and upgrade workflows run migrations
+    explicitly.
+  </p>
+
+  <h2>Asynchronous work</h2>
+  <p>
+    Exports, notifications, PDFs, and other expensive operations should use
+    queues. Redis backs queues and Station manages worker processes in the
+    production image. Jobs must be retry-safe where possible and should not
+    expose sensitive payloads in logs or failure UIs.
+  </p>
+
+  <h2>PDF boundary</h2>
+  <p>
+    The application depends on <code>spatie/laravel-pdf</code>; the supported
+    renderer is the private Gotenberg service. <strong>No DOMPDF fallback is
+    installed</strong>, which makes renderer failure visible instead of silently
+    changing document fidelity or capabilities.
+  </p>
+
+  <h2>Documentation architecture</h2>
+  <p>
+    Technical/project docs are authored once at the repository root and
+    generated into marked MDX mirrors. Astro and the in-app reader consume the
+    same mirrors. Operator guides, enrollment blueprints, and the deliberately
+    small tested API contract stay native to Astro content.
+  </p>
+
+  <h2>Extension guidance</h2>
+  <p>
+    Prefer core services and existing module boundaries over new cross-module
+    coupling. A module should declare KoAkademy/AGPL metadata, own its
+    migrations and tests, and avoid assuming its optional feature is always
+    enabled. New external services require configuration, failure behavior,
+    data-flow documentation, and a deployment decision.
+  </p>
+</DocsLayout>

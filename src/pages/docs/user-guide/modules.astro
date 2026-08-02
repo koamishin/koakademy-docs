@@ -1,0 +1,97 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Optional modules"
+  path="/docs/user-guide/modules"
+  description="The six optional KoAkademy modules — Announcements, Cashier, Inventory, Library, Notification Center, and Student Medical Records — and how they are enabled."
+>
+  <p>
+    KoAkademy ships six modules that extend the platform for institutions that
+    need them. Modules are enabled or disabled per installation by your system
+    administrator; some areas additionally depend on feature toggles in General
+    Settings. If your school does not use a module, its pages and menus are
+    hidden entirely.
+  </p>
+
+  <h2>Announcements</h2>
+  <p>School-wide announcements targeted at staff, faculty, or students.</p>
+  <ul>
+    <li>Administrators create, schedule, and publish announcements from the administration panel.</li>
+    <li>
+      Active announcements appear as a <strong>banner</strong> in the
+      administration panel and on the <strong>student portal</strong> dashboard
+      and announcements page.
+    </li>
+  </ul>
+
+  <h2>Cashier</h2>
+  <p>
+    A dedicated workspace for cashier staff, separate from the full finance
+    administration area.
+  </p>
+  <ul>
+    <li>
+      <strong>Student lookup</strong> with Current Balance, History, and
+      Transactions tabs.
+    </li>
+    <li><strong>Payment posting</strong> against outstanding assessments.</li>
+    <li>Works together with statements of account and the enrollment payment-verification step.</li>
+  </ul>
+
+  <h2>Inventory</h2>
+  <p>Property and equipment management for the school.</p>
+  <ul>
+    <li>Catalog of <strong>products</strong>, <strong>categories</strong>, and <strong>suppliers</strong>.</li>
+    <li><strong>Stock movements</strong> and amendments with a full inventory ledger.</li>
+    <li><strong>Borrowings</strong> — track equipment lent to staff or students and its return status.</li>
+  </ul>
+
+  <h2>Library System</h2>
+  <p>Library operations for school librarians.</p>
+  <ul>
+    <li><strong>Books</strong>, <strong>authors</strong>, and <strong>categories</strong> catalog management.</li>
+    <li><strong>Borrow records</strong> — check books in and out and track overdue items.</li>
+    <li><strong>Research papers</strong> repository for the institution's archive.</li>
+  </ul>
+
+  <h2>Notification Center</h2>
+  <p>Template-based messaging to keep the school community informed.</p>
+  <ul>
+    <li>
+      Prebuilt <strong>templates</strong> for common situations: enrollment
+      updates, grade releases, payment notices, class suspensions, holidays,
+      school events, reminders, warnings, and official announcements.
+    </li>
+    <li><strong>Bulk sending</strong> to selected audiences, processed in the background.</li>
+    <li>Delivered to the recipient's portal Notification Center and by e-mail where configured.</li>
+  </ul>
+
+  <h2>Student Medical Records</h2>
+  <p>Clinic visit records managed by authorized medical staff.</p>
+  <ul>
+    <li>Visit records with type, status, and priority, plus <strong>follow-up scheduling</strong>.</li>
+    <li><strong>Confidentiality flags</strong> restrict sensitive records to authorized personnel.</li>
+    <li>A dashboard widget summarizes clinic activity.</li>
+  </ul>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Privacy</p>
+    <p>
+      Medical records contain sensitive personal data. Access is limited by role
+      and confidentiality flags — do not grant the medical records permissions
+      to general administrative accounts.
+    </p>
+  </div>
+
+  <h2>Enabling or disabling a module</h2>
+  <p>
+    Module availability is an <strong>operator decision</strong> made at
+    deployment time (module management) and, for some areas, through institution
+    switches in <strong>General Settings</strong> — for example the inventory and
+    library modules, the student portal, online enrollment, clearances,
+    signature capture, and QR codes. Changes take effect without a redeploy for
+    settings-based switches; fully removing a module requires an application
+    administrator.
+  </p>
+</DocsLayout>

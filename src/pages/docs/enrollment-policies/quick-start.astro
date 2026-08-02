@@ -1,0 +1,140 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Quick start — preset to activation"
+  path="/docs/enrollment-policies/quick-start"
+  description="Publish and safely activate a first Enrollment Blueprint using the seven-stage guided checklist."
+>
+  <p>
+    Use this guide when configuring Enrollment Policies for the first time on a
+    new or existing installation.
+  </p>
+
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Deployed schools stay on legacy</p>
+    <p>
+      Creating, editing, simulating, or publishing a blueprint does not switch
+      the live enrollment runtime. Activation is an explicit final decision and
+      affects future enrollments only.
+    </p>
+  </div>
+
+  <h2>Before you begin</h2>
+  <p>
+    Confirm that you can manage System Management settings and that the school,
+    programs, roles, payment methods, and academic periods already exist. Choose
+    at least one representative student or realistic sample profile for
+    simulation.
+  </p>
+
+  <h2>Create the global blueprint</h2>
+  <ol>
+    <li>Open <strong>System Management → Enrollment Blueprint</strong>.</li>
+    <li>Select <strong>New blueprint</strong>.</li>
+    <li>Enter a descriptive name such as <code>School-wide enrollment foundation</code>.</li>
+    <li>
+      Choose a preset:
+      <ul>
+        <li><strong>Current legacy process</strong> — safest when migrating an established school.</li>
+        <li><strong>Registrar and cashier approval</strong> — a common two-approval starting point.</li>
+        <li><strong>Manual enrollment</strong> — keeps assignment decisions with staff.</li>
+        <li><strong>Automatic curriculum assignment</strong> — recommends or assigns curriculum subjects.</li>
+        <li><strong>No-payment enrollment</strong> — removes the minimum-payment gate.</li>
+      </ul>
+    </li>
+    <li>Leave all scope fields blank. The coverage preview should say this is the global blueprint.</li>
+    <li>Select <strong>Create guided draft</strong>.</li>
+  </ol>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      The global blueprint becomes the stable foundation for every scoped
+      blueprint. A scoped policy cannot inherit until a global version is
+      published.
+    </p>
+  </div>
+
+  <h2>Complete the seven stages</h2>
+
+  <h3>1. Template and scope</h3>
+  <p>
+    Confirm the coverage sentence and review inherited layers. A global blueprint
+    has no ancestor. Downloading a backup is optional at this stage.
+  </p>
+
+  <h3>2. Availability and eligibility</h3>
+  <p>Start with conservative defaults:</p>
+  <ul>
+    <li>Allow only enrollment channels the school actively supports.</li>
+    <li>Set an opening and closing date if the period is time-limited.</li>
+    <li>Keep duplicate-enrollment protection enabled.</li>
+    <li>Select allowed schools, programs, student types, periods, and year levels only when restriction is intended.</li>
+    <li>Add balance, prerequisite, clearance, capacity, or schedule checks that the school can reliably supply.</li>
+  </ul>
+
+  <h3>3. Required documents</h3>
+  <p>
+    Use student-facing names and instructions. For example:
+    <strong>Form 138</strong> with "Upload a clear PDF of every page; the
+    registrar will request the original later." Mark an item required only if
+    its absence should block progress.
+  </p>
+
+  <h3>4. Subjects and classes</h3>
+  <p>
+    Choose manual assignment for the safest first rollout. Use automatic
+    curriculum or first-available class assignment only after the curriculum and
+    class capacities are accurate.
+  </p>
+
+  <h3>5. Tuition and payment</h3>
+  <p>
+    Confirm the course-rate strategy, discounts, additional fees, accepted
+    payment methods, and minimum-payment rule. Use <strong>No minimum</strong> if
+    payment should not block completion.
+  </p>
+
+  <h3>6. Approvals and notifications</h3>
+  <p>Review every workflow card from top to bottom:</p>
+  <ul>
+    <li>Give each step a plain staff-facing name.</li>
+    <li>Select responsible roles.</li>
+    <li>Select only the actions that should occur on approval.</li>
+    <li>Make exactly one step the final completed outcome.</li>
+    <li>Keep the protected <strong>Otherwise</strong> destination pointing forward.</li>
+    <li>Add messages only where students or staff need an update.</li>
+  </ul>
+
+  <h3>7. Test, publish, and activate</h3>
+  <p>
+    Save the draft, describe a representative student, and run the journey. Fix
+    every blocker using its <strong>Review setting</strong> link. Add a change
+    note and publish only when the readiness checklist is complete.
+  </p>
+
+  <h2>Activate safely</h2>
+  <p>After the global policy is published and the compatibility report says <strong>Ready to activate</strong>:</p>
+  <ol>
+    <li>Run one final representative simulation against the active global version.</li>
+    <li>Select <strong>Activate for future enrollments</strong>.</li>
+    <li>Read the impact dialog carefully.</li>
+    <li>Confirm activation.</li>
+    <li>Create a test enrollment through each supported entry path and verify the pinned workflow object.</li>
+  </ol>
+  <div class="doc-callout doc-callout-tip">
+    <p class="doc-callout-label">Recommended rollout</p>
+    <p>
+      Start with a policy that mirrors the current legacy process. After a
+      stable rollout, publish focused improvements one version at a time.
+    </p>
+  </div>
+
+  <h2>Next steps</h2>
+  <ul>
+    <li><a href="/docs/enrollment-policies/scopes-inheritance">Create scoped overrides</a></li>
+    <li><a href="/docs/enrollment-policies/simulation-publication">Understand the simulation report</a></li>
+    <li><a href="/docs/enrollment-policies/troubleshooting-deployment">Use the deployment-safety checklist</a></li>
+  </ul>
+</DocsLayout>

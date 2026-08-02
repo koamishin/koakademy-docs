@@ -1,0 +1,159 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="The enrollment engine"
+  path="/docs/system/enrollment-engine"
+  description="The operational enrollment pipeline and the blueprint policy engine — compiler, inheritance, snapshots, rollout, and transitions."
+>
+  <p>
+    Enrollment is KoAkademy's deepest subsystem. It has two cooperating layers:
+    an <strong>operational pipeline</strong> that moves individual enrollments
+    through verification, and a <strong>policy engine</strong> ("Enrollment
+    Blueprints") that decides the rules — who may enroll, what they must provide,
+    what they pay, and who approves.
+  </p>
+
+  <h2>The operational pipeline</h2>
+  <p>
+    <code>EnrollmentService</code> is the application façade. Every workflow
+    mutation passes through <code>EnrollmentWorkflowCoordinator</code>, while
+    <code>EnrollmentTransitionEngine</code> owns row locking, transactions,
+    status and outcome projection, idempotency, and workflow events. A separate
+    legacy adapter preserves enrollments created before policy activation.
+  </p>
+  <ol>
+    <li>
+      <strong>Application</strong> — created by staff or through public online
+      enrollment (when enabled).
+    </li>
+    <li>
+      <strong>Academic verification</strong> — registrar or department head
+      verifies subjects, documents, and the computed assessment.
+    </li>
+    <li>
+      <strong>Cashier verification</strong> — payment is confirmed or recorded;
+      the enrollment becomes official.
+    </li>
+    <li>
+      <strong>Post-enrollment</strong> — authorized transitions: undo, reopen,
+      schedule-change notifications, class enrollment adjustments.
+    </li>
+  </ol>
+  <p>
+    For policy enrollments, configured actions run in their listed order:
+    entry-step actions during creation and target-step actions during
+    transitions. An omitted action has no side effect. Every status change goes
+    through the <strong>transition engine</strong> rather than direct edits, so
+    the history of an enrollment is reconstructable. Assessment PDFs and
+    notifications are queued only after the transaction commits (see
+    <a href="/docs/system/queues-pdf">Queues &amp; PDF</a>).
+  </p>
+
+  <h2>The policy engine (blueprints)</h2>
+  <p>
+    The engine lives in <code>app/Enrollment/</code> and is configured from the
+    admin workspace (React UI under System Management → Enrollment Policy):
+    blueprint shell, rule editor, workflow editor, and simulation reports.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>PolicyRegistry</code> / <code>PolicyManager</code></td>
+        <td>Known policy types, presets, and CRUD over blueprints</td>
+      </tr>
+      <tr>
+        <td><code>PolicyResolver</code> / <code>PolicyInheritanceService</code></td>
+        <td>Scope matching and inherit-and-override resolution (school → student type → program → period)</td>
+      </tr>
+      <tr>
+        <td><code>EnrollmentPolicyCompiler</code></td>
+        <td>Compiles a published blueprint version into the executable policy the pipeline consults</td>
+      </tr>
+      <tr>
+        <td><code>PolicySimulationService</code></td>
+        <td>Dry-runs representative students against a draft, reporting blockers before publication</td>
+      </tr>
+      <tr>
+        <td><code>PolicyRolloutService</code></td>
+        <td>Staged activation and rollback of published versions</td>
+      </tr>
+      <tr>
+        <td><code>EnrollmentTransitionEngine</code> / <code>EnrollmentWorkflowCoordinator</code></td>
+        <td>Approval timelines, branches, and post-commit actions</td>
+      </tr>
+      <tr>
+        <td>Strategies &amp; handlers</td>
+        <td>Assignment/billing strategies and integration action handlers (extension points)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Persistence: <code>EnrollmentPolicy</code> (the blueprint),
+    <code>EnrollmentPolicyVersion</code> (immutable published versions),
+    <code>EnrollmentPolicySnapshot</code> (what a given enrollment started with),
+    and <code>EnrollmentWorkflowEvent</code> (the audit trail).
+  </p>
+  <p>Key invariants:</p>
+  <ul>
+    <li><strong>Publication is immutable.</strong> A published version never changes; edits produce a new version.</li>
+    <li>
+      <strong>Snapshots isolate in-flight enrollments.</strong> Activating a new
+      version affects <em>future</em> enrollments only — active enrollments keep
+      the snapshot they started with, and legacy enrollments stay legacy.
+    </li>
+    <li><strong>Simulation precedes activation.</strong> Operators are expected to resolve every simulated blocker before publishing.</li>
+    <li>
+      <strong>Legacy behavior is isolated.</strong> Policy actions do not call
+      legacy workflow methods, use ambient authentication, or open their own
+      workflow transaction.
+    </li>
+  </ul>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">About the DynamicEnrollmentPolicies flag</p>
+    <p>
+      <code>DynamicEnrollmentPolicies</code> defaults to <code>false</code>.
+      While it is off, new enrollments remain on the legacy runtime. After an
+      administrator explicitly activates it, future enrollments resolve a
+      published blueprint and pin its compiled snapshot. Existing legacy and
+      policy enrollments do not change runtime when the flag changes.
+    </p>
+  </div>
+
+  <h2>For operators vs. for developers</h2>
+  <ul>
+    <li>
+      <strong>Operators</strong> configure blueprints without code — see the
+      Enrollment Blueprints guides in the User Guide section (overview, quick
+      start, scopes and inheritance, approvals, simulation and publication,
+      troubleshooting).
+    </li>
+    <li>
+      <strong>Developers</strong> extend the engine through the documented
+      contracts — rule handlers, action handlers, assignment/billing strategies,
+      registry registration, and import envelopes. See
+      <a href="/dev/enrollment-policy-extensions">Extending the
+      enrollment engine</a>.
+    </li>
+  </ul>
+
+  <h2>Contributing rules of thumb</h2>
+  <ul>
+    <li>Never mutate a published <code>EnrollmentPolicyVersion</code>; create a new version.</li>
+    <li>Route status changes through the transition engine so workflow events stay complete.</li>
+    <li>
+      Route creation through <code>EnrollmentSubmissionData</code> and the
+      coordinator so administrator, public, continuing, API, and Filament
+      submissions resolve policies consistently.
+    </li>
+    <li>New rule/action types must be registered in the registry and covered by compiler and simulation tests.</li>
+    <li>Keep the React blueprint editors in sync with the operator schema manifests the engine exposes.</li>
+  </ul>
+</DocsLayout>

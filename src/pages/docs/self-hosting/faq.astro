@@ -1,0 +1,130 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="FAQ"
+  path="/docs/self-hosting/faq"
+  description="Answers about support, deployment, storage, PDFs, and APIs."
+>
+  <h2>Is KoAkademy production ready?</h2>
+  <p>
+    KoAkademy is a <strong>production-capable beta</strong>. It provides a
+    hardened reference topology, health endpoint, migrations, tests, and
+    operator docs. Each institution remains responsible for staging, capacity
+    planning, backups, monitoring, privacy, security review, and recovery
+    exercises.
+  </p>
+
+  <h2>Which release is supported?</h2>
+  <p>
+    Only the latest stable, non-prerelease release is supported. Development and
+    prerelease images are for evaluation. Read the changelog and release notes
+    before upgrading.
+  </p>
+
+  <h2>What does the one-line installer change?</h2>
+  <p>
+    It validates an existing Linux Docker engine, initializes Swarm only when
+    inactive, and deploys manager-pinned KoAkademy, PostgreSQL, Redis,
+    Gotenberg, and optional RustFS services. If Swarm is already active, the
+    installer preserves it and requires the current node to be a manager. It does
+    not install Docker, configure TLS, leave a Swarm, or remove unrelated
+    services.
+  </p>
+  <p>
+    The Bash and PowerShell commands resolve the tag from the latest published,
+    non-draft, non-prerelease KoAkademy GitHub Release at runtime. Local RustFS
+    resolves the newest stable tag with a published Docker image, or the newest
+    published non-preview beta when no stable tag exists. Resolution fails
+    instead of silently using a mutable <code>latest</code> image.
+  </p>
+
+  <h2>Can I use MySQL or SQLite in production?</h2>
+  <p>
+    The prebuilt production image supports <strong>PostgreSQL only</strong>.
+    SQLite remains the default lightweight option for native development and
+    automated tests. Other databases are not part of the supported production
+    contract.
+  </p>
+
+  <h2>Which ports are exposed?</h2>
+  <p>
+    The default Swarm installer publishes KoAkademy on manager host port
+    <code>8000</code>. Local RustFS also publishes its S3 API on <code>9000</code>;
+    its console remains private. Restrict those ports with a firewall and
+    forward HTTPS traffic from an operator-managed edge.
+  </p>
+  <p>
+    The manual Compose topology publishes only <code>127.0.0.1:8000</code>.
+    PostgreSQL, Redis, and Gotenberg are private in both topologies.
+  </p>
+
+  <h2>Can portal and admin use separate subdomains?</h2>
+  <p>
+    Yes, as an advanced option. The supported default uses one hostname with
+    <code>/admin</code>. For split hosts, configure <code>APP_URL</code>,
+    <code>PORTAL_HOST</code>, <code>ADMIN_HOST</code>, certificates, proxy
+    routes, cookie scope, and cross-host behavior together.
+  </p>
+
+  <h2>How do I create the first administrator?</h2>
+  <p>
+    Run migrations, start the app, then open <code>/setup</code>. The one-time
+    wizard creates the institution and first super administrator. It becomes
+    forbidden after setup. Do not use <code>make:filament-user</code> for initial
+    installation.
+  </p>
+
+  <h2>Does KoAkademy run migrations automatically?</h2>
+  <p>
+    Not in the supported production flow. <code>RUN_MIGRATIONS=false</code> is
+    the default. Operators run <code>php artisan migrate --force</code>
+    explicitly during installation and upgrades after taking a backup and
+    reviewing release notes.
+  </p>
+
+  <h2>Which PDF library and renderer are used?</h2>
+  <p>
+    KoAkademy uses <code>spatie/laravel-pdf</code> with Gotenberg. Gotenberg
+    runs as a private production service. DOMPDF is not installed and is not a
+    fallback.
+  </p>
+
+  <h2>Is local storage supported for production uploads?</h2>
+  <p>
+    Container-local application storage is not a durable upload store. The
+    installer can deploy local RustFS, which provides S3-compatible object
+    storage on a persistent Docker volume, for evaluation or a backed-up
+    single-node installation. Use redundant external S3-compatible storage when
+    the upload data must survive a host failure.
+  </p>
+
+  <h2>Are all routes under <code>/api</code> public API contracts?</h2>
+  <p>
+    No. The documented beta contract intentionally includes only public settings,
+    authenticated settings, and authenticated student verification. Other
+    internal routes may change without public compatibility guarantees.
+  </p>
+
+  <h2>How should vulnerabilities be reported?</h2>
+  <p>
+    Use a private GitHub Security Advisory as described in
+    <a href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md" target="_blank" rel="noreferrer">SECURITY.md</a>.
+    Do not include exploit details or sensitive institutional data in a public
+    issue.
+  </p>
+
+  <h2>Is hosted support or an SLA included?</h2>
+  <p>
+    No support SLA, compliance certification, uptime guarantee, or compatibility
+    guarantee is offered. Community issues and pull requests are handled as
+    maintainer capacity allows.
+  </p>
+
+  <h2>Why is there no Code of Conduct?</h2>
+  <p>
+    The maintainers have not adopted one yet. Choosing and enforcing a Code of
+    Conduct is explicitly deferred as a maintainer governance decision.
+  </p>
+</DocsLayout>

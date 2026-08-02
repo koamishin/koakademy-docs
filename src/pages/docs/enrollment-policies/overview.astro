@@ -1,0 +1,155 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Enrollment policies — overview"
+  path="/docs/enrollment-policies/overview"
+  description="Understand Enrollment Blueprints, rollout safety, versions, snapshots, and the guided operator workspace."
+>
+  <p>
+    Enrollment Blueprints let a school administrator configure the full
+    enrollment journey <strong>without editing code or JSON</strong>. A blueprint
+    answers seven practical questions:
+  </p>
+  <ol>
+    <li>Who does this apply to?</li>
+    <li>When can students start, and who is eligible?</li>
+    <li>Which documents are needed?</li>
+    <li>How are subjects and classes selected?</li>
+    <li>How are tuition and payment requirements calculated?</li>
+    <li>Who approves each step, and which messages are sent?</li>
+    <li>Has the finished journey been tested, published, and activated safely?</li>
+  </ol>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      The workspace turns administrator choices into a validated, versioned
+      policy. New enrollments receive an immutable snapshot of the resolved
+      policy, so later edits cannot silently change an active enrollment.
+    </p>
+  </div>
+
+  <h2>Who the workspace is for</h2>
+  <ul>
+    <li>
+      <strong>Guided for first-time setup</strong> — follow seven stages in
+      order, with a progress rail, examples, recommendations, and contextual
+      help.
+    </li>
+    <li>
+      <strong>Fast for returning administrators</strong> — jump directly to any
+      stage, override inherited values, test, and publish a focused change.
+    </li>
+    <li>
+      <strong>Safe for deployed schools</strong> — legacy enrollment remains
+      active until an authorized administrator explicitly activates the engine.
+    </li>
+    <li>
+      <strong>Extensible for open source</strong> — community handlers use stable
+      keys and optional operator metadata. Executable class names are never
+      stored in policy files.
+    </li>
+  </ul>
+
+  <h2>The safety model</h2>
+  <ol>
+    <li>
+      <strong>Draft</strong> — edit freely. Drafts never affect live
+      enrollments.
+    </li>
+    <li>
+      <strong>Simulate</strong> — test a representative student against every
+      matching policy layer. Simulation performs no writes.
+    </li>
+    <li>
+      <strong>Publish</strong> — make an immutable version available for future
+      matching enrollments.
+    </li>
+    <li>
+      <strong>Activate</strong> — opt future enrollments into the policy engine.
+      This is separate from publication.
+    </li>
+    <li>
+      <strong>Pin</strong> — each new policy enrollment stores its compiled
+      snapshot and continues with it permanently.
+    </li>
+  </ol>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Future versus existing enrollments</p>
+    <p>
+      Publishing, activation, deactivation, and rollback affect
+      <strong>future enrollments only</strong>. Existing legacy enrollments stay
+      legacy. Existing policy enrollments keep their original snapshot even if
+      the rollout flag is later disabled.
+    </p>
+  </div>
+
+  <h2>Glossary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Term</th>
+        <th>Plain-language meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Blueprint / policy</td>
+        <td>A named set of enrollment rules for a defined group of students.</td>
+      </tr>
+      <tr>
+        <td>Scope</td>
+        <td>The school, student type, program, school year, or semester the blueprint covers. Blank scope means global.</td>
+      </tr>
+      <tr>
+        <td>Inheritance</td>
+        <td>Reusing settings from a broader published blueprint.</td>
+      </tr>
+      <tr>
+        <td>Override</td>
+        <td>A deliberate local change that replaces an inherited value.</td>
+      </tr>
+      <tr>
+        <td>Draft</td>
+        <td>The editable working version.</td>
+      </tr>
+      <tr>
+        <td>Published version</td>
+        <td>A permanent, validated version that can be selected for future enrollments.</td>
+      </tr>
+      <tr>
+        <td>Snapshot</td>
+        <td>The complete compiled policy pinned to one enrollment.</td>
+      </tr>
+      <tr>
+        <td>Simulation</td>
+        <td>A no-write preview of eligibility, assignment, fees, workflow, messages, and blockers.</td>
+      </tr>
+      <tr>
+        <td>Legacy runtime</td>
+        <td>The previously deployed enrollment logic and settings.</td>
+      </tr>
+      <tr>
+        <td>Policy runtime</td>
+        <td>The versioned enrollment engine used after explicit activation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Common school scenarios</h2>
+  <ul>
+    <li>A small school can publish one global blueprint and configure everything in one place.</li>
+    <li>A multi-school installation can inherit a global blueprint and override only the school-specific documents or approval roles.</li>
+    <li>College and TESDA can share a billing strategy while using different availability, programs, or workflow steps.</li>
+    <li>A program can enforce prerequisites or unit limits without duplicating unrelated school-wide rules.</li>
+  </ul>
+
+  <h2>Where to go next</h2>
+  <ul>
+    <li><a href="/docs/enrollment-policies/quick-start">Quick start: preset to activation</a></li>
+    <li><a href="/docs/enrollment-policies/scopes-inheritance">Scopes, inheritance, and overrides</a></li>
+    <li><a href="/docs/enrollment-policies/simulation-publication">Simulation, publication, activation, rollback, and backup</a></li>
+    <li><a href="/dev/enrollment-policy-extensions">Maintainer extension reference</a></li>
+  </ul>
+</DocsLayout>

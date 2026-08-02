@@ -1,0 +1,139 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Admin portal"
+  path="/docs/user-guide/admin-portal"
+  description="Daily work in the KoAkademy administration panel and admin workspace — records, enrollment, finance, and system management."
+>
+  <p>
+    Administrative staff work in two connected areas: the
+    <strong>administration panel</strong> at <code>/admin</code> (records,
+    resources, and settings) and the <strong>admin workspace</strong> (guided
+    operational screens such as enrollment processing and finance). What you see
+    depends on your role and permissions.
+  </p>
+
+  <h2>Sign-in and security</h2>
+  <ul>
+    <li>
+      Sign in with your staff account. Administrators can require
+      <strong>two-factor authentication</strong> (authenticator app or e-mail
+      code) and <strong>passkeys</strong>.
+    </li>
+    <li>
+      Use the <strong>school-year and semester selector</strong> in the panel
+      header before entering data, so records land in the correct academic
+      period.
+    </li>
+    <li>
+      Press <span class="doc-kbd">Ctrl</span>+<span class="doc-kbd">L</span>
+      (Windows/Linux) or <span class="doc-kbd">⌘</span>+<span class="doc-kbd">L</span>
+      (macOS) for global search across students, classes, and other records.
+    </li>
+  </ul>
+
+  <h2>Dashboard</h2>
+  <p>
+    The panel dashboard summarizes operations with widgets: enrollment,
+    retention, and attrition statistics, demographics, scholarship distribution,
+    clearance status, geographic distribution, recent enrollments and students,
+    resource availability, and upcoming events. Widgets respect the selected
+    academic period and your permissions.
+  </p>
+
+  <h2>Records and resources</h2>
+  <p>The sidebar groups the core resources:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Typical work</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Students</td>
+        <td>Student profiles, documents, signature capture, enrollment checklists, clearances</td>
+      </tr>
+      <tr>
+        <td>Student Enrollments</td>
+        <td>Enrollment records, statuses, and history</td>
+      </tr>
+      <tr>
+        <td>Faculties and Accounts</td>
+        <td>Teaching staff and user accounts</td>
+      </tr>
+      <tr>
+        <td>Courses and Departments</td>
+        <td>Programs, curriculum structure, and departments</td>
+      </tr>
+      <tr>
+        <td>Classes and Rooms</td>
+        <td>Sections, schedules, capacity, and room assignment</td>
+      </tr>
+      <tr>
+        <td>Events</td>
+        <td>School calendar events shown on dashboards</td>
+      </tr>
+      <tr>
+        <td>Schools</td>
+        <td>Institutions in a multi-school deployment</td>
+      </tr>
+      <tr>
+        <td>Users and Roles</td>
+        <td>Accounts, role assignment, and permission review</td>
+      </tr>
+      <tr>
+        <td>Senior High School</td>
+        <td>SHS strands and SHS student records (cluster)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Additional panel pages cover <strong>Timetable</strong> management,
+    <strong>Student Clearances</strong>, <strong>Backups</strong>, and
+    <strong>General Settings</strong>.
+  </p>
+
+  <h2>Enrollment processing</h2>
+  <p>The admin workspace provides the operational enrollment flow:</p>
+  <ol>
+    <li><strong>Search and review applicants.</strong> Look up a student and open their application.</li>
+    <li><strong>Verify academically.</strong> The registrar or department head verifies subjects, documents, and assessment.</li>
+    <li><strong>Verify payment.</strong> The cashier confirms or records payment.</li>
+    <li><strong>Complete or reopen.</strong> Finish the enrollment, or use the authorized undo/reopen action with a reason.</li>
+  </ol>
+  <p>
+    Enrollment reports, analytics, and assessment PDFs are available from the
+    same area. Configuration of availability, eligibility, tuition, and approvals
+    is handled by <strong>Enrollment Blueprints</strong> — see the Blueprint
+    guides in the documentation navigation.
+  </p>
+
+  <h2>Finance</h2>
+  <p>
+    The finance area provides dashboards, payment recording, invoices and
+    receipts, and reports. Statements of account can be issued to students and
+    include a signed public verification link. Bulk assessment PDFs are
+    generated in the background; downloads appear when ready.
+  </p>
+
+  <h2>System management</h2>
+  <p>
+    The System Management area centralizes institution configuration: school
+    profile and branding, academic periods, grading rules, student identifier
+    formats, mail delivery, notification templates, analytics, SEO, social
+    sign-in providers, API keys, and the <strong>Feature Toggles</strong> page
+    that switches portal features on or off.
+  </p>
+  <div class="doc-callout doc-callout-tip">
+    <p class="doc-callout-label">Audit trail</p>
+    <p>
+      Administrative changes are recorded under <strong>Audit Logs</strong>.
+      When something looks wrong, check there first before changing a record
+      back.
+    </p>
+  </div>
+</DocsLayout>

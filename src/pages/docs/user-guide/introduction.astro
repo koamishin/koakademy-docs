@@ -1,0 +1,146 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Using KoAkademy"
+  path="/docs/user-guide/introduction"
+  description="A practical starting point for school administrators and staff using KoAkademy day to day."
+>
+  <p>
+    This User Guide is for the people who operate the school: administrators,
+    registrars, department heads, cashiers, and other authorized staff. It
+    explains what to do in KoAkademy and what each setting changes.
+    Installation, server configuration, programming, extensions, and APIs are
+    kept in the separate developer-facing sections.
+  </p>
+
+  <h2>Start with your assigned workspace</h2>
+  <p>
+    After signing in, use the sidebar to open the area related to your
+    responsibility. The exact pages and actions you see depend on your
+    permissions.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>If you are responsible for</th>
+        <th>Start here</th>
+        <th>What you normally do</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>School setup</td>
+        <td>System Management</td>
+        <td>Review school years, semesters, programs, roles, and enrollment availability.</td>
+      </tr>
+      <tr>
+        <td>Student records</td>
+        <td>Students</td>
+        <td>Create or update student information and review academic history.</td>
+      </tr>
+      <tr>
+        <td>Curriculum and classes</td>
+        <td>Curriculum and Classes</td>
+        <td>Prepare subjects, curriculum assignments, sections, schedules, and class capacity.</td>
+      </tr>
+      <tr>
+        <td>Enrollment</td>
+        <td>Enrollments</td>
+        <td>Review applications, resolve blockers, complete approvals, and monitor progress.</td>
+      </tr>
+      <tr>
+        <td>Tuition and payments</td>
+        <td>Finance</td>
+        <td>Review assessments, record payments, and complete payment verification.</td>
+      </tr>
+      <tr>
+        <td>Oversight</td>
+        <td>Dashboards and Reports</td>
+        <td>Monitor enrollment, finance, activity, and operational exceptions.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      KoAkademy shows only the actions your account is allowed to perform. If a
+      page or button is missing, ask an administrator to review your permission
+      instead of sharing another person's account.
+    </p>
+  </div>
+  <p>
+    For a complete map of capabilities and how they are switched on, see
+    <a href="/docs/user-guide/features-overview">Platform Features</a>. Dedicated
+    guides cover the <a href="/docs/user-guide/admin-portal">Admin</a>,
+    <a href="/docs/user-guide/faculty-portal">Faculty</a>, and
+    <a href="/docs/user-guide/student-portal">Student</a> portals and the
+    <a href="/docs/user-guide/modules">optional modules</a>.
+  </p>
+
+  <h2>A safe daily workflow</h2>
+  <ol>
+    <li>
+      <strong>Confirm the active school year and semester.</strong> This prevents
+      records from being added to the wrong academic period.
+    </li>
+    <li>
+      <strong>Check alerts and unfinished work.</strong> Resolve blocked
+      enrollments, incomplete documents, payment issues, or full classes before
+      starting new work.
+    </li>
+    <li>
+      <strong>Use the purpose-built action for the task.</strong> Avoid changing
+      reporting statuses simply to move a record forward.
+    </li>
+    <li>
+      <strong>Read the confirmation message.</strong> KoAkademy explains whether
+      an action was saved, queued, rejected, or needs another step.
+    </li>
+    <li>
+      <strong>Review the result.</strong> Confirm the student, academic period,
+      amount, and next responsible office before leaving the page.
+    </li>
+  </ol>
+
+  <h2>Configure enrollment without code</h2>
+  <p>
+    Enrollment Blueprints control who may enroll, required documents, subject
+    and class assignment, tuition and payment rules, approvals, and
+    notifications.
+  </p>
+  <p>Use this safe sequence whenever you configure enrollment:</p>
+  <ol>
+    <li>Choose a preset and scope.</li>
+    <li>Change only what is different for that school, student type, program, or period.</li>
+    <li>Save the draft.</li>
+    <li>Simulate a representative student and resolve every blocker.</li>
+    <li>Publish the validated version.</li>
+    <li>Activate the policy engine only when the readiness checklist is complete.</li>
+  </ol>
+  <p>
+    Publishing or activating a blueprint affects <strong>future enrollments
+    only</strong>. Existing legacy enrollments remain legacy, and active policy
+    enrollments keep the snapshot they started with. Continue with
+    <a href="/docs/enrollment-policies/quick-start">Enrollment Blueprints → Quick
+    start</a>.
+  </p>
+
+  <h2>Before making an important change</h2>
+  <ul>
+    <li>Confirm that you are working in the correct school and academic period.</li>
+    <li>Read the "What this does" and impact guidance beside the setting.</li>
+    <li>Test configuration changes with simulation before publication.</li>
+    <li>Add clear change notes so another administrator can understand the decision later.</li>
+    <li>Use rollback or reopen only through the authorized action provided by KoAkademy.</li>
+  </ul>
+
+  <h2>Looking for technical setup?</h2>
+  <p>
+    Choose the developer-facing sections for installation, Docker deployment,
+    environment configuration, contribution workflow, and extension development.
+    Choose <a href="/api/api-overview">API Reference</a> for integration
+    endpoints and request formats.
+  </p>
+</DocsLayout>

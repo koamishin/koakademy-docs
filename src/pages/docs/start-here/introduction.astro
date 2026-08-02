@@ -1,0 +1,98 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Introduction"
+  path="/docs/start-here/introduction"
+  description="What KoAkademy is, the stack it runs on, and which path to pick."
+>
+  <h2>What KoAkademy is</h2>
+  <p>
+    KoAkademy is a <strong>self-hosted school administration and learning platform</strong>:
+    a production-capable beta that ships as one deployable container. The
+    repository provides a supported deployment topology and automated
+    validation, while each operator remains responsible for staging, backup,
+    monitoring, privacy, and recovery.
+  </p>
+
+  <h2>The stack at a glance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Technology</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Backend</td>
+        <td>PHP 8.5, Laravel 12, Octane (FrankenPHP)</td>
+      </tr>
+      <tr>
+        <td>Administration</td>
+        <td>Filament 5 with Shield permissions</td>
+      </tr>
+      <tr>
+        <td>Portals</td>
+        <td>Inertia 3, React 19, Tailwind CSS 4, shadcn/ui</td>
+      </tr>
+      <tr>
+        <td>Data</td>
+        <td>PostgreSQL; Redis for cache, sessions, and queues</td>
+      </tr>
+      <tr>
+        <td>Documents</td>
+        <td><code>spatie/laravel-pdf</code> with Gotenberg</td>
+      </tr>
+      <tr>
+        <td>Tests</td>
+        <td>Pest 4 (parallel, SQLite in-memory)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Pick your path</h2>
+  <ul>
+    <li>
+      <strong>New contributor?</strong> Start with
+      <a href="/dev/development-setup">Development setup</a>, read the
+      <a href="/docs/start-here/architecture">Architecture overview</a>, then dive
+      into <strong>System Internals</strong>, beginning with the
+      <a href="/docs/system/architecture-domain">domain model</a>.
+    </li>
+    <li>
+      <strong>Maintainer?</strong> The <strong>Maintainers</strong> section
+      documents the <a href="/docs/maintainers/ci">CI pipeline</a>, the
+      <a href="/docs/maintainers/releases">release and versioning process</a>,
+      <a href="/docs/maintainers/automation">repository automation</a>, and the
+      <a href="/docs/maintainers/documentation">documentation system</a>.
+    </li>
+    <li>
+      <strong>Self-hosting?</strong> Begin with
+      <a href="/docs/self-hosting/installation">Installation</a>, then follow
+      <a href="/docs/self-hosting/deployment">Deployment</a> and
+      <a href="/docs/self-hosting/configuration">Configuration</a>. The supported
+      default is one HTTPS hostname with administration at <code>/admin</code>.
+    </li>
+    <li>
+      <strong>Operating a school?</strong> The
+      <a href="/docs/user-guide/introduction">User Guide</a> covers daily staff
+      workflows, and <a href="/docs/enrollment-policies/overview">Enrollment
+      Blueprints</a> covers no-code enrollment configuration.
+    </li>
+    <li>
+      <strong>Integrating?</strong> Only the tested beta subset is a supported
+      contract: public settings, authenticated settings, and authenticated
+      student verification. See the <a href="/api/api-overview">API overview</a>.
+    </li>
+  </ul>
+
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Supported versions</p>
+    <p>
+      Only the latest stable release is supported. KoAkademy is licensed under
+      <strong>GNU AGPL-3.0-or-later</strong>.
+    </p>
+  </div>
+</DocsLayout>

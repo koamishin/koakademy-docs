@@ -1,0 +1,149 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Documentation system"
+  path="/docs/maintainers/documentation"
+  description="Canonical Markdown, generated MDX mirrors, the validation contract, and how this site is built and deployed."
+>
+  <p>
+    KoAkademy's documentation has a single-source rule: <strong>root Markdown
+    files are canonical</strong> for project and technical docs; the Astro site
+    and the in-app docs viewer consume <strong>generated mirrors</strong>. This
+    page is the maintainer's map of that machinery.
+  </p>
+
+  <h2>The pipeline</h2>
+  <pre><code>Root canonical MD ──▶ scripts/sync-docs.mjs ──▶ MDX mirrors (site + in-app viewer)
+        │                                              ▲
+        └────── scripts/check-docs.mjs (validation) ◀──┘</code></pre>
+  <p>
+    <code>npm run docs:sync</code> maps eight canonical files to site pages:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Canonical source</th>
+        <th>Generated page</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>GETTING_STARTED.md</code></td>
+        <td>Self-Hosting → Installation</td>
+      </tr>
+      <tr>
+        <td><code>DEPLOYMENT.md</code></td>
+        <td>Self-Hosting → Deployment</td>
+      </tr>
+      <tr>
+        <td><code>CONFIGURATION.md</code></td>
+        <td>Self-Hosting → Configuration</td>
+      </tr>
+      <tr>
+        <td><code>TROUBLESHOOTING.md</code></td>
+        <td>Self-Hosting → Troubleshooting</td>
+      </tr>
+      <tr>
+        <td><code>FAQ.md</code></td>
+        <td>Self-Hosting → FAQ</td>
+      </tr>
+      <tr>
+        <td><code>DEVELOPMENT.md</code></td>
+        <td>Start Here → Development</td>
+      </tr>
+      <tr>
+        <td><code>ARCHITECTURE.md</code></td>
+        <td>Start Here → Architecture</td>
+      </tr>
+      <tr>
+        <td><code>CONTRIBUTING.md</code></td>
+        <td>Start Here → Contributing</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    The generator strips the source H1, prepends Starlight frontmatter and a
+    <code>&#123;/* GENERATED FILE… */&#125;</code> warning, and rewrites cross-doc links:
+    mirrored docs become site routes; repo-only docs (<code>README.md</code>,
+    <code>SECURITY.md</code>, <code>CHANGELOG.md</code>,
+    <code>LICENSE.md</code>) become absolute GitHub URLs. <strong>Never edit a
+    generated mirror</strong> — edit the canonical file and re-run the sync.
+    Target directories are created automatically.
+  </p>
+  <p>
+    Everything else on the site — System Internals, Maintainers, the User Guide,
+    Enrollment Blueprints, API docs — is <strong>native MDX</strong>, edited in
+    place under <code>docs/src/content/docs/</code>.
+  </p>
+
+  <h2>Validation (<code>npm run docs:check</code>)</h2>
+  <ol>
+    <li><code>sync-docs.mjs --check</code> — fails if any generated mirror is stale.</li>
+    <li>
+      <code>scripts/check-docs.mjs</code> — verifies all canonical files exist,
+      every local <code>.md</code>/<code>.mdx</code> link across root docs and
+      site content resolves, the three tested API endpoints
+      (<code>GET /api/v1/public/settings</code>, <code>GET /api/settings</code>,
+      <code>POST /api/students/verify</code>) are documented, and fictional
+      student-CRUD endpoints were not reintroduced.
+    </li>
+  </ol>
+  <p>
+    CI runs both on every push and PR (see
+    <a href="/docs/maintainers/ci">CI pipeline</a>); run them before committing
+    doc changes.
+  </p>
+
+  <h2>The site itself</h2>
+  <ul>
+    <li>
+      <strong>Stack:</strong> Astro 5 + Starlight, MDX content collection,
+      Pagefind search, sitemap — built with Node 22
+      (<code>npm --prefix docs ci &amp;&amp; npm --prefix docs run build</code>).
+    </li>
+    <li>
+      <strong>Theme:</strong> <code>docs/src/styles/custom.css</code> maps the
+      app's shadcn palette onto Starlight with self-hosted Inter/JetBrains Mono
+      (fontsource — no external requests).
+    </li>
+    <li>
+      <strong>Navigation:</strong> the explicit sidebar in
+      <code>docs/astro.config.mjs</code>. New pages need a sidebar entry or they
+      exist but are unreachable.
+    </li>
+    <li>
+      <strong>In-app viewer:</strong> the same generated mirrors render inside
+      the application at <code>/docs</code>, so operator docs ship with the
+      product.
+    </li>
+  </ul>
+
+  <h2>Deployment</h2>
+  <p>
+    <code>deploy-docs.yml</code> builds the site and can deploy it through
+    <code>upload-pages-artifact</code> + <code>deploy-pages</code>. The workflow
+    is intentionally disabled while the repository is private.
+  </p>
+  <p>After the repository becomes public:</p>
+  <ol>
+    <li>Enable <strong>Settings → Pages → Build and deployment → Source: GitHub Actions</strong>.</li>
+    <li>Run <code>gh workflow enable deploy-docs.yml --repo yukazakiri/koakademy</code>.</li>
+    <li>Push a change under <code>docs/**</code> or manually dispatch the workflow.</li>
+  </ol>
+  <p>
+    Successful deployments publish at
+    <code>https://yukazakiri.github.io/koakademy/</code> (the
+    <code>site</code>/<code>base</code> in <code>astro.config.mjs</code> — keep
+    them in sync if the repository ever moves).
+  </p>
+
+  <h2>Writing guidelines for maintainers</h2>
+  <ul>
+    <li><strong>Factual over aspirational.</strong> Document what the code does today; roadmaps live in issues/projects, not docs.</li>
+    <li><strong>Screenshots</strong> go in <code>docs/src/assets/</code> and are imported by MDX (optimized at build).</li>
+    <li><strong>API surface:</strong> only tested endpoints may be documented — the contract check enforces it.</li>
+    <li><strong>Security and changelog</strong> stay on GitHub (SECURITY.md, Releases) and are deliberately not mirrored to the site.</li>
+  </ul>
+</DocsLayout>

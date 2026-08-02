@@ -1,15 +1,65 @@
 ---
 import "@/styles/global.css"
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = "KoAkademy — The school’s system of record, owned by the school",
+  description =
+    "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
+} = Astro.props
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f5f3ec" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Astro App</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <script is:inline>
+      document.documentElement.classList.add("js")
+    </script>
   </head>
   <body>
+    <a
+      href="#top"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
+      >Skip to content</a
+    >
     <slot />
+
+    <script>
+      import hljs from "highlight.js/lib/common"
+      import powershell from "highlight.js/lib/languages/powershell"
+      hljs.registerLanguage("powershell", powershell)
+      hljs.configure({ ignoreUnescapedHTML: true })
+
+      function highlightBlocks() {
+        document.querySelectorAll("pre code").forEach((/** @type {HTMLElement} */ el) => {
+          try {
+            hljs.highlightElement(el)
+          } catch {
+            // Leave the block plain; highlighting is progressive enhancement.
+          }
+        })
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", highlightBlocks)
+      } else {
+        highlightBlocks()
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,231 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Enrollment policy extensions"
+  path="/dev/enrollment-policy-extensions"
+  section="dev"
+  description="Add rules, actions, assignment strategies, and billing strategies without storing executable classes in policy data."
+>
+  <p>
+    Enrollment policies store stable handler keys and JSON configuration. They
+    never store PHP class names, closures, formulas, or scripts. A published
+    version and every compiled enrollment snapshot are immutable.
+  </p>
+
+  <h2>Extension contracts</h2>
+  <p>Implement one of the public contracts in <code>app/Contracts/Enrollment</code>:</p>
+  <ul>
+    <li><code>EnrollmentRuleHandler</code> evaluates an <code>EnrollmentContext</code> and returns a <code>RuleResult</code>.</li>
+    <li><code>EnrollmentActionHandler</code> performs one atomic, idempotent action and returns an <code>ActionResult</code>.</li>
+    <li>
+      <code>EnrollmentAssignmentStrategy</code> describes or simulates
+      subject/class assignment. A strategy selected for live rollout must also
+      implement <code>RuntimeEnrollmentAssignmentStrategy</code>.
+    </li>
+    <li>
+      <code>EnrollmentBillingStrategy</code> describes or simulates fees and
+      payment gates. A strategy selected for live rollout must also implement
+      <code>RuntimeEnrollmentBillingStrategy</code>.
+    </li>
+  </ul>
+  <p>
+    Keys are public compatibility identifiers. Prefix third-party keys, for
+    example <code>acme.scholarship_eligibility</code>, and never rename a key
+    while published policy versions still reference it.
+  </p>
+
+  <h2>Registration</h2>
+  <p>Register handlers from a service provider after resolving <code>EnrollmentPolicyRegistry</code>:</p>
+  <pre><code>use App\Enrollment\EnrollmentPolicyRegistry;
+
+$this-&gt;app-&gt;afterResolving(
+    EnrollmentPolicyRegistry::class,
+    function (EnrollmentPolicyRegistry $registry): void &#123;
+        $registry-&gt;registerRule(new ScholarshipEligibilityRule());
+        $registry-&gt;registerAction(new ReserveScholarshipAction());
+    &#125;,
+);</code></pre>
+  <p>
+    Registry objects may contain immutable metadata and stateless collaborators.
+    Do not store a request, user, enrollment, or tenant as mutable registry
+    state; KoAkademy runs under Octane.
+  </p>
+
+  <h2>Configuration schemas</h2>
+  <p>
+    Return a JSON-schema-like object from <code>configurationSchema()</code> or
+    <code>payloadSchema()</code>. Configuration must be plain JSON data. Reject
+    unknown keys where practical and give validation messages an operator can
+    act on.
+  </p>
+  <p>
+    To make an extension editable by school operators, also implement the
+    optional <code>EnrollmentOperatorSchemaProvider</code> contract. Its
+    <code>operatorSchema()</code> manifest supplies help content and fields for
+    the guided editor. Supported controls are boolean, text, number, money,
+    percentage, date/date range, select, multi-select, role, permission, school,
+    program, period, and notification channel. Dynamic choices must use one of
+    the registry's whitelisted option-source keys.
+  </p>
+  <p>
+    Extensions without this optional contract still execute and can be restored
+    from a validated backup, but their configuration is shown read-only in the
+    visual editor. This keeps existing community extensions compatible.
+  </p>
+  <p>
+    The operator-schema contract is independent from runtime execution. Legacy
+    assignment and billing extensions remain valid manifest and simulation
+    providers, but compilation rejects them for a published live workflow unless
+    they implement the corresponding runtime contract.
+  </p>
+  <pre><code>public function operatorSchema(): array
+&#123;
+    return [
+        'description' =&gt; 'Allow only students with an approved scholarship.',
+        'what_it_does' =&gt; 'Checks the approved scholarship percentage on the student record.',
+        'impact' =&gt; 'Students below this percentage cannot continue through the matching blueprint.',
+        'example' =&gt; 'Enter 50 to allow half and full scholars.',
+        'docs_anchor' =&gt; 'enrollment-policies/availability-eligibility-documents',
+        'fields' =&gt; [[
+            'key' =&gt; 'minimum_percentage',
+            'label' =&gt; 'Minimum scholarship',
+            'control' =&gt; 'percentage',
+            'required' =&gt; true,
+            'description' =&gt; 'The smallest approved scholarship percentage accepted by this rule.',
+            'placeholder' =&gt; '50',
+            'example' =&gt; 50,
+            'prefix' =&gt; null,
+            'suffix' =&gt; '%',
+            'min' =&gt; 0,
+            'max' =&gt; 100,
+            'step' =&gt; 1,
+            'recommended' =&gt; 50,
+        ]],
+    ];
+&#125;</code></pre>
+  <p>The top-level help keys are additive and optional:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Operator use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>description</code></td>
+        <td>Short explanation shown on the setting card.</td>
+      </tr>
+      <tr>
+        <td><code>what_it_does</code></td>
+        <td>Plain-language explanation in the contextual help drawer.</td>
+      </tr>
+      <tr>
+        <td><code>impact</code></td>
+        <td>What changes for a matched student.</td>
+      </tr>
+      <tr>
+        <td><code>example</code></td>
+        <td>A realistic school scenario or sample value.</td>
+      </tr>
+      <tr>
+        <td><code>docs_anchor</code></td>
+        <td>Relative page under the configured documentation base URL.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Field metadata is also optional. Use <code>description</code>,
+    <code>placeholder</code>, <code>example</code>, <code>prefix</code>,
+    <code>suffix</code>, <code>min</code>, <code>max</code>, <code>step</code>,
+    and <code>recommended</code> to make the form self-explanatory. Conditional
+    fields may use a deterministic <code>visible_when</code> descriptor:
+  </p>
+  <pre><code>[
+    'key' =&gt; 'minimum_amount',
+    'label' =&gt; 'Minimum amount',
+    'control' =&gt; 'money',
+    'min' =&gt; 0,
+    'visible_when' =&gt; [
+        'field' =&gt; 'gate_type',
+        'equals' =&gt; 'fixed',
+    ],
+]</code></pre>
+  <p>
+    Supported conditional operators are <code>equals</code> and <code>in</code>.
+    Conditions may reference only another field in the same handler
+    configuration. Do not use executable callbacks in a manifest.
+  </p>
+
+  <h2>Operator-schema compatibility</h2>
+  <ul>
+    <li>Adding help text, bounds, examples, or conditional visibility is backward-compatible when it does not reinterpret stored values.</li>
+    <li>Removing a field requires the runtime handler to keep accepting configurations written by every supported published schema version.</li>
+    <li>Renaming a field or changing its semantics is incompatible. Add a new handler key or schema version instead.</li>
+    <li>Missing optional metadata receives generic guidance from the registry.</li>
+    <li>A handler with no operator schema remains executable and importable but read-only in the guided editor.</li>
+    <li>Option sources are allowlisted by the application. Unknown source names are rejected during draft save, import, simulation, and publication.</li>
+    <li>The manifest must never contain a class name to execute, a script, a closure, an arbitrary URL, or a request-specific object.</li>
+  </ul>
+  <p>
+    Rules should fail closed when required facts are unavailable. Actions run
+    inside the enrollment transition database transaction and must use the
+    supplied idempotency key for every externally visible side effect. They must
+    not open nested transactions, change workflow status/outcome, use ambient
+    <code>Auth</code>, or call the legacy workflow adapter. Queue notifications
+    only after commit.
+  </p>
+
+  <h2>Import format</h2>
+  <p>Exports use this envelope:</p>
+  <pre><code>&#123;
+    "format": "koakademy.enrollment-policy",
+    "schema_version": 1,
+    "name": "College enrollment",
+    "configuration": &#123;&#125;
+&#125;</code></pre>
+  <p>
+    Only <code>configuration</code> is executable by the policy compiler, and
+    only through registered keys. Imports containing unknown handler keys,
+    unsupported schema versions, PHP class names, or script/code fields are
+    rejected.
+  </p>
+
+  <h2>Version compatibility</h2>
+  <p>
+    Handler changes must remain compatible with every published schema version
+    they claim to support. Add a new stable handler key for incompatible
+    semantics. Never reinterpret an existing key in a way that changes pinned
+    snapshots.
+  </p>
+
+  <h2>Testing expectations</h2>
+  <p>
+    Every extension should include Pest coverage for metadata, valid and invalid
+    configuration, pass/fail evaluation, authorization, idempotent retry,
+    transaction rollback, and compatibility with an immutable compiled snapshot.
+    Capacity-changing actions also need a concurrent final-seat test.
+  </p>
+  <p>Operator-facing extensions must additionally test:</p>
+  <ul>
+    <li>Every supported control converts to and from stored configuration.</li>
+    <li>Recommended values and numeric bounds validate correctly.</li>
+    <li><code>visible_when</code> hides only the intended field and server-side validation follows the same condition.</li>
+    <li>Unknown option sources fail with an actionable validation message.</li>
+    <li>Missing help metadata receives registry defaults.</li>
+    <li>An extension without <code>EnrollmentOperatorSchemaProvider</code> renders read-only without losing stored configuration.</li>
+    <li>Import/export contains stable keys and plain configuration only.</li>
+    <li>A representative simulation and the published version produce the same resolved checksum.</li>
+  </ul>
+  <p>
+    When a handler can block a student, test that its failure includes an
+    operator-friendly message and the correct editor section so the simulation
+    report can link back to the setting.
+  </p>
+  <p>
+    Run focused tests first, then Pint, Wayfinder generation, the frontend
+    build, and <code>git diff --check</code>.
+  </p>
+</DocsLayout>

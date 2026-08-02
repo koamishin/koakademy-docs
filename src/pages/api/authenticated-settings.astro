@@ -1,0 +1,177 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Authenticated settings API"
+  path="/api/authenticated-settings"
+  section="api"
+  description="Tested Laravel Sanctum routes for KoAkademy general settings."
+>
+  <p>
+    These routes are served from the installation's application origin and
+    require Laravel Sanctum authentication.
+  </p>
+
+  <h2>Endpoints</h2>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/settings</code>
+      <span class="api-status">200 · 404</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Collection of general setting resources. Returns <code>404</code> when
+        the collection is empty.
+      </p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-post">POST</span>
+      <code class="api-endpoint-path">/api/settings</code>
+      <span class="api-status">201 · 422</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Create settings after validation. Returns <code>201</code> on success
+        and <code>422</code> with an <code>errors</code> object on validation
+        failure.
+      </p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/settings/&#123;id&#125;</code>
+      <span class="api-status">200 · 404</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>Retrieve one numeric settings ID.</p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-put">PUT</span>
+      <span class="api-method api-method-patch">PATCH</span>
+      <code class="api-endpoint-path">/api/settings/&#123;id&#125;</code>
+      <span class="api-status">200 · 422</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>Update one numeric settings ID.</p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-delete">DELETE</span>
+      <code class="api-endpoint-path">/api/settings/&#123;id&#125;</code>
+      <span class="api-status">200 · 404</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>Soft-delete one numeric settings ID.</p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/settings/current</code>
+      <span class="api-status">200</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>Current settings for the authenticated context.</p>
+    </div>
+  </div>
+
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/settings/service</code>
+      <span class="api-status">200</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>Current semester/year and service-derived settings.</p>
+    </div>
+  </div>
+
+  <p>
+    The application also contains operator-oriented settings routes. They are
+    not documented here until their authorization, examples, and compatibility
+    contract are covered as a public integration surface.
+  </p>
+
+  <h2>Read settings</h2>
+  <pre><code>GET /api/settings
+Accept: application/json
+Authorization: Bearer YOUR_TOKEN</code></pre>
+  <p>
+    The collection uses KoAkademy's <code>GeneralSettingResource</code>.
+    Consumers should request only fields they need and must not assume internal
+    configuration or secrets will be returned.
+  </p>
+
+  <h2>Create settings</h2>
+  <pre><code>POST /api/settings
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN
+
+&#123;
+  "site_name": "Example School",
+  "site_description": "Student and faculty portal",
+  "support_email": "support@example.edu"
+&#125;</code></pre>
+  <p>Successful creation returns HTTP <code>201</code>:</p>
+  <pre><code>&#123;
+  "message": "General settings created successfully",
+  "data": &#123;&#125;
+&#125;</code></pre>
+  <p>
+    <code>data</code> is a general setting resource and can gain fields. A
+    validation failure returns HTTP <code>422</code> with an <code>errors</code>
+    object.
+  </p>
+
+  <h2 id="public-website-settings">Public website settings</h2>
+  <div class="api-endpoint">
+    <div class="api-endpoint-header">
+      <span class="api-method api-method-get">GET</span>
+      <code class="api-endpoint-path">/api/v1/public/settings</code>
+      <span class="api-status">Public · 200 · 404</span>
+    </div>
+    <div class="api-endpoint-body">
+      <p>
+        Does not require authentication, but an administrator must enable both
+        the public API and public-settings feature and choose allowed fields.
+        A successful response has this form:
+      </p>
+      <pre><code>&#123;
+  "message": "Public website settings retrieved successfully",
+  "data": &#123;
+    "site_name": "Example School",
+    "theme_color": "#123456",
+    "support_email": "support@example.edu"
+  &#125;
+&#125;</code></pre>
+      <p>
+        When disabled it returns HTTP <code>404</code> with
+        <code>data: null</code>. Only administrator-selected fields are
+        returned; clients must tolerate fields being absent.
+      </p>
+    </div>
+  </div>
+
+  <h2>Authorization warning</h2>
+  <p>
+    Settings can contain operational or institution-specific values. Treat token
+    possession as sensitive and apply least privilege. Route authentication does
+    not eliminate the need for operator review of who can issue and use
+    integration tokens.
+  </p>
+</DocsLayout>

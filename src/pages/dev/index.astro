@@ -1,0 +1,69 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+import { devTree } from "@/data/docs"
+---
+
+<DocsLayout
+  title="Developers"
+  path="/dev"
+  section="dev"
+  description="Local development, environments, and extension contracts for KoAkademy."
+>
+  <h2>Pick a path</h2>
+  <p>
+    Everything for working on the KoAkademy codebase: the canonical setup, the
+    managed local environments you can use instead, and the contracts for
+    extending enrollment policies without forking the application.
+  </p>
+
+  <div
+    class="mt-8 grid gap-6 sm:grid-cols-2"
+    style="display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))"
+  >
+    {
+      devTree.map((group) => (
+        <div class="rounded-xl border border-line bg-paper p-6">
+          <p
+            class="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brass-deep"
+          >
+            {group.label}
+          </p>
+          <ul class="mt-4 space-y-2.5">
+            {
+              group.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="group/link flex items-start gap-2.5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="mt-[7px] size-1 shrink-0 rotate-45 bg-brass transition-colors group-hover/link:bg-ink"
+                    ></span>
+                    <span class="min-w-0">
+                      <span
+                        class="block text-[14.5px] font-medium text-ink transition-colors group-hover/link:text-brass-deep"
+                        >{link.title}</span
+                      >
+                      <span class="mt-0.5 block text-[12.5px] leading-relaxed text-ink-soft"
+                        >{link.blurb}</span
+                      >
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">Building an integration?</p>
+    <p>
+      Looking for HTTP endpoints instead of the codebase? Switch to the
+      <a href="/api">API reference</a> section.
+    </p>
+  </div>
+</DocsLayout>

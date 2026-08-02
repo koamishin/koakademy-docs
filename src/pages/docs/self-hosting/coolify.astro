@@ -1,0 +1,147 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Coolify deployment"
+  path="/docs/self-hosting/coolify"
+  description="Run KoAkademy on Coolify, the open-source PaaS, from its Docker Compose file."
+>
+  <p>
+    Coolify is a self-hosted PaaS with a built-in Caddy proxy, automatic TLS,
+    managed databases, and scheduled backups. You can run it on your own
+    servers or on Coolify's hosted infrastructure. This guide deploys KoAkademy
+    as a single Docker Compose resource.
+  </p>
+
+  <h2>Prerequisites</h2>
+  <ul>
+    <li>A Coolify server with a domain assigned to it</li>
+    <li>A stable KoAkademy release tag</li>
+    <li>An external S3-compatible bucket for uploads</li>
+  </ul>
+  <p>
+    Install Coolify with its installer script on a fresh Ubuntu or Debian
+    server, or add this server to an existing Coolify instance.
+  </p>
+
+  <h2>1. Prepare the Compose source</h2>
+  <p>
+    Fetch KoAkademy's production Compose topology at the stable tag you intend
+    to deploy:
+  </p>
+  <pre><code>git clone --depth 1 --branch &lt;latest-stable-tag&gt; https://github.com/yukazakiri/koakademy.git
+cd koakademy</code></pre>
+  <p>
+    Adapt <code>compose.production.yaml</code> for Coolify the same way you
+    would for any proxy-managed platform:
+  </p>
+  <ul>
+    <li>Keep PostgreSQL data on a named volume.</li>
+    <li>
+      Do not publish host ports for the application — Coolify's Caddy proxy
+      routes to the container's port <code>8000</code>.
+    </li>
+    <li>
+      Pass credentials as environment variables in the resource; Docker secrets
+      and the Swarm installer's secret handling do not apply here.
+    </li>
+    <li>
+      <code>TRUSTED_PROXIES=*</code> is acceptable because only Coolify's proxy
+      can reach the application (see
+      <a href="/docs/self-hosting/configuration">Configuration</a>).
+    </li>
+  </ul>
+
+  <h2>2. Create a Docker Compose resource</h2>
+  <ol>
+    <li>
+      Choose <strong>New Resource → Docker Compose Empty</strong> and paste your
+      compose file, or create a resource from your Git repository and select the
+      <strong>Docker Compose</strong> build pack with the compose file location.
+    </li>
+    <li>
+      Coolify parses the environment variables out of the compose file and
+      exposes them in the UI — individual cards in Normal view, or a bulk
+      <code>.env</code> editor in Developer view. Set <code>APP_URL</code>,
+      <code>PORTAL_HOST</code>, <code>ADMIN_HOST</code>, <code>APP_KEY</code>,
+      <code>DB_*</code>, <code>REDIS_*</code>, <code>GOTENBERG_URL</code>,
+      <code>AWS_*</code> storage credentials, <code>MAIL_*</code>, and
+      <code>KOAKADEMY_VERSION</code>.
+    </li>
+    <li>
+      Assign your domain to the application service in the resource's
+      <strong>Domains</strong> tab and set the port to <code>8000</code>.
+      Coolify's Caddy proxy issues the TLS certificate automatically.
+    </li>
+  </ol>
+  <p>
+    Verify the application answers: <code>curl --fail --silent --show-error
+    https://school.example/up</code>.
+  </p>
+  <div class="doc-callout doc-callout-tip">
+    <p class="doc-callout-label">Managed databases instead</p>
+    <p>
+      Coolify can also run PostgreSQL and Redis as dedicated database
+      resources with built-in S3 backups. If you use them, point the
+      application's <code>DB_HOST</code> and <code>REDIS_HOST</code> at the
+      internal hostname Coolify assigns to each resource, and keep the database
+      credentials in the application's environment.
+    </p>
+  </div>
+
+  <h2>3. Run migrations and complete setup</h2>
+  <p>
+    KoAkademy keeps <code>RUN_MIGRATIONS=false</code>. First set a stable
+    application key: generate one once with
+    <code>php artisan key:generate --show</code> and paste the complete value
+    into <code>APP_KEY</code> in the resource's environment. A key written only
+    to the container's <code>.env</code> would be lost on the next redeploy.
+  </p>
+  <p>
+    Then open the application container's <strong>Terminal</strong> tab and run:
+  </p>
+  <pre><code>php artisan migrate --force</code></pre>
+  <p>
+    Visit <code>https://school.example/setup</code> to create the institution,
+    initial academic period, and first administrator, then verify
+    <code>/admin</code>. If you define a one-off migration container in the
+    compose file, add <code>exclude_from_hc: true</code> to its service so it
+    does not affect the resource's health evaluation.
+  </p>
+
+  <h2>4. Backups</h2>
+  <ul>
+    <li>
+      For managed database resources, enable Coolify's scheduled backups to an
+      S3-compatible destination.
+    </li>
+    <li>
+      For a PostgreSQL service inside the compose file, schedule a
+      <code>pg_dump</code> from the container terminal or back up its named
+      volume.
+    </li>
+    <li>Back up the S3 upload bucket separately, and preserve <code>APP_KEY</code> in a secret store.</li>
+  </ul>
+
+  <h2>5. Upgrades</h2>
+  <ol>
+    <li>Read the release notes and take a database backup.</li>
+    <li>Pin the new stable image tag (<code>KOAKADEMY_VERSION</code>) and redeploy.</li>
+    <li>Run <code>php artisan migrate --force</code> from the terminal.</li>
+    <li>Smoke-test the portal, <code>/admin</code>, uploads, a queued job, and a PDF export.</li>
+  </ol>
+  <p>
+    The upgrade and rollback rules in
+    <a href="/docs/self-hosting/deployment">Deployment</a> apply unchanged.
+  </p>
+
+  <h2>Troubleshooting</h2>
+  <p>
+    Start with the resource logs and
+    <a href="/docs/self-hosting/troubleshooting">Troubleshooting</a>. Common
+    Coolify-specific causes: environment changes applied but not redeployed, a
+    domain on the wrong service or port, and <code>APP_URL</code> not matching
+    the assigned domain.
+  </p>
+</DocsLayout>

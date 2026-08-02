@@ -1,0 +1,142 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Repository automation"
+  path="/docs/maintainers/automation"
+  description="Issue and PR automation — auto-labeling, issue quality checks, the roadmap board, and maintainer-access enforcement."
+>
+  <p>
+    Four lightweight workflows keep the issue tracker and PR queue manageable
+    without a bot account. All use <code>actions/github-script</code> and run
+    with minimal permissions.
+  </p>
+
+  <h2>Auto Label (<code>auto-label.yml</code>)</h2>
+  <p>
+    Triggers on issues and PRs (opened/edited; <code>pull_request_target</code>
+    for PRs).
+  </p>
+  <ul>
+    <li>
+      <strong>Issues and PRs:</strong> scans title/body keywords and adds
+      matching labels — <code>bug</code>, <code>feature</code>,
+      <code>documentation</code>, <code>refactor</code>, <code>breaking</code>,
+      <code>chore</code>, <code>performance</code>, <code>security</code>,
+      <code>good first issue</code>, <code>ui/ux</code>, <code>database</code>,
+      <code>api</code>, <code>tests</code>, <code>docker</code>,
+      <code>priority: high/low</code>.
+    </li>
+    <li>
+      <strong>PRs additionally:</strong> maps changed file paths to area labels
+      (<code>frontend</code>, <code>backend</code>, <code>ci/cd</code>,
+      <code>docker</code>, <code>tests</code>, <code>database</code>,
+      <code>ui/ux</code>).
+    </li>
+    <li>
+      It <strong>only adds</strong> labels that aren't present — it never removes
+      a maintainer's manual label.
+    </li>
+  </ul>
+  <p>
+    Release Please derives stable notes and SemVer changes from the
+    squash-merged Conventional Commit PR title. Labels remain useful for issue
+    and pull request triage but do not decide the release version.
+  </p>
+
+  <h2>Issue Quality Check (<code>issue-quality.yml</code>)</h2>
+  <p>
+    Triggers on issues (opened/edited). Skips the repo owner and anything labeled
+    <code>enhancement</code>.
+  </p>
+  <p>It enforces the bug-report template by extracting three sections:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Rule</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Reproduction repository</td>
+        <td>Must contain a <code>https://github.com/</code> URL</td>
+      </tr>
+      <tr>
+        <td>Steps to reproduce</td>
+        <td>At least 25 characters</td>
+      </tr>
+      <tr>
+        <td>PHP Version</td>
+        <td>At least 10 characters</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    If a check fails, the bot labels the issue <code>needs more info</code>,
+    comments with what's missing, and closes it as not-planned. When the author
+    edits the body into compliance, the bot removes the label and reopens (only
+    if the bot itself closed it). Maintainers can always reopen manually — the
+    bot's close is a nudge, not a verdict.
+  </p>
+
+  <h2>Project Roadmap Automation (<code>project-roadmap-automation.yml</code>)</h2>
+  <p>
+    Keeps a Projects v2 board in sync (requires
+    <code>secrets.PROJECT_AUTOMATION_TOKEN</code>; board IDs are configured in
+    the workflow):
+  </p>
+  <ul>
+    <li>New issues → added to the board with <strong>Status: Todo</strong> (polled until the item appears).</li>
+    <li>PRs → <strong>Todo</strong> when draft, <strong>In Progress</strong> when ready, <strong>Done</strong> on close.</li>
+  </ul>
+  <p>
+    Without the secret configured the workflow fails soft at the API call — safe
+    to ignore on forks.
+  </p>
+
+  <h2>PR Maintainer Access (<code>pr-maintainer-access.yml</code>)</h2>
+  <p>
+    Triggers on <code>pull_request_target: opened</code>. For fork PRs with
+    "Allow edits from maintainers" disabled, it comments with instructions
+    (enable maintainer access, or move an org fork to a personal account) and
+    closes the PR. PRs from the repo owner or same-owner repos are skipped.
+  </p>
+
+  <h2>Issue templates &amp; routing</h2>
+  <p>
+    Blank issues are disabled (<code>.github/ISSUE_TEMPLATE/config.yml</code>);
+    two templates and two discussion links route people correctly:
+  </p>
+  <ul>
+    <li>
+      <strong>Bug report</strong> (auto-labels <code>bug</code>,
+      <code>unconfirmed</code>) — area/module dropdown, KoAkademy/Laravel/PHP
+      versions, problem, expected behavior, steps, and a required
+      <strong>reproduction repository</strong> (enforced by the quality check
+      above).
+    </li>
+    <li>
+      <strong>Feature request</strong> (auto-labels <code>enhancement</code>) —
+      description, use case, optional solution/alternatives.
+    </li>
+    <li>
+      Discussions links redirect "Ideas" and "Help" questions out of the issue
+      tracker.
+    </li>
+  </ul>
+
+  <h2>Maintainer guidance</h2>
+  <ul>
+    <li>
+      The automation is intentionally conservative (adds labels, closes only
+      non-compliant issues). If a rule misfires, fix by hand — no cleanup is
+      required beyond removing a label or reopening.
+    </li>
+    <li>
+      Changing label names? Update <code>auto-label.yml</code> and the
+      quality-check label (<code>needs more info</code>) together.
+    </li>
+  </ul>
+</DocsLayout>

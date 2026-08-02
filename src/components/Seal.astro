@@ -1,0 +1,33 @@
+---
+interface Props {
+  size?: number
+  class?: string
+}
+
+const { size = 36, class: className = "" } = Astro.props
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  fill="none"
+  aria-hidden="true"
+  class={className}
+>
+  <circle cx="32" cy="32" r="30.5" stroke="currentColor" stroke-width="1.6" />
+  <circle
+    cx="32"
+    cy="32"
+    r="26.5"
+    stroke="currentColor"
+    stroke-width="0.8"
+    opacity="0.45"
+  />
+  <g stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <line x1="25.5" y1="20" x2="25.5" y2="44" />
+    <polyline points="29,32 42,19.5" />
+    <polyline points="29,36.5 42,46" />
+  </g>
+  <circle cx="32" cy="53.5" r="1.8" fill="currentColor" />
+</svg>

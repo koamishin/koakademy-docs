@@ -1,0 +1,119 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Scopes, inheritance, and overrides"
+  path="/docs/enrollment-policies/scopes-inheritance"
+  description="Configure school, student-type, program, and academic-period policies without duplicating the global blueprint."
+>
+  <p>
+    A scope describes <strong>who should receive a blueprint</strong>. A blank
+    scope is global. A scoped blueprint may target a school, student type,
+    program, school year, semester, or a combination.
+  </p>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      Scopes let one installation support different enrollment needs without
+      copying an entire configuration. Scoped drafts default to "inherit and
+      change only what is different."
+    </p>
+  </div>
+
+  <h2>Resolution order</h2>
+  <p>Matching policies are compiled from broad to specific:</p>
+  <ol>
+    <li>Global</li>
+    <li>School</li>
+    <li>Student type</li>
+    <li>Program</li>
+    <li>Academic period</li>
+    <li>Combined scopes</li>
+  </ol>
+  <p>
+    More constrained scopes win. When matching layers are equally constrained,
+    academic period wins first, followed by program, student type, and school.
+  </p>
+
+  <h2>Strict ancestor inheritance in the editor</h2>
+  <p>
+    The editor shows only strict ancestors of the selected scope. This makes it
+    clear where an inherited value originated and prevents a misleading preview
+    based on an unspecified student.
+  </p>
+  <p>
+    The final cross-scope result may include other matching layers. To see it,
+    select a representative student and run simulation. The
+    <strong>Matched blueprints</strong> list and source badges show the actual
+    result.
+  </p>
+
+  <h2>Override and reset</h2>
+  <p>
+    For rules and documents, overrides are keyed individually. For workflow,
+    assignment, billing, and notifications, the whole section is replaced
+    atomically so a partial graph or strategy cannot be created accidentally.
+  </p>
+  <ul>
+    <li>
+      <strong>Override here</strong> copies the effective inherited value into
+      the scoped draft so it can be edited.
+    </li>
+    <li>
+      <strong>Use inherited value</strong> removes the local override and
+      reconnects the field or section to its ancestor.
+    </li>
+    <li>
+      Disabling an inherited keyed rule stores an explicit disabled override; it
+      does not delete the ancestor.
+    </li>
+  </ul>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Do not copy the global blueprint unnecessarily</p>
+    <p>
+      A sparse scoped draft is easier to maintain. If the school-wide payment
+      strategy changes later, every scope that has not overridden billing
+      receives the change automatically for future enrollments.
+    </p>
+  </div>
+
+  <h2>Example: College-only document</h2>
+  <p>
+    The global blueprint requires a birth certificate. College also requires a
+    Form 138.
+  </p>
+  <ol>
+    <li>Publish the global blueprint.</li>
+    <li>Create a new blueprint scoped to student type <strong>College</strong>.</li>
+    <li>Keep <strong>Inherit school-wide settings</strong> enabled.</li>
+    <li>In Required documents, add Form 138.</li>
+    <li>Save and simulate a College student and a TESDA student.</li>
+  </ol>
+  <p>
+    The College simulation should match both global and College blueprints.
+    TESDA should match only global and should not receive the Form 138
+    requirement.
+  </p>
+
+  <h2>Example: program and semester override</h2>
+  <p>
+    For BS Nursing in the first semester of 2026–2027, add a capacity check and
+    a nursing-office approval step. Scope the policy to the program, school
+    year, and semester. Override only eligibility and workflow.
+  </p>
+
+  <h2>Existing complete configurations</h2>
+  <p>
+    Blueprints created before sparse inheritance remain valid. Their complete
+    configuration is preserved and continues to replace the relevant sections.
+    Editing does not silently convert or discard those stored values.
+  </p>
+
+  <h2>Duplicate scope protection</h2>
+  <p>
+    Only one logical policy may own a scope combination. If the selected school,
+    student type, program, year, and semester already exist together, create a
+    new version of that policy instead of a duplicate.
+  </p>
+</DocsLayout>

@@ -1,0 +1,125 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Queues, jobs & PDF pipeline"
+  path="/docs/system/queues-pdf"
+  description="Queue connections, background jobs, Gotenberg-backed PDF generation, exports, and broadcasting."
+>
+  <p>
+    Anything slow, retryable, or user-blocking runs in the background: PDF
+    documents, bulk notifications, exports, and search indexing. This page
+    covers the queue topology and the document pipeline.
+  </p>
+
+  <h2>Queue connections</h2>
+  <p>Defined in <code>config/queue.php</code>:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Connection</th>
+        <th>Used for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>database</code></td>
+        <td>Default in development and tests (sync driver in CI)</td>
+      </tr>
+      <tr>
+        <td><code>redis</code></td>
+        <td>Default application queues in production (<code>default</code>, <code>assessments</code>)</td>
+      </tr>
+      <tr>
+        <td><code>redis-pdf</code></td>
+        <td>PDF generation jobs (<code>pdf-generation</code>) — isolated so a heavy render batch never delays transactional work</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    In production, supervisord <strong>station</strong> workers consume these
+    queues inside the container (the dev Compose stack runs the same layout:
+    three workers on <code>default,assessments</code>, two on
+    <code>pdf-generation</code> with raised memory and timeout). Production
+    deployments should run the scheduler and workers via the provided
+    supervisord variants.
+  </p>
+
+  <h2>Job inventory (by purpose)</h2>
+  <ul>
+    <li>
+      <strong>PDF documents</strong> — <code>GenerateAssessmentPdfJob</code>,
+      <code>GenerateTimetablePdfJob</code>, <code>GenerateStudentSoaPdfJob</code>,
+      plus chunked bulk-assessment jobs that render in slices and merge results.
+    </li>
+    <li>
+      <strong>Notifications</strong> — <code>SendBulkNotificationJob</code> for
+      template-based bulk sends (see
+      <a href="/docs/system/modules-flags">Modules &amp; feature flags</a>).
+    </li>
+    <li>
+      <strong>Exports</strong> — <code>ExportJob</code> records drive
+      maatwebsite/excel exports (enrollment reports, student lists); completed
+      files are delivered through <strong>signed download routes</strong> with
+      authorization checks.
+    </li>
+    <li>
+      <strong>Housekeeping</strong> — backups (spatie/laravel-backup panel
+      page), search indexing, notification delivery.
+    </li>
+  </ul>
+
+  <h2>The PDF boundary</h2>
+  <p>
+    Rendering is delegated: application code builds HTML/Blade,
+    <strong><code>spatie/laravel-pdf</code></strong> sends it to
+    <strong>Gotenberg</strong> (Chromium) over HTTP, and the result lands in
+    storage. <code>PdfGenerationService</code> and <code>FixedPdfService</code>
+    wrap driver specifics; Gotenberg is the default and supported production
+    driver (<code>config/laravel-pdf.php</code>).
+  </p>
+  <p>Consequences for contributors:</p>
+  <ul>
+    <li><strong>No browser in the app container.</strong> Never shell out to Chromium; go through the PDF service.</li>
+    <li>
+      <strong>Documents are queued.</strong> Callers dispatch a job and poll or
+      receive a download link; do not render large documents synchronously in a
+      web request.
+    </li>
+    <li>
+      <strong>Templates must print well.</strong> PDF Blade views share the
+      app's fonts/assets — keep them self-contained (Gotenberg fetches what the
+      HTML references).
+    </li>
+  </ul>
+  <p>
+    Also installed but secondary: <code>barryvdh/laravel-snappy</code> and
+    fpdf/fpdi for legacy/specific documents.
+  </p>
+
+  <h2>Broadcasting and real-time</h2>
+  <p>
+    Laravel Echo (with Pusher/predis) powers live UI updates. Channels
+    (<code>routes/channels.php</code>):
+  </p>
+  <ul>
+    <li>Private per-user channel and <code>filament-notifications.&#123;userId&#125;</code> — panel notification toasts.</li>
+    <li><code>administrators</code> — admin-area events.</li>
+    <li>Presence <code>online-users</code> — the online-users widget in the admin workspace.</li>
+  </ul>
+  <p>
+    Queue workers and the web worker share the same Redis, so job status and
+    notifications propagate without extra services. <strong>Laravel Pulse</strong>
+    (with its own supervised processes in dev) provides ops monitoring; Telescope
+    and Nightwatch are available but disabled in tests/CI.
+  </p>
+
+  <h2>Contributing rules of thumb</h2>
+  <ul>
+    <li>Expensive work (PDF, exports, bulk mail, indexing) → <strong>dispatch a job</strong>, never inline in a request.</li>
+    <li>Heavy document jobs → the <strong><code>redis-pdf</code></strong> connection, with explicit memory/timeout budgets.</li>
+    <li>Deliver generated files through <strong>signed, authorized download routes</strong> — never expose storage paths.</li>
+    <li>New channels need authorization in <code>routes/channels.php</code> and a Pest test.</li>
+  </ul>
+</DocsLayout>

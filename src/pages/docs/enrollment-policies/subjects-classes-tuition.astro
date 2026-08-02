@@ -1,0 +1,135 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro"
+---
+
+<DocsLayout
+  title="Subjects, classes, tuition, and payment"
+  path="/docs/enrollment-policies/subjects-classes-tuition"
+  description="Configure assignment, capacity, fees, discounts, payment methods, and minimum-payment gates."
+>
+  <p>
+    These settings control what the student is enrolled in and what must be paid
+    before the journey can complete.
+  </p>
+
+  <h2>Subject assignment</h2>
+  <p>Choose one assignment strategy for a matched blueprint:</p>
+  <ul>
+    <li><strong>Manual</strong> — staff select subjects. Safest for a first rollout or irregular curricula.</li>
+    <li><strong>Recommendation only</strong> — the system suggests curriculum subjects but staff confirm them.</li>
+    <li><strong>Automatic curriculum</strong> — valid curriculum subjects are assigned automatically.</li>
+  </ul>
+  <div class="doc-callout doc-callout-note">
+    <p class="doc-callout-label">What this does</p>
+    <p>
+      Assignment strategies are selected by stable keys and validated settings.
+      They do not allow arbitrary formulas or scripts.
+    </p>
+  </div>
+
+  <h2>Class assignment</h2>
+  <p>
+    Manual assignment leaves sections to staff. First-available assignment
+    reserves a class only inside a database transaction and locks capacity
+    records, protecting the final seat from concurrent enrollments.
+  </p>
+  <p>Before enabling automatic class assignment, confirm:</p>
+  <ul>
+    <li>Class capacities are accurate.</li>
+    <li>Schedules are complete.</li>
+    <li>Conflict checks are enabled when required.</li>
+    <li>Staff know how to retry a failed transition.</li>
+  </ul>
+
+  <h2>Tuition calculation</h2>
+  <p>
+    The core course-rate strategy materializes its behavior into the enrollment
+    snapshot. Its compatibility defaults include NSTP lecture pricing, modular
+    laboratory and per-subject pricing, course miscellaneous fees, additional
+    fees, and lecture-only discounts. Later PHP default changes therefore cannot
+    reinterpret an enrollment already in progress.
+  </p>
+  <p>
+    An authorized enrollment submission may carry a one-off miscellaneous
+    override and a billing override. The assessment stores both the reusable
+    <code>discount_id</code> and the applied percentage snapshot so later edits
+    to a discount preset do not rewrite historical tuition.
+  </p>
+
+  <h2>Payment methods</h2>
+  <p>
+    Choose the methods accepted by this policy, such as cash, bank transfer, or
+    supported online channels. A method must also be operational in the school's
+    finance configuration.
+  </p>
+  <p>Receipt behavior is also explicit:</p>
+  <ul>
+    <li><strong>Required</strong> — a receipt or invoice identifier must be supplied.</li>
+    <li><strong>Optional</strong> — a configured transition may accept either form.</li>
+    <li><strong>None</strong> — permitted only by an authorized no-receipt transition with an audited reason.</li>
+  </ul>
+
+  <h2>Minimum-payment gates</h2>
+  <ul>
+    <li><strong>No minimum</strong> — payment does not block the configured completion action.</li>
+    <li><strong>Fixed amount</strong> — require a specific currency amount.</li>
+    <li><strong>Percentage</strong> — require a portion of calculated tuition.</li>
+  </ul>
+  <p>
+    Minimum-payment rules are deferred while an applicant starts enrollment.
+    They are enforced inside the terminal transition after configured payment
+    actions run, and policy simulations identify them as completion gates rather
+    than entry blockers.
+  </p>
+  <p>
+    A no-payment blueprint omits the payment action entirely; it does not
+    synthesize a zero-value transaction.
+  </p>
+  <div class="doc-callout doc-callout-caution">
+    <p class="doc-callout-label">Billing sections replace atomically</p>
+    <p>
+      When a scoped blueprint overrides billing, it owns the complete billing
+      strategy and payment-method section. This avoids mixing incompatible
+      pieces from multiple strategies.
+    </p>
+  </div>
+
+  <h2>Common scenarios</h2>
+
+  <h3>Manual enrollment with payment later</h3>
+  <p>
+    Use manual assignment, course-rate tuition, accepted payment methods, and
+    <strong>No minimum</strong>. Keep assessment generation in the workflow if
+    students still need an official statement.
+  </p>
+  <p>
+    Public manual applications do not synthesize curriculum or class selections.
+    Staff can make those selections through the configured assisted workflow;
+    automatic curriculum policies continue to resolve subjects through their
+    pinned assignment strategy.
+  </p>
+
+  <h3>Reserve a class after cashier verification</h3>
+  <p>
+    Place class assignment on the cashier approval transition or the next
+    authorized step. Keep the capacity action transactional and test a full
+    class and a final-seat contention case.
+  </p>
+
+  <h3>Scholarship discount</h3>
+  <p>
+    Configure the supported discount in the billing strategy and use an
+    eligibility rule for approved scholarship status. Do not encode an arbitrary
+    formula in a backup file.
+  </p>
+
+  <h2>Verify with simulation</h2>
+  <p>Test at least:</p>
+  <ol>
+    <li>A regular student with full tuition</li>
+    <li>A discounted student</li>
+    <li>A student below the payment gate</li>
+    <li>A student at the unit limit</li>
+    <li>A student competing for the last available class seat</li>
+  </ol>
+</DocsLayout>
