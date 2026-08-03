@@ -7,64 +7,84 @@ const github = "https://github.com/yukazakiri/koakademy"
 
 <Layout>
   <!-- ============================== NAV ============================== -->
-  <header class="site-nav sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
+  <header
+    class="site-nav sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md"
+  >
     <nav class="mx-auto max-w-6xl px-6" aria-label="Main">
       <div class="flex h-16 items-center justify-between">
-      <a href="#top" class="flex items-center gap-2.5">
-        <Seal size={28} class="text-ink" />
-        <span class="font-display text-[19px] font-medium tracking-[-0.01em]">KoAkademy</span>
-        <span
-          class="ml-1 rounded border border-line px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink-soft"
-          >Beta</span
-        >
-      </a>
-
-      <div class="hidden items-center gap-7 text-[14px] text-ink-soft md:flex">
-        <a href="#platform" class="transition-colors hover:text-ink">Platform</a>
-        <a href="#enrollment" class="transition-colors hover:text-ink">Enrollment</a>
-        <a href="#portals" class="transition-colors hover:text-ink">Portals</a>
-        <a href="#stack" class="transition-colors hover:text-ink">Stack</a>
-        <a href="/docs" class="transition-colors hover:text-ink">Docs</a>
-      </div>
-
-      <div class="flex items-center gap-2.5">
-        <a
-          href={github}
-          target="_blank"
-          rel="noreferrer"
-          class="hidden items-center gap-2 rounded-lg border border-line px-3.5 py-2.5 text-[13.5px] font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper-2 sm:inline-flex"
-        >
-          <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true">
-            <path
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
-            />
-          </svg>
-          GitHub
-        </a>
-        <a
-          href="#install"
-          class="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2.5 text-[13.5px] font-medium text-paper transition hover:-translate-y-px hover:bg-ink/85"
-        >
-          Install
-          <svg
-            viewBox="0 0 24 24"
-            width="13"
-            height="13"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
+        <a href="#top" class="flex items-center gap-2.5">
+          <Seal size={28} class="text-ink" />
+          <span class="font-display text-[19px] font-medium tracking-[-0.01em]"
+            >KoAkademy</span
           >
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
+          <span
+            class="ml-1 rounded border border-line px-1.5 py-px font-mono text-[9.5px] tracking-[0.18em] text-ink-soft uppercase"
+            >Beta</span
+          >
         </a>
-      </div>
+
+        <div
+          class="hidden items-center gap-7 text-[14px] text-ink-soft md:flex"
+        >
+          <a href="#platform" class="transition-colors hover:text-ink"
+            >Platform</a
+          >
+          <a href="#enrollment" class="transition-colors hover:text-ink"
+            >Enrollment</a
+          >
+          <a href="#portals" class="transition-colors hover:text-ink">Portals</a
+          >
+          <a href="#stack" class="transition-colors hover:text-ink">Stack</a>
+          <a href="/docs" class="transition-colors hover:text-ink">Docs</a>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <a
+            href={github}
+            target="_blank"
+            rel="noreferrer"
+            class="hidden items-center gap-2 rounded-lg border border-line px-3.5 py-2.5 text-[13.5px] font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper-2 sm:inline-flex"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              width="15"
+              height="15"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+              ></path>
+            </svg>
+            GitHub
+          </a>
+          <a
+            href="#install"
+            class="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2.5 text-[13.5px] font-medium text-paper transition hover:-translate-y-px hover:bg-ink/85"
+          >
+            Install
+            <svg
+              viewBox="0 0 24 24"
+              width="13"
+              height="13"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </a>
+        </div>
       </div>
       <div
-        class="flex items-center justify-center gap-6 border-t border-line py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft md:hidden"
+        class="flex items-center justify-center gap-6 border-t border-line py-2 font-mono text-[11px] tracking-[0.16em] text-ink-soft uppercase md:hidden"
       >
-        <a href="#platform" class="transition-colors hover:text-ink">Platform</a>
-        <a href="#enrollment" class="transition-colors hover:text-ink">Enrollment</a>
+        <a href="#platform" class="transition-colors hover:text-ink">Platform</a
+        >
+        <a href="#enrollment" class="transition-colors hover:text-ink"
+          >Enrollment</a
+        >
         <a href="#portals" class="transition-colors hover:text-ink">Portals</a>
         <a href="#stack" class="transition-colors hover:text-ink">Stack</a>
         <a href="/docs" class="transition-colors hover:text-ink">Docs</a>
@@ -74,157 +94,226 @@ const github = "https://github.com/yukazakiri/koakademy"
 
   <main id="top">
     <!-- ============================== HERO ============================== -->
-    <section class="relative overflow-hidden">
+    <section class="hero-shell relative overflow-hidden border-b border-line">
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(55%_50%_at_50%_0%,rgba(163,123,38,0.10),transparent_70%)]"
-      ></div>
+        class="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(45%_50%_at_50%_0%,rgba(163,123,38,0.07),transparent_72%)]"
+      >
+      </div>
 
-      <div class="mx-auto max-w-6xl px-6 pb-14 pt-16 md:pb-20 md:pt-24">
-        <div class="grid items-center gap-14 lg:grid-cols-[1.08fr_1fr] lg:gap-16">
-          <div class="max-w-xl text-left">
-          <p
-            class="reveal font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
-          >
-            Open source · Self-hosted · AGPL-3.0
-          </p>
-
-          <h1
-            class="reveal opsz-72 mt-6 font-display text-balance text-[clamp(2.35rem,4.8vw,4rem)] font-medium leading-[1.06] tracking-[-0.015em]"
-            style="--d:90ms"
-          >
-            The school’s system of record,
-            <em class="italic text-brass-deep">owned by the school.</em>
-          </h1>
-
-          <p
-            class="reveal mt-6 max-w-md text-[16.5px] leading-relaxed text-ink-soft"
-            style="--d:180ms"
-          >
-            KoAkademy is a complete academic management platform — enrollment,
-            academics, finance, and three portals — that runs on infrastructure
-            you choose. No per-student pricing. No feature gates.
-          </p>
-
-          <div
-            class="reveal mt-9 flex flex-wrap items-center gap-3.5"
-            style="--d:270ms"
-          >
-            <a
-              href="#install"
-              class="inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-[14px] font-medium text-paper shadow-[0_12px_28px_-16px_rgba(26,42,33,0.5)] transition hover:-translate-y-px hover:bg-ink/85"
+      <div class="mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-24 md:pb-24">
+        <div>
+          <div class="max-w-2xl">
+            <p
+              class="reveal font-mono text-[10.5px] font-medium tracking-[0.23em] text-brass-deep uppercase"
             >
-              Get started
-              <svg
-                viewBox="0 0 24 24"
-                width="14"
-                height="14"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                aria-hidden="true"
+              Open source · Self-hosted · AGPL-3.0
+            </p>
+
+            <h1
+              class="reveal opsz-72 mt-6 font-display text-[clamp(3.1rem,5.2vw,4.8rem)] leading-[1.03] font-medium tracking-[-0.025em] text-balance"
+              style="--d:90ms"
+            >
+              The school’s system of record, <em class="text-brass-deep italic"
+                >owned by the school.</em
               >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
-            <a
-              href="/docs"
-              class="inline-flex items-center gap-2 rounded-lg border border-ink/15 bg-paper-2/70 px-5 py-3 text-[14px] font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper-2"
+            </h1>
+
+            <p
+              class="reveal mt-6 max-w-xl text-[16px] leading-relaxed text-ink-soft md:text-[17px]"
+              style="--d:180ms"
             >
-              Read the docs
-            </a>
-          </div>
-
-          <p
-            class="reveal mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft"
-            style="--d:360ms"
-          >
-            No per-student pricing. No feature gates. Seriously.
-          </p>
-          </div>
-
-          <!-- Angled dashboard showcase -->
-          <div
-            class="reveal relative mx-auto mt-16 w-full max-w-xl lg:mt-0 lg:max-w-none"
-            style="--d:420ms"
-          >
-          <div class="hero-dashboard relative">
-            <div
-              aria-hidden="true"
-              class="hero-dashboard-back absolute inset-0 rounded-xl border border-line bg-paper-2"
-            ></div>
-
-            <Seal
-              size={200}
-              class="pointer-events-none absolute -left-10 -top-12 -rotate-6 text-ink opacity-[0.05]"
-            />
-
-          <div
-            class="absolute -top-4 right-2 z-10 flex items-center gap-2 rounded-md border border-brass/30 bg-paper px-3 py-1.5 text-[10.5px] font-medium uppercase tracking-[0.14em] text-brass-deep shadow-[0_10px_24px_-16px_rgba(26,42,33,0.45)] md:right-6"
-          >
-            <span
-              class="size-1.5 rounded-full bg-brass"
-              style="animation: kd-pulse 2s ease-in-out infinite"
-            ></span>
-            Self-hosted · live
-          </div>
-
-          <div
-            class="absolute -bottom-4 left-2 z-10 hidden items-center gap-2 rounded-md border border-line bg-paper px-3 py-1.5 text-[11px] font-medium tracking-[0.06em] text-ink-soft shadow-[0_10px_24px_-16px_rgba(26,42,33,0.4)] md:left-6 md:flex"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="12"
-              height="12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <rect x="4.5" y="10.5" width="15" height="9.5" rx="1.5" />
-              <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
-            </svg>
-            MFA · passkeys · RBAC
-          </div>
+              KoAkademy is a complete academic management platform — enrollment,
+              academics, finance, and three portals — that runs on
+              infrastructure you choose. No per-student pricing. No feature
+              gates.
+            </p>
 
             <div
-              class="hero-dashboard-panel group relative overflow-hidden rounded-xl border border-line bg-paper"
+              class="reveal mt-8 flex flex-wrap items-center gap-3"
+              style="--d:270ms"
             >
+              <a
+                href="#install"
+                class="inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-[14px] font-medium text-paper shadow-[0_12px_28px_-16px_rgba(26,42,33,0.5)] transition hover:-translate-y-px hover:bg-ink/85"
+              >
+                Install KoAkademy
+                <svg
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </a>
+              <a
+                href="/docs"
+                class="inline-flex items-center gap-2 rounded-lg border border-ink/15 bg-paper-2/70 px-5 py-3 text-[14px] font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper-2"
+              >
+                Explore documentation
+              </a>
+            </div>
+
+            <p
+              class="reveal mt-7 font-mono text-[10px] tracking-[0.2em] text-ink-soft uppercase"
+              style="--d:360ms"
+            >
+              No per-student pricing. · No feature gates. · Seriously.
+            </p>
+          </div>
+
+          <!-- Install command -->
+          <section
+            id="install"
+            class="reveal mx-auto mt-14 max-w-5xl scroll-mt-20"
+            style="--d:400ms"
+          >
             <div
-              class="grid grid-cols-[1fr_auto_1fr] items-center border-b border-line px-4 py-2"
+              class="minimal-install grid gap-8 border-y border-line py-7 md:grid-cols-[0.5fr_1.7fr] md:gap-14 md:py-8"
             >
-              <div class="flex items-center gap-1.5" aria-hidden="true">
-                <span class="size-2 rounded-full bg-line"></span>
-                <span class="size-2 rounded-full bg-line"></span>
-                <span class="size-2 rounded-full bg-line"></span>
+              <div>
+                <p
+                  class="font-mono text-[10px] font-medium tracking-[0.22em] text-brass-deep uppercase"
+                >
+                  Install
+                </p>
+                <h2
+                  class="opsz-40 mt-2 font-display text-[clamp(1.55rem,2.5vw,2rem)] leading-[1.05] font-medium tracking-[-0.025em]"
+                >
+                  One command.
+                </h2>
               </div>
-              <span
-                class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft"
-                >koakademy · admin</span
-              >
-              <span
-                class="flex items-center justify-end gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-brass-deep"
-              >
-                <span class="size-1.5 rounded-full bg-brass"></span>
-                live
-              </span>
+
+              <div class="min-w-0 self-end">
+                <div class="flex justify-end">
+                  <div
+                    class="flex items-center gap-3 font-mono text-[10px] tracking-[0.12em] uppercase"
+                    role="group"
+                    aria-label="Choose your operating system"
+                  >
+                    <button
+                      type="button"
+                      id="install-tab-linux"
+                      aria-pressed="true"
+                      data-os="linux"
+                      class="install-tab install-tab-active border-b border-transparent pb-1 text-ink-soft transition-colors hover:text-ink"
+                      >Linux / macOS</button
+                    >
+                    <button
+                      type="button"
+                      id="install-tab-windows"
+                      aria-pressed="false"
+                      data-os="windows"
+                      class="install-tab border-b border-transparent pb-1 text-ink-soft transition-colors hover:text-ink"
+                      >Windows</button
+                    >
+                  </div>
+                </div>
+
+                <div class="relative mt-5 border-y border-ink/20 py-3">
+                  <button
+                    type="button"
+                    class="install-copy absolute top-0 right-0 font-mono text-[10px] font-medium tracking-[0.12em] text-brass-deep uppercase transition hover:text-ink"
+                    aria-label="Copy the install command">Copy</button
+                  >
+                  <div id="install-panel-linux" class="install-panel">
+                    <pre
+                      class="overflow-x-auto pr-12 text-left font-mono text-[12px] leading-relaxed whitespace-nowrap"><span class="text-brass-deep" aria-hidden="true">$ </span><code class="language-bash">bash -c "$(curl -fsSL https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh)"</code></pre>
+                  </div>
+                  <div id="install-panel-windows" class="install-panel" hidden>
+                    <pre
+                      class="overflow-x-auto pr-12 text-left font-mono text-[12px] leading-relaxed whitespace-nowrap"><span class="text-brass-deep" aria-hidden="true">PS&gt; </span><code class="language-powershell">&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.ps1)))</code></pre>
+                  </div>
+                </div>
+                <a
+                  href="/docs/self-hosting/installation"
+                  class="mt-3 inline-flex font-mono text-[9.5px] tracking-[0.13em] text-brass-deep uppercase transition hover:text-ink"
+                  >Install guide →</a
+                >
+              </div>
             </div>
-            <img
-              src="/screenshots/admin-dashboard.png"
-              width="1440"
-              height="1000"
-              fetchpriority="high"
-              alt="KoAkademy administrator dashboard — the school's full register in one view"
-              class="aspect-[1440/1000] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-            />
-            </div>
+          </section>
+
+          <!-- Dashboard showcase -->
+          <div
+            class="reveal relative mx-auto mt-8 w-full max-w-5xl"
+            style="--d:460ms"
+          >
+            <div class="hero-dashboard relative">
+              <div
+                aria-hidden="true"
+                class="hero-dashboard-back absolute inset-0 rounded-2xl border border-line bg-paper-2"
+              >
+              </div>
+
+              <Seal size={200} class="hidden" />
+
+              <div class="hidden">
+                <span
+                  class="size-1.5 rounded-full bg-brass"
+                  style="animation: kd-pulse 2s ease-in-out infinite"></span>
+                Self-hosted · live
+              </div>
+
+              <div class="hidden">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="12"
+                  height="12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <rect x="4.5" y="10.5" width="15" height="9.5" rx="1.5"
+                  ></rect>
+                  <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"></path>
+                </svg>
+                MFA · passkeys · RBAC
+              </div>
+
+              <div
+                class="hero-dashboard-panel group relative overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_32px_80px_-48px_rgba(26,42,33,0.45)] md:p-3"
+              >
+                <div
+                  class="grid grid-cols-[1fr_auto_1fr] items-center rounded-t-xl border border-b-0 border-line px-4 py-3"
+                >
+                  <div class="flex items-center gap-1.5" aria-hidden="true">
+                    <span class="size-2 rounded-full bg-line"></span>
+                    <span class="size-2 rounded-full bg-line"></span>
+                    <span class="size-2 rounded-full bg-line"></span>
+                  </div>
+                  <span
+                    class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase"
+                    >koakademy · admin</span
+                  >
+                  <span
+                    class="flex items-center justify-end gap-1.5 font-mono text-[10px] tracking-[0.18em] text-brass-deep uppercase"
+                  >
+                    <span class="size-1.5 rounded-full bg-brass"></span>
+                    live
+                  </span>
+                </div>
+                <img
+                  src="/screenshots/admin-dashboard.png"
+                  width="1440"
+                  height="1000"
+                  fetchpriority="high"
+                  alt="KoAkademy administrator dashboard — the school's full register in one view"
+                  class="aspect-[1440/850] w-full rounded-b-xl border border-line object-cover object-top"
+                />
+              </div>
             </div>
           </div>
 
           <!-- Logo banner -->
-          <div class="mt-16 border-t border-line pt-8 md:mt-20">
+          <div class="mt-14 border-t border-line pt-8 md:mt-16">
             <p
-              class="text-center font-mono text-[10.5px] font-medium uppercase tracking-[0.22em] text-ink-soft"
+              class="text-center font-mono text-[10.5px] font-medium tracking-[0.22em] text-ink-soft uppercase"
             >
               Runs on infrastructure you choose
             </p>
@@ -244,104 +333,15 @@ const github = "https://github.com/yukazakiri/koakademy"
       </div>
     </section>
 
-    <!-- ============================== INSTALL ============================== -->
-    <section id="install" class="scroll-mt-20 border-b border-line bg-paper-2/40">
-      <div
-        class="mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:py-20 lg:grid-cols-[1fr_1.45fr] lg:gap-14"
-      >
-        <div class="reveal">
-          <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
-          >
-            Install
-          </p>
-          <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(1.9rem,3.5vw,2.6rem)] font-medium leading-[1.1] tracking-[-0.01em]"
-          >
-            Up and running in one command.
-          </h2>
-          <p class="mt-5 max-w-md text-[15.5px] leading-relaxed text-ink-soft">
-            The installer provisions PostgreSQL, Redis, FrankenPHP, and the
-            application itself. A one-time /setup URL walks you through the rest —
-            no account, no phone-home.
-          </p>
-          <p class="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
-            One-line installer · one-time /setup URL · no account required
-          </p>
-        </div>
-
-        <div class="reveal" style="--d:120ms">
-          <div
-            class="install-card overflow-hidden rounded-xl border border-ink/15 bg-[#14211a] text-[#e9ebdf] shadow-[0_24px_44px_-32px_rgba(26,42,33,0.55)]"
-          >
-            <div
-              class="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5"
-            >
-              <div class="flex items-center gap-1.5" aria-hidden="true">
-                <span class="size-2 rounded-full bg-white/15"></span>
-                <span class="size-2 rounded-full bg-white/15"></span>
-                <span class="size-2 rounded-full bg-white/15"></span>
-              </div>
-              <div
-                class="flex items-center gap-0.5 rounded-lg bg-white/5 p-0.5"
-                role="group"
-                aria-label="Choose your operating system"
-              >
-                <button
-                  type="button"
-                  id="install-tab-linux"
-                  aria-pressed="true"
-                  data-os="linux"
-                  class="install-tab install-tab-active rounded-md px-2.5 py-1 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#9aa79e] transition-colors hover:text-[#e9ebdf]"
-                >
-                  Linux / macOS
-                </button>
-                <button
-                  type="button"
-                  id="install-tab-windows"
-                  aria-pressed="false"
-                  data-os="windows"
-                  class="install-tab rounded-md px-2.5 py-1 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#9aa79e] transition-colors hover:text-[#e9ebdf]"
-                >
-                  Windows
-                </button>
-              </div>
-            </div>
-
-            <div class="relative px-4 py-3.5">
-              <button
-                type="button"
-                class="install-copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-[#1d2f26] px-2 py-1 font-mono text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#c9a44c] transition-colors hover:border-[#c9a44c]/60 hover:text-[#e9ebdf]"
-                aria-label="Copy the install command"
-              >
-                Copy
-              </button>
-
-              <div id="install-panel-linux" class="install-panel">
-                <pre
-                  class="overflow-x-auto whitespace-nowrap pr-16 text-left font-mono text-[12.5px] leading-relaxed"
-                  ><code class="language-bash">bash -c "$(curl -fsSL https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh)"</code></pre
-                >
-              </div>
-              <div id="install-panel-windows" class="install-panel" hidden>
-                <pre
-                  class="overflow-x-auto whitespace-nowrap pr-16 text-left font-mono text-[12.5px] leading-relaxed"
-                  ><code class="language-powershell">&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.ps1)))</code></pre
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ============================== CLAIMS ============================== -->
     <section class="border-b border-line bg-paper-2/50">
       <div
         class="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 md:py-16 lg:grid-cols-4 lg:gap-0"
       >
         <div class="lg:pr-8">
-          <span aria-hidden="true" class="inline-block size-1.5 rotate-45 bg-brass"></span>
+          <span
+            aria-hidden="true"
+            class="inline-block size-1.5 rotate-45 bg-brass"></span>
           <h3 class="mt-3.5 text-[15px] font-semibold tracking-[-0.01em]">
             No per-student pricing
           </h3>
@@ -350,7 +350,9 @@ const github = "https://github.com/yukazakiri/koakademy"
           </p>
         </div>
         <div class="lg:border-l lg:border-line lg:px-8">
-          <span aria-hidden="true" class="inline-block size-1.5 rotate-45 bg-brass"></span>
+          <span
+            aria-hidden="true"
+            class="inline-block size-1.5 rotate-45 bg-brass"></span>
           <h3 class="mt-3.5 text-[15px] font-semibold tracking-[-0.01em]">
             No feature gates
           </h3>
@@ -359,7 +361,9 @@ const github = "https://github.com/yukazakiri/koakademy"
           </p>
         </div>
         <div class="lg:border-l lg:border-line lg:px-8">
-          <span aria-hidden="true" class="inline-block size-1.5 rotate-45 bg-brass"></span>
+          <span
+            aria-hidden="true"
+            class="inline-block size-1.5 rotate-45 bg-brass"></span>
           <h3 class="mt-3.5 text-[15px] font-semibold tracking-[-0.01em]">
             Your data, your backups
           </h3>
@@ -368,7 +372,9 @@ const github = "https://github.com/yukazakiri/koakademy"
           </p>
         </div>
         <div class="lg:border-l lg:border-line lg:pl-8">
-          <span aria-hidden="true" class="inline-block size-1.5 rotate-45 bg-brass"></span>
+          <span
+            aria-hidden="true"
+            class="inline-block size-1.5 rotate-45 bg-brass"></span>
           <h3 class="mt-3.5 text-[15px] font-semibold tracking-[-0.01em]">
             AGPL-3.0, forever
           </h3>
@@ -384,12 +390,12 @@ const github = "https://github.com/yukazakiri/koakademy"
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div class="reveal max-w-2xl">
           <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+            class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
           >
             The platform
           </p>
           <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+            class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
           >
             Everything a school runs on, in one repository.
           </h2>
@@ -403,7 +409,9 @@ const github = "https://github.com/yukazakiri/koakademy"
           class="reveal mt-14 grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-2 lg:grid-cols-3"
           style="--d:120ms"
         >
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -418,19 +426,24 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M3 21h18" />
-                <path d="M5.5 21V11h13v10" />
-                <path d="M5.5 11V8l-1.5 1L12 3l8 6-1.5-1v3" />
+                <path d="M3 21h18"></path>
+                <path d="M5.5 21V11h13v10"></path>
+                <path d="M5.5 11V8l-1.5 1L12 3l8 6-1.5-1v3"></path>
               </svg>
             </div>
-            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">Administration</h3>
+            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
+              Administration
+            </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              Students, faculty, programs, courses, classrooms, terms, schedules,
-              attendance, grading, and institution branding in one register.
+              Students, faculty, programs, courses, classrooms, terms,
+              schedules, attendance, grading, and institution branding in one
+              register.
             </p>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -445,21 +458,24 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M6 3.5h8l4 4V20.5H6z" />
-                <path d="M14 3.5v4h4" />
-                <path d="m9.5 13.5 2 2 3.5-3.5" />
+                <path d="M6 3.5h8l4 4V20.5H6z"></path>
+                <path d="M14 3.5v4h4"></path>
+                <path d="m9.5 13.5 2 2 3.5-3.5"></path>
               </svg>
             </div>
             <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
               Enrollment engine
             </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              A registrar-to-cashier workflow driven by versioned blueprints. Rules
-              can be scoped, simulated, staged, and rolled back — never buried in code.
+              A registrar-to-cashier workflow driven by versioned blueprints.
+              Rules can be scoped, simulated, staged, and rolled back — never
+              buried in code.
             </p>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -474,21 +490,26 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <circle cx="9" cy="8.5" r="2.75" />
-                <path d="M4.5 19.5c.4-3.1 2.3-4.5 4.5-4.5s4.1 1.4 4.5 4.5" />
-                <circle cx="16.5" cy="9.5" r="2.25" />
-                <path d="M15.3 15.2c2.8.2 4.4 1.7 4.7 4.3" />
+                <circle cx="9" cy="8.5" r="2.75"></circle>
+                <path d="M4.5 19.5c.4-3.1 2.3-4.5 4.5-4.5s4.1 1.4 4.5 4.5"
+                ></path>
+                <circle cx="16.5" cy="9.5" r="2.25"></circle>
+                <path d="M15.3 15.2c2.8.2 4.4 1.7 4.7 4.3"></path>
               </svg>
             </div>
-            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">Three portals</h3>
+            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
+              Three portals
+            </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              Distinct administrator, faculty, and student experiences for the work
-              each role actually does: classes, attendance, grades, tuition, and
-              digital IDs.
+              Distinct administrator, faculty, and student experiences for the
+              work each role actually does: classes, attendance, grades,
+              tuition, and digital IDs.
             </p>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -503,19 +524,24 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M6 3.5h12V20.5l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z" />
-                <path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3" />
+                <path d="M6 3.5h12V20.5l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"
+                ></path>
+                <path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"></path>
               </svg>
             </div>
-            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">Finance</h3>
+            <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
+              Finance
+            </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              Tuition assessment, payment posting, statements of account, receipts,
-              public verification, and finance reporting — without exporting records
-              to another product.
+              Tuition assessment, payment posting, statements of account,
+              receipts, public verification, and finance reporting — without
+              exporting records to another product.
             </p>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -530,21 +556,24 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z" />
-                <path d="m4 7.5 8 4.5 8-4.5" />
-                <path d="M12 12v9" />
+                <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"></path>
+                <path d="m4 7.5 8 4.5 8-4.5"></path>
+                <path d="M12 12v9"></path>
               </svg>
             </div>
             <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
               Optional modules
             </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              Library, inventory, cashier, student medical records, announcements,
-              and notifications — enabled as the institution needs them.
+              Library, inventory, cashier, student medical records,
+              announcements, and notifications — enabled as the institution
+              needs them.
             </p>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -559,16 +588,19 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M12 3l7 2.8v5.6c0 4.5-2.9 7.8-7 9.6-4.1-1.8-7-5.1-7-9.6V5.8z" />
-                <path d="m9 11.6 2.1 2.1 4-4.2" />
+                <path
+                  d="M12 3l7 2.8v5.6c0 4.5-2.9 7.8-7 9.6-4.1-1.8-7-5.1-7-9.6V5.8z"
+                ></path>
+                <path d="m9 11.6 2.1 2.1 4-4.2"></path>
               </svg>
             </div>
             <h3 class="mt-5 text-[17px] font-semibold tracking-[-0.01em]">
               Security & accountability
             </h3>
             <p class="mt-2 text-[14px] leading-relaxed text-ink-soft">
-              Role-based permissions, multi-factor authentication, passkeys, audited
-              impersonation, and an operator-controlled deployment boundary.
+              Role-based permissions, multi-factor authentication, passkeys,
+              audited impersonation, and an operator-controlled deployment
+              boundary.
             </p>
           </article>
         </div>
@@ -580,26 +612,25 @@ const github = "https://github.com/yukazakiri/koakademy"
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div class="reveal max-w-2xl">
           <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+            class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
           >
             The product
           </p>
           <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+            class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
           >
             Screens from a school's working day.
           </h2>
           <p class="mt-5 max-w-xl text-[15.5px] leading-relaxed text-ink-soft">
-            Real views from the application — enrollment, academics, finance, and
-            the library — not a generic mockup.
+            Real views from the application — enrollment, academics, finance,
+            and the library — not a generic mockup.
           </p>
         </div>
 
-        <div
-          class="reveal mt-14 grid gap-6 md:grid-cols-2"
-          style="--d:120ms"
-        >
-          <figure class="group overflow-hidden rounded-xl border border-line bg-paper">
+        <div class="reveal mt-14 grid gap-6 md:grid-cols-2" style="--d:120ms">
+          <figure
+            class="group overflow-hidden rounded-xl border border-line bg-paper"
+          >
             <div
               class="grid grid-cols-[1fr_auto_1fr] items-center border-b border-line px-4 py-2"
             >
@@ -609,7 +640,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 <span class="size-2 rounded-full bg-line"></span>
               </div>
               <span
-                class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft"
+                class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase"
                 >koakademy · enrollment</span
               >
               <span></span>
@@ -624,18 +655,20 @@ const github = "https://github.com/yukazakiri/koakademy"
             />
             <figcaption class="border-t border-line px-5 py-4">
               <p
-                class="font-mono text-[10.5px] uppercase tracking-[0.2em] text-brass-deep"
+                class="font-mono text-[10.5px] tracking-[0.2em] text-brass-deep uppercase"
               >
                 Enrollment
               </p>
               <p class="mt-1 text-[14px] leading-relaxed text-ink-soft">
-                Track applicants, verification status, balances, and the registrar
-                workflow in one place.
+                Track applicants, verification status, balances, and the
+                registrar workflow in one place.
               </p>
             </figcaption>
           </figure>
 
-          <figure class="group overflow-hidden rounded-xl border border-line bg-paper">
+          <figure
+            class="group overflow-hidden rounded-xl border border-line bg-paper"
+          >
             <div
               class="grid grid-cols-[1fr_auto_1fr] items-center border-b border-line px-4 py-2"
             >
@@ -645,7 +678,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 <span class="size-2 rounded-full bg-line"></span>
               </div>
               <span
-                class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft"
+                class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase"
                 >koakademy · academics</span
               >
               <span></span>
@@ -660,18 +693,20 @@ const github = "https://github.com/yukazakiri/koakademy"
             />
             <figcaption class="border-t border-line px-5 py-4">
               <p
-                class="font-mono text-[10.5px] uppercase tracking-[0.2em] text-brass-deep"
+                class="font-mono text-[10.5px] tracking-[0.2em] text-brass-deep uppercase"
               >
                 Academics
               </p>
               <p class="mt-1 text-[14px] leading-relaxed text-ink-soft">
-                Manage sections, capacity, curricula, and schedules with the school
-                context intact.
+                Manage sections, capacity, curricula, and schedules with the
+                school context intact.
               </p>
             </figcaption>
           </figure>
 
-          <figure class="group overflow-hidden rounded-xl border border-line bg-paper">
+          <figure
+            class="group overflow-hidden rounded-xl border border-line bg-paper"
+          >
             <div
               class="grid grid-cols-[1fr_auto_1fr] items-center border-b border-line px-4 py-2"
             >
@@ -681,7 +716,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 <span class="size-2 rounded-full bg-line"></span>
               </div>
               <span
-                class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft"
+                class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase"
                 >koakademy · finance</span
               >
               <span></span>
@@ -696,7 +731,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             />
             <figcaption class="border-t border-line px-5 py-4">
               <p
-                class="font-mono text-[10.5px] uppercase tracking-[0.2em] text-brass-deep"
+                class="font-mono text-[10.5px] tracking-[0.2em] text-brass-deep uppercase"
               >
                 Finance
               </p>
@@ -707,7 +742,9 @@ const github = "https://github.com/yukazakiri/koakademy"
             </figcaption>
           </figure>
 
-          <figure class="group overflow-hidden rounded-xl border border-line bg-paper">
+          <figure
+            class="group overflow-hidden rounded-xl border border-line bg-paper"
+          >
             <div
               class="grid grid-cols-[1fr_auto_1fr] items-center border-b border-line px-4 py-2"
             >
@@ -717,7 +754,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 <span class="size-2 rounded-full bg-line"></span>
               </div>
               <span
-                class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft"
+                class="font-mono text-[10px] tracking-[0.18em] text-ink-soft uppercase"
                 >koakademy · library</span
               >
               <span></span>
@@ -732,7 +769,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             />
             <figcaption class="border-t border-line px-5 py-4">
               <p
-                class="font-mono text-[10.5px] uppercase tracking-[0.2em] text-brass-deep"
+                class="font-mono text-[10.5px] tracking-[0.2em] text-brass-deep uppercase"
               >
                 Library
               </p>
@@ -747,40 +784,54 @@ const github = "https://github.com/yukazakiri/koakademy"
     </section>
 
     <!-- ============================== ENROLLMENT ============================== -->
-    <section id="enrollment" class="scroll-mt-20 border-y border-line bg-paper-2/40">
-      <div class="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:py-32 lg:grid-cols-2 lg:gap-20">
+    <section
+      id="enrollment"
+      class="scroll-mt-20 border-y border-line bg-paper-2/40"
+    >
+      <div
+        class="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:py-32 lg:grid-cols-2 lg:gap-20"
+      >
         <div class="reveal">
           <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+            class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
           >
             The enrollment engine
           </p>
           <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+            class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
           >
             Institutional policy, versioned like code.
           </h2>
           <p class="mt-6 max-w-lg text-[15.5px] leading-relaxed text-ink-soft">
             Enrollment is where a school’s rules become visible — who can enrol,
-            which documents they need, which checks must happen before payment, and
-            when an account becomes active. KoAkademy models them as versioned
-            blueprints an institution can adapt without losing its audit trail.
+            which documents they need, which checks must happen before payment,
+            and when an account becomes active. KoAkademy models them as
+            versioned blueprints an institution can adapt without losing its
+            audit trail.
           </p>
           <ul class="mt-8 max-w-md space-y-3">
             <li class="flex items-start gap-3 text-[14.5px] text-ink">
-              <span aria-hidden="true" class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
+              <span
+                aria-hidden="true"
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
               Eligibility and document checks, scoped per program
             </li>
             <li class="flex items-start gap-3 text-[14.5px] text-ink">
-              <span aria-hidden="true" class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
+              <span
+                aria-hidden="true"
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
               Academic and billing gates before an account goes active
             </li>
             <li class="flex items-start gap-3 text-[14.5px] text-ink">
-              <span aria-hidden="true" class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
+              <span
+                aria-hidden="true"
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
               Approvals and notifications at every hand-off
             </li>
             <li class="flex items-start gap-3 text-[14.5px] text-ink">
-              <span aria-hidden="true" class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
+              <span
+                aria-hidden="true"
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-brass"></span>
               Staged publication and rollback, with the audit trail intact
             </li>
           </ul>
@@ -789,11 +840,13 @@ const github = "https://github.com/yukazakiri/koakademy"
         <div class="reveal lg:pt-2" style="--d:120ms">
           <div class="rounded-xl border border-line bg-paper p-7 md:p-8">
             <div class="flex items-center justify-between">
-              <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+              <p
+                class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+              >
                 Blueprint lifecycle
               </p>
               <span
-                class="inline-flex items-center gap-1.5 rounded border border-brass/30 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-brass-deep"
+                class="inline-flex items-center gap-1.5 rounded border border-brass/30 px-2 py-0.5 font-mono text-[10px] tracking-[0.16em] text-brass-deep uppercase"
               >
                 <span class="size-1 rounded-full bg-brass"></span>
                 v3 · staged
@@ -803,43 +856,55 @@ const github = "https://github.com/yukazakiri/koakademy"
             <ol class="mt-8">
               <li class="flex gap-6 pb-9">
                 <div class="flex flex-col items-center">
-                  <span class="opsz-40 font-display text-[22px] font-medium leading-none text-brass"
+                  <span
+                    class="opsz-40 font-display text-[22px] leading-none font-medium text-brass"
                     >01</span
                   >
-                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"></span>
+                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"
+                  ></span>
                 </div>
                 <div class="pb-1">
-                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">Simulate</h3>
+                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">
+                    Simulate
+                  </h3>
                   <p class="mt-1.5 text-[14px] leading-relaxed text-ink-soft">
-                    Run a blueprint against real applicants and see every gate and
-                    balance before anything changes.
+                    Run a blueprint against real applicants and see every gate
+                    and balance before anything changes.
                   </p>
                 </div>
               </li>
               <li class="flex gap-6 pb-9">
                 <div class="flex flex-col items-center">
-                  <span class="opsz-40 font-display text-[22px] font-medium leading-none text-brass"
+                  <span
+                    class="opsz-40 font-display text-[22px] leading-none font-medium text-brass"
                     >02</span
                   >
-                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"></span>
+                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"
+                  ></span>
                 </div>
                 <div class="pb-1">
-                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">Stage</h3>
+                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">
+                    Stage
+                  </h3>
                   <p class="mt-1.5 text-[14px] leading-relaxed text-ink-soft">
-                    Publish to a draft term with the registrar’s full audit trail
-                    intact.
+                    Publish to a draft term with the registrar’s full audit
+                    trail intact.
                   </p>
                 </div>
               </li>
               <li class="flex gap-6 pb-9">
                 <div class="flex flex-col items-center">
-                  <span class="opsz-40 font-display text-[22px] font-medium leading-none text-brass"
+                  <span
+                    class="opsz-40 font-display text-[22px] leading-none font-medium text-brass"
                     >03</span
                   >
-                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"></span>
+                  <span class="mt-3 w-px flex-1 bg-line" aria-hidden="true"
+                  ></span>
                 </div>
                 <div class="pb-1">
-                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">Publish</h3>
+                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">
+                    Publish
+                  </h3>
                   <p class="mt-1.5 text-[14px] leading-relaxed text-ink-soft">
                     Roll the policy out; applicants flow from enquiry to active
                     account.
@@ -848,15 +913,18 @@ const github = "https://github.com/yukazakiri/koakademy"
               </li>
               <li class="flex gap-6">
                 <div class="flex flex-col items-center">
-                  <span class="opsz-40 font-display text-[22px] font-medium leading-none text-brass"
+                  <span
+                    class="opsz-40 font-display text-[22px] leading-none font-medium text-brass"
                     >04</span
                   >
                 </div>
                 <div class="pb-1">
-                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">Roll back</h3>
+                  <h3 class="text-[16px] font-semibold tracking-[-0.01em]">
+                    Roll back
+                  </h3>
                   <p class="mt-1.5 text-[14px] leading-relaxed text-ink-soft">
-                    A bad term never ships. Revert to a prior version without losing
-                    the audit trail.
+                    A bad term never ships. Revert to a prior version without
+                    losing the audit trail.
                   </p>
                 </div>
               </li>
@@ -871,12 +939,12 @@ const github = "https://github.com/yukazakiri/koakademy"
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div class="reveal max-w-2xl">
           <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+            class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
           >
             Three portals
           </p>
           <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+            class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
           >
             One platform. Three kinds of work.
           </h2>
@@ -890,7 +958,9 @@ const github = "https://github.com/yukazakiri/koakademy"
           class="reveal mt-14 grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3"
           style="--d:120ms"
         >
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -905,32 +975,41 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M3 21h18" />
-                <path d="M5.5 21V11h13v10" />
-                <path d="M5.5 11V8l-1.5 1L12 3l8 6-1.5-1v3" />
+                <path d="M3 21h18"></path>
+                <path d="M5.5 21V11h13v10"></path>
+                <path d="M5.5 11V8l-1.5 1L12 3l8 6-1.5-1v3"></path>
               </svg>
             </div>
-            <h3 class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]">
+            <h3
+              class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]"
+            >
               Administrator
             </h3>
-            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">The full register.</p>
+            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">
+              The full register.
+            </p>
             <ul class="mt-4 space-y-2">
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Schedules &amp; attendance
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Grading &amp; reports
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Institution branding
               </li>
             </ul>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -945,31 +1024,42 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M12 6.5C10 4.9 7 4.4 3.5 4.4v14.2C7 18.6 10 19.1 12 20.7c2-1.6 5-2.1 8.5-2.1V4.4C17 4.4 14 4.9 12 6.5z" />
-                <path d="M12 6.5v14.2" />
+                <path
+                  d="M12 6.5C10 4.9 7 4.4 3.5 4.4v14.2C7 18.6 10 19.1 12 20.7c2-1.6 5-2.1 8.5-2.1V4.4C17 4.4 14 4.9 12 6.5z"
+                ></path>
+                <path d="M12 6.5v14.2"></path>
               </svg>
             </div>
-            <h3 class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]">
+            <h3
+              class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]"
+            >
               Faculty
             </h3>
-            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">The classroom view.</p>
+            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">
+              The classroom view.
+            </p>
             <ul class="mt-4 space-y-2">
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Classes &amp; sections
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Submissions &amp; grades
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Announcements
               </li>
             </ul>
           </article>
 
-          <article class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2">
+          <article
+            class="group bg-paper p-7 transition-colors duration-300 hover:bg-paper-2"
+          >
             <div
               class="flex size-10 items-center justify-center rounded-md border border-line text-ink transition-colors duration-300 group-hover:border-brass/40 group-hover:text-brass-deep"
             >
@@ -984,26 +1074,33 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M12 5 2.5 9.5 12 14l9.5-4.5z" />
-                <path d="M6 11.7v4.3c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.3" />
-                <path d="M21.5 9.5V14" />
+                <path d="M12 5 2.5 9.5 12 14l9.5-4.5z"></path>
+                <path d="M6 11.7v4.3c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.3"></path>
+                <path d="M21.5 9.5V14"></path>
               </svg>
             </div>
-            <h3 class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]">
+            <h3
+              class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em]"
+            >
               Student
             </h3>
-            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">The student record.</p>
+            <p class="mt-1.5 text-[14px] font-medium text-ink-soft">
+              The student record.
+            </p>
             <ul class="mt-4 space-y-2">
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Classes &amp; schedule
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Tuition &amp; statements
               </li>
               <li class="flex items-center gap-2.5 text-[13.5px] text-ink-soft">
-                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"></span>
+                <span aria-hidden="true" class="size-1 rotate-45 bg-brass"
+                ></span>
                 Digital ID
               </li>
             </ul>
@@ -1018,19 +1115,21 @@ const github = "https://github.com/yukazakiri/koakademy"
         <div class="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
           <div class="reveal">
             <p
-              class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+              class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
             >
               The stack
             </p>
             <h2
-              class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+              class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
             >
               Built to be run by you, not rented from a vendor.
             </h2>
-            <p class="mt-5 max-w-md text-[15.5px] leading-relaxed text-ink-soft">
+            <p
+              class="mt-5 max-w-md text-[15.5px] leading-relaxed text-ink-soft"
+            >
               A Laravel application with a React portal layer, packaged for
-              self-hosting rather than split across vendor services. One image, your
-              infrastructure.
+              self-hosting rather than split across vendor services. One image,
+              your infrastructure.
             </p>
             <a
               href="/docs/start-here/introduction"
@@ -1046,19 +1145,26 @@ const github = "https://github.com/yukazakiri/koakademy"
                 stroke-width="2"
                 aria-hidden="true"
               >
-                <path d="M5 12h14M13 6l6 6-6 6" />
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
               </svg>
             </a>
           </div>
 
-          <div class="reveal overflow-hidden rounded-xl border border-line bg-paper" style="--d:120ms">
+          <div
+            class="reveal overflow-hidden rounded-xl border border-line bg-paper"
+            style="--d:120ms"
+          >
             <div
               class="flex items-center justify-between border-b border-line px-6 py-3.5"
             >
-              <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+              <span
+                class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+              >
                 KoAkademy · system ledger
               </span>
-              <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+              <span
+                class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+              >
                 one image
               </span>
             </div>
@@ -1067,7 +1173,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Application
                 </dt>
@@ -1079,7 +1185,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Portals
                 </dt>
@@ -1091,7 +1197,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Data &amp; jobs
                 </dt>
@@ -1103,7 +1209,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Documents
                 </dt>
@@ -1115,7 +1221,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Runtime
                 </dt>
@@ -1127,7 +1233,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="grid gap-1 px-6 py-4 sm:grid-cols-[180px_1fr] sm:gap-6"
               >
                 <dt
-                  class="pt-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brass-deep"
+                  class="pt-0.5 font-mono text-[11px] tracking-[0.18em] text-brass-deep uppercase"
                 >
                   Quality
                 </dt>
@@ -1146,12 +1252,12 @@ const github = "https://github.com/yukazakiri/koakademy"
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div class="reveal max-w-2xl">
           <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-deep"
+            class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-deep uppercase"
           >
             Why KoAkademy
           </p>
           <h2
-            class="opsz-40 mt-4 font-display text-balance text-[clamp(2rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.01em]"
+            class="opsz-40 mt-4 font-display text-[clamp(2rem,4vw,2.9rem)] leading-[1.1] font-medium tracking-[-0.01em] text-balance"
           >
             School software should be owned, not rented.
           </h2>
@@ -1175,7 +1281,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             </div>
             <div class="border-l border-line px-5 py-4 md:px-7">
               <span
-                class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft"
+                class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
                 >Hosted school software</span
               >
             </div>
@@ -1195,7 +1301,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="mt-0.5 shrink-0 text-brass-deep"
                 aria-hidden="true"
               >
-                <path d="M4.5 12.5 10 18 19.5 6.5" />
+                <path d="M4.5 12.5 10 18 19.5 6.5"></path>
               </svg>
               <div>
                 <p class="text-[15px] font-medium">No per-student pricing</p>
@@ -1209,8 +1315,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             >
               <span
                 aria-hidden="true"
-                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"
-              ></span>
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"></span>
               <p class="text-[15px] leading-relaxed text-ink-soft">
                 Per-seat licenses and upsold modules
               </p>
@@ -1231,10 +1336,12 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="mt-0.5 shrink-0 text-brass-deep"
                 aria-hidden="true"
               >
-                <path d="M4.5 12.5 10 18 19.5 6.5" />
+                <path d="M4.5 12.5 10 18 19.5 6.5"></path>
               </svg>
               <div>
-                <p class="text-[15px] font-medium">Your records, your backups</p>
+                <p class="text-[15px] font-medium">
+                  Your records, your backups
+                </p>
                 <p class="mt-1 text-[13px] leading-relaxed text-ink-soft">
                   PostgreSQL and object storage you control.
                 </p>
@@ -1245,8 +1352,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             >
               <span
                 aria-hidden="true"
-                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"
-              ></span>
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"></span>
               <p class="text-[15px] leading-relaxed text-ink-soft">
                 Vendor-hosted, with a vendor retention policy
               </p>
@@ -1267,7 +1373,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="mt-0.5 shrink-0 text-brass-deep"
                 aria-hidden="true"
               >
-                <path d="M4.5 12.5 10 18 19.5 6.5" />
+                <path d="M4.5 12.5 10 18 19.5 6.5"></path>
               </svg>
               <div>
                 <p class="text-[15px] font-medium">Included, not gated</p>
@@ -1281,8 +1387,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             >
               <span
                 aria-hidden="true"
-                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"
-              ></span>
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"></span>
               <p class="text-[15px] leading-relaxed text-ink-soft">
                 Feature gates behind a sales conversation
               </p>
@@ -1303,7 +1408,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="mt-0.5 shrink-0 text-brass-deep"
                 aria-hidden="true"
               >
-                <path d="M4.5 12.5 10 18 19.5 6.5" />
+                <path d="M4.5 12.5 10 18 19.5 6.5"></path>
               </svg>
               <div>
                 <p class="text-[15px] font-medium">AGPL-3.0, auditable</p>
@@ -1317,8 +1422,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             >
               <span
                 aria-hidden="true"
-                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"
-              ></span>
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"></span>
               <p class="text-[15px] leading-relaxed text-ink-soft">
                 Closed source, roadmap decided elsewhere
               </p>
@@ -1339,7 +1443,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 class="mt-0.5 shrink-0 text-brass-deep"
                 aria-hidden="true"
               >
-                <path d="M4.5 12.5 10 18 19.5 6.5" />
+                <path d="M4.5 12.5 10 18 19.5 6.5"></path>
               </svg>
               <div>
                 <p class="text-[15px] font-medium">You can leave anytime</p>
@@ -1353,8 +1457,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             >
               <span
                 aria-hidden="true"
-                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"
-              ></span>
+                class="mt-[7px] size-1.5 shrink-0 rotate-45 bg-sage/70"></span>
               <p class="text-[15px] leading-relaxed text-ink-soft">
                 Migration fees and data-lock terms
               </p>
@@ -1363,7 +1466,7 @@ const github = "https://github.com/yukazakiri/koakademy"
         </div>
 
         <p
-          class="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-soft"
+          class="mt-5 font-mono text-[11px] tracking-[0.18em] text-ink-soft uppercase"
         >
           Compared with hosted, closed-source school software — the common
           alternative.
@@ -1379,23 +1482,25 @@ const github = "https://github.com/yukazakiri/koakademy"
         >
           <Seal
             size={300}
-            class="pointer-events-none absolute -right-16 -top-20 rotate-12 text-brass-soft opacity-[0.14]"
+            class="pointer-events-none absolute -top-20 -right-16 rotate-12 text-brass-soft opacity-[0.14]"
           />
           <div class="reveal relative max-w-xl">
             <p
-              class="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-brass-soft"
+              class="font-mono text-[11px] font-medium tracking-[0.24em] text-brass-soft uppercase"
             >
               Self-hosted · AGPL-3.0
             </p>
             <h2
-              class="opsz-72 mt-5 font-display text-balance text-[clamp(2.1rem,4.5vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.01em]"
+              class="opsz-72 mt-5 font-display text-[clamp(2.1rem,4.5vw,3.2rem)] leading-[1.06] font-medium tracking-[-0.01em] text-balance"
             >
               Run your own KoAkademy.
             </h2>
-            <p class="mt-5 max-w-lg text-[15.5px] leading-relaxed text-paper/70">
-              The supported installer stands up PostgreSQL, Redis, Gotenberg, and
-              storage, runs migrations, and prints a one-time /setup URL — then
-              closes it.
+            <p
+              class="mt-5 max-w-lg text-[15.5px] leading-relaxed text-paper/70"
+            >
+              The supported installer stands up PostgreSQL, Redis, Gotenberg,
+              and storage, runs migrations, and prints a one-time /setup URL —
+              then closes it.
             </p>
             <div class="mt-9 flex flex-wrap gap-3">
               <a
@@ -1412,7 +1517,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                   stroke-width="2"
                   aria-hidden="true"
                 >
-                  <path d="M5 12h14M13 6l6 6-6 6" />
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
                 </svg>
               </a>
               <a
@@ -1423,7 +1528,7 @@ const github = "https://github.com/yukazakiri/koakademy"
               </a>
             </div>
             <p
-              class="mt-7 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/65"
+              class="mt-7 font-mono text-[11px] tracking-[0.2em] text-paper/65 uppercase"
             >
               Linux &amp; Windows installers · beta — evaluate in staging
             </p>
@@ -1440,7 +1545,8 @@ const github = "https://github.com/yukazakiri/koakademy"
         <div>
           <a href="#top" class="flex items-center gap-2.5">
             <Seal size={30} class="text-ink" />
-            <span class="font-display text-[19px] font-medium tracking-[-0.01em]"
+            <span
+              class="font-display text-[19px] font-medium tracking-[-0.01em]"
               >KoAkademy</span
             >
           </a>
@@ -1448,7 +1554,7 @@ const github = "https://github.com/yukazakiri/koakademy"
             An open-source school administration platform you run yourself.
           </p>
           <p
-            class="mt-6 inline-flex items-center gap-2 rounded border border-line px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-soft"
+            class="mt-6 inline-flex items-center gap-2 rounded border border-line px-2.5 py-1 font-mono text-[10.5px] tracking-[0.16em] text-ink-soft uppercase"
           >
             <span class="size-1.5 rounded-full bg-brass"></span>
             AGPL-3.0-or-later
@@ -1456,27 +1562,37 @@ const github = "https://github.com/yukazakiri/koakademy"
         </div>
 
         <nav aria-label="Platform">
-          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+          <p
+            class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+          >
             Platform
           </p>
           <ul class="mt-4 space-y-2.5 text-[14px]">
             <li>
-              <a href="#enrollment" class="text-ink-soft transition-colors hover:text-ink"
+              <a
+                href="#enrollment"
+                class="text-ink-soft transition-colors hover:text-ink"
                 >Enrollment engine</a
               >
             </li>
             <li>
-              <a href="#portals" class="text-ink-soft transition-colors hover:text-ink"
+              <a
+                href="#portals"
+                class="text-ink-soft transition-colors hover:text-ink"
                 >Three portals</a
               >
             </li>
             <li>
-              <a href="#platform" class="text-ink-soft transition-colors hover:text-ink"
+              <a
+                href="#platform"
+                class="text-ink-soft transition-colors hover:text-ink"
                 >Finance</a
               >
             </li>
             <li>
-              <a href="#platform" class="text-ink-soft transition-colors hover:text-ink"
+              <a
+                href="#platform"
+                class="text-ink-soft transition-colors hover:text-ink"
                 >Optional modules</a
               >
             </li>
@@ -1484,7 +1600,9 @@ const github = "https://github.com/yukazakiri/koakademy"
         </nav>
 
         <nav aria-label="Docs">
-          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+          <p
+            class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+          >
             Docs
           </p>
           <ul class="mt-4 space-y-2.5 text-[14px]">
@@ -1520,7 +1638,9 @@ const github = "https://github.com/yukazakiri/koakademy"
         </nav>
 
         <nav aria-label="Community">
-          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft">
+          <p
+            class="font-mono text-[11px] tracking-[0.2em] text-ink-soft uppercase"
+          >
             Community
           </p>
           <ul class="mt-4 space-y-2.5 text-[14px]">
@@ -1529,8 +1649,7 @@ const github = "https://github.com/yukazakiri/koakademy"
                 href={github}
                 target="_blank"
                 rel="noreferrer"
-                class="text-ink-soft transition-colors hover:text-ink"
-                >GitHub</a
+                class="text-ink-soft transition-colors hover:text-ink">GitHub</a
               >
             </li>
             <li>
@@ -1568,67 +1687,68 @@ const github = "https://github.com/yukazakiri/koakademy"
         class="mt-14 flex flex-col gap-3 border-t border-line pt-6 text-[13px] text-ink-soft sm:flex-row sm:items-center sm:justify-between"
       >
         <p>© 2026 KoAkademy · GNU AGPL-3.0-or-later</p>
-        <p class="font-mono text-[11px] uppercase tracking-[0.2em]">
+        <p class="font-mono text-[11px] tracking-[0.2em] uppercase">
           Your records. Your infrastructure.
         </p>
       </div>
     </div>
   </footer>
-</Layout>  <script>
-    import { copyToClipboard, flashCopied } from "@/lib/clipboard"
+</Layout>
+<script>
+  import { copyToClipboard, flashCopied } from "@/lib/clipboard"
 
-    const nav = document.querySelector(".site-nav")
-    const onScroll = () => {
-      if (nav) nav.classList.toggle("scrolled", window.scrollY > 4)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+  const nav = document.querySelector(".site-nav")
+  const onScroll = () => {
+    if (nav) nav.classList.toggle("scrolled", window.scrollY > 4)
+  }
+  window.addEventListener("scroll", onScroll, { passive: true })
+  onScroll()
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible")
-            io.unobserve(entry.target)
-          }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible")
+          io.unobserve(entry.target)
         }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
-    )
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el))
-
-    // --- Install command tabs & copy ---
-    /** @type {HTMLButtonElement[]} */
-    const installTabs = [...document.querySelectorAll(".install-tab")]
-    /** @type {HTMLButtonElement | null} */
-    const installCopy = document.querySelector(".install-copy")
-    /** @type {HTMLElement[]} */
-    const installPanels = [...document.querySelectorAll(".install-panel")]
-
-    /** @param {string} os */
-    const selectOs = (os) => {
-      for (const tab of installTabs) {
-        const active = tab.dataset.os === os
-        tab.setAttribute("aria-pressed", String(active))
-        tab.classList.toggle("install-tab-active", active)
       }
-      for (const panel of installPanels) {
-        panel.hidden = panel.id !== `install-panel-${os}`
-      }
-    }
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  )
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el))
 
+  // --- Install command tabs & copy ---
+  /** @type {HTMLButtonElement[]} */
+  const installTabs = [...document.querySelectorAll(".install-tab")]
+  /** @type {HTMLButtonElement | null} */
+  const installCopy = document.querySelector(".install-copy")
+  /** @type {HTMLElement[]} */
+  const installPanels = [...document.querySelectorAll(".install-panel")]
+
+  /** @param {string} os */
+  const selectOs = (os) => {
     for (const tab of installTabs) {
-      tab.addEventListener("click", () => selectOs(tab.dataset.os || "linux"))
+      const active = tab.dataset.os === os
+      tab.setAttribute("aria-pressed", String(active))
+      tab.classList.toggle("install-tab-active", active)
     }
+    for (const panel of installPanels) {
+      panel.hidden = panel.id !== `install-panel-${os}`
+    }
+  }
 
-    if (installCopy) {
-      installCopy.addEventListener("click", async () => {
-        const visible = installPanels.find((p) => !p.hidden)
-        /** @type {HTMLElement | null} */
-        const code = visible ? visible.querySelector("code") : null
-        const text = (code && code.innerText) || ""
-        if (!text) return
-        if (await copyToClipboard(text)) flashCopied(installCopy)
-      })
-    }
-  </script>
+  for (const tab of installTabs) {
+    tab.addEventListener("click", () => selectOs(tab.dataset.os || "linux"))
+  }
+
+  if (installCopy) {
+    installCopy.addEventListener("click", async () => {
+      const visible = installPanels.find((p) => !p.hidden)
+      /** @type {HTMLElement | null} */
+      const code = visible ? visible.querySelector("code") : null
+      const text = (code && code.innerText) || ""
+      if (!text) return
+      if (await copyToClipboard(text)) flashCopied(installCopy)
+    })
+  }
+</script>
