@@ -4,13 +4,53 @@ import "@/styles/global.css"
 interface Props {
   title?: string
   description?: string
+  canonicalPath?: string
+  pageType?: "website" | "article"
+  structuredData?: Record<string, unknown>[]
 }
 
 const {
   title = "KoAkademy — The school’s system of record, owned by the school",
-  description =
-    "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
+  description = "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
+  canonicalPath = Astro.url.pathname,
+  pageType = "website",
+  structuredData = [],
 } = Astro.props
+
+const site = Astro.site ?? new URL("https://koakademy.koamishin.com/")
+const siteUrl = site.href.endsWith("/") ? site.href : `${site.href}/`
+const absoluteUrl = (path: string) =>
+  new URL(path.replace(/^\/+/, ""), siteUrl).href
+const canonicalUrl = absoluteUrl(
+  canonicalPath === "/" ? "" : `${canonicalPath.replace(/^\/+|\/+$/g, "")}/`
+)
+const socialImageUrl = absoluteUrl("screenshots/admin-dashboard.png")
+const organizationId = `${siteUrl}#organization`
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: "KoAkademy",
+      url: siteUrl,
+      logo: absoluteUrl("favicon.svg"),
+      sameAs: ["https://github.com/yukazakiri/koakademy"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      name: "KoAkademy",
+      url: siteUrl,
+      description:
+        "Open-source, self-hosted school management software and documentation.",
+      publisher: { "@id": organizationId },
+      inLanguage: "en",
+    },
+    ...structuredData,
+  ],
+}
+const serializedSchema = JSON.stringify(schema).replace(/</g, "\\u003c")
 ---
 
 <html lang="en">
@@ -23,10 +63,23 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={pageType} />
+    <meta property="og:site_name" content="KoAkademy" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta
+      property="og:image:alt"
+      content="KoAkademy administration dashboard"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <script is:inline type="application/ld+json" set:html={serializedSchema} />
     <script is:inline>
       document.documentElement.classList.add("js")
     </script>
@@ -34,7 +87,7 @@ const {
   <body>
     <a
       href="#top"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
       >Skip to content</a
     >
     <slot />
@@ -46,7 +99,7 @@ const {
       hljs.configure({ ignoreUnescapedHTML: true })
 
       function highlightBlocks() {
-        document.querySelectorAll("pre code").forEach((/** @type {HTMLElement} */ el) => {
+        document.querySelectorAll<HTMLElement>("pre code").forEach((el) => {
           try {
             hljs.highlightElement(el)
           } catch {

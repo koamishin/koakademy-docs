@@ -3,9 +3,29 @@ import Layout from "@/layouts/main.astro"
 import Seal from "@/components/Seal.astro"
 
 const github = "https://github.com/yukazakiri/koakademy"
+const siteUrl = (Astro.site ?? new URL("https://koakademy.koamishin.com/")).href
+const homepageSchema = [
+  {
+    "@type": "SoftwareApplication",
+    name: "KoAkademy",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web, Linux, Windows",
+    description:
+      "Open-source, self-hosted school management software for enrollment, academics, finance, and student, faculty, and administrator portals.",
+    url: siteUrl,
+    downloadUrl: github,
+    softwareHelp: new URL("docs", siteUrl).href,
+    license: `${github}/blob/master/LICENSE.md`,
+    isAccessibleForFree: true,
+  },
+]
 ---
 
-<Layout>
+<Layout
+  title="KoAkademy | Open-Source School Management Software"
+  description="KoAkademy is open-source, self-hosted school management software for enrollment, academics, finance, and student, faculty, and admin portals."
+  structuredData={homepageSchema}
+>
   <!-- ============================== NAV ============================== -->
   <header
     class="site-nav sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md"
@@ -1718,15 +1738,15 @@ const github = "https://github.com/yukazakiri/koakademy"
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el))
 
   // --- Install command tabs & copy ---
-  /** @type {HTMLButtonElement[]} */
-  const installTabs = [...document.querySelectorAll(".install-tab")]
-  /** @type {HTMLButtonElement | null} */
-  const installCopy = document.querySelector(".install-copy")
-  /** @type {HTMLElement[]} */
-  const installPanels = [...document.querySelectorAll(".install-panel")]
+  const installTabs = [
+    ...document.querySelectorAll<HTMLButtonElement>(".install-tab"),
+  ]
+  const installCopy = document.querySelector<HTMLButtonElement>(".install-copy")
+  const installPanels = [
+    ...document.querySelectorAll<HTMLElement>(".install-panel"),
+  ]
 
-  /** @param {string} os */
-  const selectOs = (os) => {
+  const selectOs = (os: string) => {
     for (const tab of installTabs) {
       const active = tab.dataset.os === os
       tab.setAttribute("aria-pressed", String(active))
@@ -1744,8 +1764,7 @@ const github = "https://github.com/yukazakiri/koakademy"
   if (installCopy) {
     installCopy.addEventListener("click", async () => {
       const visible = installPanels.find((p) => !p.hidden)
-      /** @type {HTMLElement | null} */
-      const code = visible ? visible.querySelector("code") : null
+      const code = visible ? visible.querySelector<HTMLElement>("code") : null
       const text = (code && code.innerText) || ""
       if (!text) return
       if (await copyToClipboard(text)) flashCopied(installCopy)
