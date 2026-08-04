@@ -50,16 +50,21 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <li>The exact simulated checksum</li>
   </ul>
   <p>
-    A published version is <strong>immutable</strong>. Editing a published policy
-    creates a new draft.
+    A published version is <strong>immutable</strong>. Editing a published
+    policy creates a new draft.
   </p>
 
   <h2>Activation</h2>
-  <p>Activation controls which runtime <strong>future enrollments</strong> receive:</p>
+  <p>
+    Activation controls which runtime <strong>future enrollments</strong> receive:
+  </p>
   <ul>
     <li>Flag off: new enrollments remain legacy.</li>
     <li>Flag on: new enrollments use the active compiled policy.</li>
-    <li>Existing policy enrollments continue through their pinned snapshot even after deactivation.</li>
+    <li>
+      Existing policy enrollments continue through their pinned snapshot even
+      after deactivation.
+    </li>
   </ul>
   <p>
     Activation requires an active published global blueprint, a successful
@@ -75,16 +80,18 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Backup export</h2>
   <p>
-    Use <strong>Download backup</strong> to export schema-versioned
-    configuration. The file contains stable handler keys and data only — never
-    PHP class names, scripts, closures, or arbitrary formulas.
+    Use <strong>Download backup</strong> to export schema-versioned configuration.
+    The file contains stable handler keys and data only — never PHP class names, scripts,
+    closures, or arbitrary formulas.
   </p>
 
   <h2>Backup import</h2>
   <p>Import is under Advanced:</p>
   <ol>
     <li>Choose a trusted KoAkademy JSON backup.</li>
-    <li>Review the human-readable count of checks, documents, and workflow steps.</li>
+    <li>
+      Review the human-readable count of checks, documents, and workflow steps.
+    </li>
     <li>Import it as a new draft.</li>
     <li>Review every guided section.</li>
     <li>Save, simulate, and publish normally.</li>
@@ -109,6 +116,9 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <li>A student with an outstanding balance</li>
     <li>A student at class capacity</li>
     <li>A student matching the most specific combined scope</li>
-    <li>Each public, administrator, continuing, and API channel the school supports</li>
+    <li>
+      Each public, administrator, continuing, and API channel the school
+      supports
+    </li>
   </ul>
 </DocsLayout>

@@ -33,33 +33,33 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
   <p>
     The manual <code>compose.production.yaml</code> topology binds KoAkademy to
-    <code>127.0.0.1:8000</code> and uses external S3-compatible storage. In both
-    topologies the HTTPS edge remains operator-managed, so Caddy, Nginx,
-    Traefik, or an existing tunnel or certificate platform can be used.
+    <code>127.0.0.1:8000</code> and uses external S3-compatible storage. In both topologies
+    the HTTPS edge remains operator-managed, so Caddy, Nginx, Traefik, or an existing
+    tunnel or certificate platform can be used.
   </p>
 
   <h2>Application layers</h2>
   <ul>
     <li>
-      <strong>HTTP and UI</strong> — Laravel routes and middleware, Filament
-      administration, and Inertia React portal pages.
+      <strong>HTTP and UI</strong> — Laravel routes and middleware, Filament administration,
+      and Inertia React portal pages.
     </li>
     <li>
-      <strong>Application workflows</strong> — services, actions, jobs,
-      policies, and settings objects coordinate use cases.
+      <strong>Application workflows</strong> — services, actions, jobs, policies,
+      and settings objects coordinate use cases.
     </li>
     <li>
-      <strong>Domain/data</strong> — Eloquent models, enums, relationships,
-      validation, and database constraints.
+      <strong>Domain/data</strong> — Eloquent models, enums, relationships, validation,
+      and database constraints.
     </li>
     <li>
-      <strong>Infrastructure adapters</strong> — filesystems, mail, queues,
-      broadcasting, search, PDF rendering, and integrations.
+      <strong>Infrastructure adapters</strong> — filesystems, mail, queues, broadcasting,
+      search, PDF rendering, and integrations.
     </li>
     <li>
       <strong>Optional modules</strong> — packages under <code>Modules/</code>
-      extend the monolith while sharing its authentication, database, and
-      deployment lifecycle.
+      extend the monolith while sharing its authentication, database, and deployment
+      lifecycle.
     </li>
   </ul>
   <p>
@@ -103,10 +103,22 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Data and state</h2>
   <ul>
-    <li>PostgreSQL is the durable relational source of record in the production image.</li>
-    <li>S3-compatible storage is the durable upload store. Local RustFS is convenient but only as durable as its single host and backups.</li>
-    <li>Redis contains disposable operational state and queued work; it is not the backup source of truth.</li>
-    <li>Container-local <code>storage/</code> holds runtime files and temporary artifacts, not supported durable uploads.</li>
+    <li>
+      PostgreSQL is the durable relational source of record in the production
+      image.
+    </li>
+    <li>
+      S3-compatible storage is the durable upload store. Local RustFS is
+      convenient but only as durable as its single host and backups.
+    </li>
+    <li>
+      Redis contains disposable operational state and queued work; it is not the
+      backup source of truth.
+    </li>
+    <li>
+      Container-local <code>storage/</code> holds runtime files and temporary artifacts,
+      not supported durable uploads.
+    </li>
   </ul>
   <p>
     Schema changes use versioned Laravel migrations. Production startup does not
@@ -125,9 +137,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>PDF boundary</h2>
   <p>
     The application depends on <code>spatie/laravel-pdf</code>; the supported
-    renderer is the private Gotenberg service. <strong>No DOMPDF fallback is
-    installed</strong>, which makes renderer failure visible instead of silently
-    changing document fidelity or capabilities.
+    renderer is the private Gotenberg service. <strong
+      >No DOMPDF fallback is installed</strong
+    >, which makes renderer failure visible instead of silently changing
+    document fidelity or capabilities.
   </p>
 
   <h2>Documentation architecture</h2>

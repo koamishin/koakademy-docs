@@ -19,7 +19,9 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <ul>
     <li>Exactly one entry step at the top</li>
     <li>At least one final step</li>
-    <li>One protected <strong>Otherwise</strong> destination for every non-final step</li>
+    <li>
+      One protected <strong>Otherwise</strong> destination for every non-final step
+    </li>
     <li>Only forward, reachable destinations</li>
     <li>Supported rule and action handlers</li>
   </ul>
@@ -38,12 +40,19 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Configure a step</h2>
   <ol>
-    <li>Give it a plain staff-facing name, such as <strong>Registrar review</strong>.</li>
+    <li>
+      Give it a plain staff-facing name, such as <strong
+        >Registrar review</strong
+      >.
+    </li>
     <li>Choose the staff roles allowed to complete it.</li>
     <li>Select the actions performed after approval.</li>
     <li>Configure any action-specific fields.</li>
     <li>Decide whether the step ends the journey.</li>
-    <li>Under Advanced, confirm the reporting status and technical identifier only when needed.</li>
+    <li>
+      Under Advanced, confirm the reporting status and technical identifier only
+      when needed.
+    </li>
   </ol>
 
   <h3>Publication permissions</h3>
@@ -56,21 +65,25 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Conditional destinations</h2>
   <p>
-    Use <strong>When … continue to …</strong> for special paths. Conditions are
-    evaluated in the order shown. Everyone who does not match uses the protected
+    Use <strong>When … continue to …</strong> for special paths. Conditions are evaluated
+    in the order shown. Everyone who does not match uses the protected
     <strong>Otherwise</strong> destination.
   </p>
   <p>Example:</p>
   <ul>
-    <li>When scholarship verification is required, continue to <strong>Scholarship office review</strong>.</li>
+    <li>
+      When scholarship verification is required, continue to <strong
+        >Scholarship office review</strong
+      >.
+    </li>
     <li>Otherwise, continue to <strong>Cashier review</strong>.</li>
   </ul>
   <div class="doc-callout doc-callout-caution">
     <p class="doc-callout-label">No backward loops</p>
     <p>
-      Corrections use an authorized <strong>reopen</strong> operation, not a
-      backward workflow link. Reopen records the actor, target step, reason, and
-      idempotency key.
+      Corrections use an authorized <strong>reopen</strong> operation, not a backward
+      workflow link. Reopen records the actor, target step, reason, and idempotency
+      key.
     </p>
     <p>
       When the terminal path synchronized the student status, period status
@@ -100,16 +113,15 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>Example: registrar and cashier</h2>
   <ol>
     <li>
-      <strong>Pending review</strong> — entry; registrar role; academic
-      verification action; Otherwise → Cashier review.
+      <strong>Pending review</strong> — entry; registrar role; academic verification
+      action; Otherwise → Cashier review.
     </li>
     <li>
-      <strong>Cashier review</strong> — cashier role; tuition, assessment, and
-      payment verification actions; Otherwise → Enrollment completed.
+      <strong>Cashier review</strong> — cashier role; tuition, assessment, and payment
+      verification actions; Otherwise → Enrollment completed.
     </li>
     <li>
-      <strong>Enrollment completed</strong> — terminal completed outcome; notify
-      student.
+      <strong>Enrollment completed</strong> — terminal completed outcome; notify student.
     </li>
   </ol>
   <p>Simulate both a student who passes and one blocked by a payment gate.</p>

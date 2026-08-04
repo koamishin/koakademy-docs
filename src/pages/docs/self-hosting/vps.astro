@@ -12,13 +12,16 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     DigitalOcean, Vultr, Oracle Cloud, or any other — running the Compose stack
     behind Caddy. This guide covers the surrounding server work that the
     platform guides assume is already done. Container deployment is the
-    supported production path; the prebuilt image is the runtime KoAkademy
-    ships and tests.
+    supported production path; the prebuilt image is the runtime KoAkademy ships
+    and tests.
   </p>
 
   <h2>Prerequisites</h2>
   <ul>
-    <li>Ubuntu 24.04 LTS or Debian 12 VPS with at least 4 GB RAM for an evaluation install; size from observed workload</li>
+    <li>
+      Ubuntu 24.04 LTS or Debian 12 VPS with at least 4 GB RAM for an evaluation
+      install; size from observed workload
+    </li>
     <li>A domain pointing to the server's public IP</li>
     <li>Docker Engine with the Compose plugin</li>
     <li>An external S3-compatible bucket for uploads</li>
@@ -26,10 +29,23 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>1. Harden the server</h2>
   <ul>
-    <li>Log in with SSH keys only; disable password authentication and root login over SSH.</li>
-    <li>Create a non-root user with <code>sudo</code> and run the deployment steps as that user.</li>
-    <li>Open the firewall for <code>22</code>, <code>80</code>, and <code>443</code> only. Port <code>8000</code> stays loopback-only behind the proxy.</li>
-    <li>Enable <code>fail2ban</code>, automatic security updates, and a swap file if the workload needs headroom.</li>
+    <li>
+      Log in with SSH keys only; disable password authentication and root login
+      over SSH.
+    </li>
+    <li>
+      Create a non-root user with <code>sudo</code> and run the deployment steps as
+      that user.
+    </li>
+    <li>
+      Open the firewall for <code>22</code>, <code>80</code>, and <code
+        >443</code
+      > only. Port <code>8000</code> stays loopback-only behind the proxy.
+    </li>
+    <li>
+      Enable <code>fail2ban</code>, automatic security updates, and a swap file
+      if the workload needs headroom.
+    </li>
   </ul>
   <pre><code>sudo ufw allow 22/tcp
 sudo ufw allow 80/tcp
@@ -54,13 +70,13 @@ cd koakademy
 cp .env.production.example .env
 chmod 600 .env</code></pre>
   <p>
-    Set every value in <code>.env</code>: <code>APP_URL</code> as the HTTPS
-    origin, <code>PORTAL_HOST</code> and <code>ADMIN_HOST</code>,
+    Set every value in <code>.env</code>: <code>APP_URL</code> as the HTTPS origin,
+    <code>PORTAL_HOST</code> and <code>ADMIN_HOST</code>,
     <code>DB_*</code>, <code>REDIS_*</code>, <code>GOTENBERG_URL</code>,
     <code>AWS_*</code> storage credentials, <code>MAIL_*</code>, and
     <code>KOAKADEMY_VERSION</code>. See
-    <a href="/docs/self-hosting/configuration">Configuration</a> for every
-    variable. Generate the application key:
+    <a href="/docs/self-hosting/configuration">Configuration</a> for every variable.
+    Generate the application key:
   </p>
   <pre><code>docker compose --env-file .env -f compose.production.yaml run --rm app php artisan key:generate --show</code></pre>
   <p>
@@ -70,7 +86,10 @@ chmod 600 .env</code></pre>
   <pre><code>docker compose --env-file .env -f compose.production.yaml config --quiet</code></pre>
 
   <h2>4. Launch the stack</h2>
-  <p>Start the dependencies first, migrate as a deliberate step, then start the application:</p>
+  <p>
+    Start the dependencies first, migrate as a deliberate step, then start the
+    application:
+  </p>
   <pre><code>docker compose --env-file .env -f compose.production.yaml pull
 docker compose --env-file .env -f compose.production.yaml up -d postgres redis gotenberg
 docker compose --env-file .env -f compose.production.yaml run --rm app php artisan migrate --force
@@ -89,10 +108,10 @@ curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
 &#125;</code></pre>
   <p>
     Restart Caddy and verify <code>https://school.example/up</code>. With the
-    application bound to loopback only, <code>TRUSTED_PROXIES=*</code> is
-    appropriate here — the warning in
-    <a href="/docs/self-hosting/configuration">Configuration</a> applies when
-    the application is reachable from any other host.
+    application bound to loopback only, <code>TRUSTED_PROXIES=*</code> is appropriate
+    here — the warning in
+    <a href="/docs/self-hosting/configuration">Configuration</a> applies when the
+    application is reachable from any other host.
   </p>
   <p>
     For split portal/admin subdomains, add both hostnames to Caddy and to
@@ -101,36 +120,41 @@ curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
 
   <h2>6. Complete setup</h2>
   <p>
-    Visit <code>https://school.example/setup</code> to create the institution,
-    initial academic period, and first administrator, then verify
-    <code>/admin</code>. The setup route returns <code>403</code> once the
-    application is initialized.
+    Visit <code>https://school.example/setup</code> to create the institution, initial
+    academic period, and first administrator, then verify
+    <code>/admin</code>. The setup route returns <code>403</code> once the application
+    is initialized.
   </p>
 
   <h2>7. Backups</h2>
   <ul>
     <li>
-      Schedule a nightly <code>pg_dump</code> of the PostgreSQL database and
-      push it offsite with <code>restic</code> or <code>rclone</code> to
-      Backblaze B2, an S3 bucket, or a Hetzner Storage Box. Test a restore
-      periodically.
+      Schedule a nightly <code>pg_dump</code> of the PostgreSQL database and push
+      it offsite with <code>restic</code> or <code>rclone</code> to Backblaze B2,
+      an S3 bucket, or a Hetzner Storage Box. Test a restore periodically.
     </li>
-    <li>Back up the S3 upload bucket with the provider's versioning controls.</li>
-    <li>Store <code>.env</code> and <code>APP_KEY</code> in an encrypted secret store, never in the repository.</li>
+    <li>
+      Back up the S3 upload bucket with the provider's versioning controls.
+    </li>
+    <li>
+      Store <code>.env</code> and <code>APP_KEY</code> in an encrypted secret store,
+      never in the repository.
+    </li>
   </ul>
   <p>Example nightly dump (adjust names and secrets):</p>
   <pre><code>docker compose --env-file .env -f compose.production.yaml exec -T postgres \
   pg_dump --clean --if-exists --no-owner --username="$DB_USERNAME" "$DB_DATABASE" &gt; koakademy.sql</code></pre>
   <p>
     Run this from a shell where <code>DB_USERNAME</code> and
-    <code>DB_DATABASE</code> are loaded (for example <code>set -a; source .env; set +a</code>),
-    or substitute the configured non-secret database name and user directly.
+    <code>DB_DATABASE</code> are loaded (for example <code
+      >set -a; source .env; set +a</code
+    >), or substitute the configured non-secret database name and user directly.
   </p>
 
   <h2>8. Upgrades and rollback</h2>
   <p>
-    Upgrades follow the manual Compose procedure: back up, update the checked-out
-    tag and <code>KOAKADEMY_VERSION</code>, pull the new image, run
+    Upgrades follow the manual Compose procedure: back up, update the
+    checked-out tag and <code>KOAKADEMY_VERSION</code>, pull the new image, run
     <code>migrate --force</code>, replace the application, and smoke-test. The
     complete rules — including when a code-only rollback is safe — are in
     <a href="/docs/self-hosting/deployment">Deployment</a>.
@@ -139,7 +163,12 @@ curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
   <h2>9. Monitoring</h2>
   <ul>
     <li>An external uptime check against <code>/up</code></li>
-    <li><code>docker compose --env-file .env -f compose.production.yaml logs --tail=200 app</code> for application logs</li>
+    <li>
+      <code
+        >docker compose --env-file .env -f compose.production.yaml logs
+        --tail=200 app</code
+      > for application logs
+    </li>
     <li>Disk usage, queue depth, certificate expiry, and backup success</li>
   </ul>
 

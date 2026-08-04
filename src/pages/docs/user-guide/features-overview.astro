@@ -25,37 +25,57 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <tbody>
       <tr>
         <td>Academic records</td>
-        <td>Students, faculty, courses, departments, rooms, senior high strands</td>
+        <td
+          >Students, faculty, courses, departments, rooms, senior high strands</td
+        >
         <td>Admin panel</td>
       </tr>
       <tr>
         <td>Classes and scheduling</td>
-        <td>Sections, subject assignments, capacity, timetables with conflict detection</td>
+        <td
+          >Sections, subject assignments, capacity, timetables with conflict
+          detection</td
+        >
         <td>Admin panel and Admin workspace</td>
       </tr>
       <tr>
         <td>Enrollment</td>
-        <td>Applications, verification pipeline, class enrollment, reports and analytics</td>
+        <td
+          >Applications, verification pipeline, class enrollment, reports and
+          analytics</td
+        >
         <td>Admin workspace</td>
       </tr>
       <tr>
         <td>Grading</td>
-        <td>Point/percent scales, passing rules, GWA exclusions, finalize and verify workflow</td>
+        <td
+          >Point/percent scales, passing rules, GWA exclusions, finalize and
+          verify workflow</td
+        >
         <td>Admin workspace and Faculty portal</td>
       </tr>
       <tr>
         <td>Finance</td>
-        <td>Tuition assessment, cashier payment posting, statements of account, finance reports</td>
+        <td
+          >Tuition assessment, cashier payment posting, statements of account,
+          finance reports</td
+        >
         <td>Admin workspace and Cashier module</td>
       </tr>
       <tr>
         <td>Communication</td>
-        <td>Announcements with banner display, template-based notifications, e-mail</td>
+        <td
+          >Announcements with banner display, template-based notifications,
+          e-mail</td
+        >
         <td>Announcement and Notification Center modules</td>
       </tr>
       <tr>
         <td>Reports and exports</td>
-        <td>Enrollment reports, student lists, attendance reports (Excel), PDF documents</td>
+        <td
+          >Enrollment reports, student lists, attendance reports (Excel), PDF
+          documents</td
+        >
         <td>Admin panel exporters and downloads</td>
       </tr>
       <tr>
@@ -68,33 +88,35 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Portals</h2>
   <p>
-    KoAkademy provides three purpose-built workspaces in addition to the Filament
-    administration panel:
+    KoAkademy provides three purpose-built workspaces in addition to the
+    Filament administration panel:
   </p>
   <ul>
     <li>
-      <strong>Administration panel (<code>/admin</code>)</strong> — records,
-      resources, settings, dashboards, backups, and role management for
-      administrative staff. See the
+      <strong>Administration panel (<code>/admin</code>)</strong> — records, resources,
+      settings, dashboards, backups, and role management for administrative staff.
+      See the
       <a href="/docs/user-guide/admin-portal">Admin portal guide</a>.
     </li>
     <li>
-      <strong>Faculty portal</strong> — dashboard, action center, attendance,
-      class posts and submissions, grading, and schedules for teaching staff.
-      See the <a href="/docs/user-guide/faculty-portal">Faculty portal guide</a>.
+      <strong>Faculty portal</strong> — dashboard, action center, attendance, class
+      posts and submissions, grading, and schedules for teaching staff. See the <a
+        href="/docs/user-guide/faculty-portal">Faculty portal guide</a
+      >.
     </li>
     <li>
       <strong>Student portal</strong> — classes, schedule, tuition and statements
       of account, digital ID card, announcements, and notifications for students.
-      See the <a href="/docs/user-guide/student-portal">Student portal guide</a>.
+      See the <a href="/docs/user-guide/student-portal">Student portal guide</a
+      >.
     </li>
   </ul>
 
   <h2>Optional modules</h2>
   <p>
     Six modules extend the platform: Announcements, Cashier, Inventory, Library
-    System, Notification Center, and Student Medical Records. Each can be enabled
-    or disabled per institution. See the
+    System, Notification Center, and Student Medical Records. Each can be
+    enabled or disabled per institution. See the
     <a href="/docs/user-guide/modules">Modules guide</a>.
   </p>
 
@@ -105,15 +127,15 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
   <ol>
     <li>
-      <strong>Feature toggles</strong> — runtime flags (managed under the admin
-      Feature Toggles page) that enable or disable portal areas such as faculty
-      attendance, student tuition pages, online enrollment, and developer tools.
-      Faculty and student portals check these flags before showing a page.
+      <strong>Feature toggles</strong> — runtime flags (managed under the admin Feature
+      Toggles page) that enable or disable portal areas such as faculty attendance,
+      student tuition pages, online enrollment, and developer tools. Faculty and student
+      portals check these flags before showing a page.
     </li>
     <li>
-      <strong>General settings</strong> — institution-wide switches in General
-      Settings, including the student portal, online enrollment, clearances,
-      signature capture, QR codes, and the inventory and library modules.
+      <strong>General settings</strong> — institution-wide switches in General Settings,
+      including the student portal, online enrollment, clearances, signature capture,
+      QR codes, and the inventory and library modules.
     </li>
   </ol>
   <div class="doc-callout doc-callout-note">
@@ -127,22 +149,22 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>Security and access control</h2>
   <ul>
     <li>
-      <strong>Roles and permissions</strong> — about 30 built-in roles (from
-      super administrator to registrar, cashier, librarian, professor ranks, and
-      student roles) with per-resource permissions.
+      <strong>Roles and permissions</strong> — about 30 built-in roles (from super
+      administrator to registrar, cashier, librarian, professor ranks, and student
+      roles) with per-resource permissions.
     </li>
     <li>
-      <strong>Multi-factor authentication</strong> — TOTP authenticator codes
-      and e-mail codes, plus WebAuthn passkeys for passwordless sign-in.
+      <strong>Multi-factor authentication</strong> — TOTP authenticator codes and
+      e-mail codes, plus WebAuthn passkeys for passwordless sign-in.
     </li>
     <li>
-      <strong>Activity logging</strong> — administrative actions are recorded
-      and reviewable under Audit Logs.
+      <strong>Activity logging</strong> — administrative actions are recorded and
+      reviewable under Audit Logs.
     </li>
     <li>
-      <strong>Multi-school context</strong> — staff with access to several
-      schools switch the active school from the organization switcher; records
-      stay scoped to the selected school.
+      <strong>Multi-school context</strong> — staff with access to several schools
+      switch the active school from the organization switcher; records stay scoped
+      to the selected school.
     </li>
   </ul>
 </DocsLayout>

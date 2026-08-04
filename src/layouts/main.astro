@@ -8,8 +8,7 @@ interface Props {
 
 const {
   title = "KoAkademy — The school’s system of record, owned by the school",
-  description =
-    "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
+  description = "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
 } = Astro.props
 ---
 
@@ -18,7 +17,7 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f3ec" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
@@ -28,13 +27,30 @@ const {
     <meta property="og:description" content={description} />
     <meta name="twitter:card" content="summary" />
     <script is:inline>
-      document.documentElement.classList.add("js")
+      ;(function () {
+        document.documentElement.classList.add("js")
+        // Apply the saved theme (or the OS preference) before first paint so
+        // there is no flash of the wrong color scheme.
+        var dark = false
+        var stored = null
+        try {
+          stored = localStorage.getItem("theme")
+        } catch (e) {
+          stored = null
+        }
+        dark = stored
+          ? stored === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+        document.documentElement.classList.toggle("dark", dark)
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute("content", dark ? "#101a14" : "#f5f3ec")
+      })()
     </script>
   </head>
   <body>
     <a
       href="#top"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
       >Skip to content</a
     >
     <slot />
@@ -46,13 +62,15 @@ const {
       hljs.configure({ ignoreUnescapedHTML: true })
 
       function highlightBlocks() {
-        document.querySelectorAll("pre code").forEach((/** @type {HTMLElement} */ el) => {
-          try {
-            hljs.highlightElement(el)
-          } catch {
-            // Leave the block plain; highlighting is progressive enhancement.
-          }
-        })
+        document
+          .querySelectorAll("pre code")
+          .forEach((/** @type {HTMLElement} */ el) => {
+            try {
+              hljs.highlightElement(el)
+            } catch {
+              // Leave the block plain; highlighting is progressive enhancement.
+            }
+          })
       }
 
       if (document.readyState === "loading") {
@@ -60,6 +78,49 @@ const {
       } else {
         highlightBlocks()
       }
+
+      // --- Theme toggle (persists to localStorage, falls back to OS) ---
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]')
+
+      function syncThemeUI() {
+        const dark = document.documentElement.classList.contains("dark")
+        document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+          btn.setAttribute("aria-pressed", String(dark))
+        })
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute("content", dark ? "#101a14" : "#f5f3ec")
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return
+        const toggle = event.target.closest("[data-theme-toggle]")
+        if (!toggle) return
+        const dark = document.documentElement.classList.toggle("dark")
+        try {
+          localStorage.setItem("theme", dark ? "dark" : "light")
+        } catch {
+          // Storage unavailable (e.g. private mode) — theme won't persist.
+        }
+        syncThemeUI()
+      })
+
+      // Follow OS theme changes only while the user has no explicit choice.
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          let stored = null
+          try {
+            stored = localStorage.getItem("theme")
+          } catch {
+            stored = null
+          }
+          if (stored) return
+          document.documentElement.classList.toggle("dark", event.matches)
+          syncThemeUI()
+        })
+
+      syncThemeUI()
     </script>
   </body>
 </html>

@@ -33,18 +33,38 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <ol>
     <li>Open <strong>System Management → Enrollment Blueprint</strong>.</li>
     <li>Select <strong>New blueprint</strong>.</li>
-    <li>Enter a descriptive name such as <code>School-wide enrollment foundation</code>.</li>
+    <li>
+      Enter a descriptive name such as <code
+        >School-wide enrollment foundation</code
+      >.
+    </li>
     <li>
       Choose a preset:
       <ul>
-        <li><strong>Current legacy process</strong> — safest when migrating an established school.</li>
-        <li><strong>Registrar and cashier approval</strong> — a common two-approval starting point.</li>
-        <li><strong>Manual enrollment</strong> — keeps assignment decisions with staff.</li>
-        <li><strong>Automatic curriculum assignment</strong> — recommends or assigns curriculum subjects.</li>
-        <li><strong>No-payment enrollment</strong> — removes the minimum-payment gate.</li>
+        <li>
+          <strong>Current legacy process</strong> — safest when migrating an established
+          school.
+        </li>
+        <li>
+          <strong>Registrar and cashier approval</strong> — a common two-approval
+          starting point.
+        </li>
+        <li>
+          <strong>Manual enrollment</strong> — keeps assignment decisions with staff.
+        </li>
+        <li>
+          <strong>Automatic curriculum assignment</strong> — recommends or assigns
+          curriculum subjects.
+        </li>
+        <li>
+          <strong>No-payment enrollment</strong> — removes the minimum-payment gate.
+        </li>
       </ul>
     </li>
-    <li>Leave all scope fields blank. The coverage preview should say this is the global blueprint.</li>
+    <li>
+      Leave all scope fields blank. The coverage preview should say this is the
+      global blueprint.
+    </li>
     <li>Select <strong>Create guided draft</strong>.</li>
   </ol>
   <div class="doc-callout doc-callout-note">
@@ -60,8 +80,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h3>1. Template and scope</h3>
   <p>
-    Confirm the coverage sentence and review inherited layers. A global blueprint
-    has no ancestor. Downloading a backup is optional at this stage.
+    Confirm the coverage sentence and review inherited layers. A global
+    blueprint has no ancestor. Downloading a backup is optional at this stage.
   </p>
 
   <h3>2. Availability and eligibility</h3>
@@ -70,16 +90,22 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <li>Allow only enrollment channels the school actively supports.</li>
     <li>Set an opening and closing date if the period is time-limited.</li>
     <li>Keep duplicate-enrollment protection enabled.</li>
-    <li>Select allowed schools, programs, student types, periods, and year levels only when restriction is intended.</li>
-    <li>Add balance, prerequisite, clearance, capacity, or schedule checks that the school can reliably supply.</li>
+    <li>
+      Select allowed schools, programs, student types, periods, and year levels
+      only when restriction is intended.
+    </li>
+    <li>
+      Add balance, prerequisite, clearance, capacity, or schedule checks that
+      the school can reliably supply.
+    </li>
   </ul>
 
   <h3>3. Required documents</h3>
   <p>
     Use student-facing names and instructions. For example:
-    <strong>Form 138</strong> with "Upload a clear PDF of every page; the
-    registrar will request the original later." Mark an item required only if
-    its absence should block progress.
+    <strong>Form 138</strong> with "Upload a clear PDF of every page; the registrar
+    will request the original later." Mark an item required only if its absence should
+    block progress.
   </p>
 
   <h3>4. Subjects and classes</h3>
@@ -103,25 +129,36 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <li>Select responsible roles.</li>
     <li>Select only the actions that should occur on approval.</li>
     <li>Make exactly one step the final completed outcome.</li>
-    <li>Keep the protected <strong>Otherwise</strong> destination pointing forward.</li>
+    <li>
+      Keep the protected <strong>Otherwise</strong> destination pointing forward.
+    </li>
     <li>Add messages only where students or staff need an update.</li>
   </ul>
 
   <h3>7. Test, publish, and activate</h3>
   <p>
     Save the draft, describe a representative student, and run the journey. Fix
-    every blocker using its <strong>Review setting</strong> link. Add a change
-    note and publish only when the readiness checklist is complete.
+    every blocker using its <strong>Review setting</strong> link. Add a change note
+    and publish only when the readiness checklist is complete.
   </p>
 
   <h2>Activate safely</h2>
-  <p>After the global policy is published and the compatibility report says <strong>Ready to activate</strong>:</p>
+  <p>
+    After the global policy is published and the compatibility report says <strong
+      >Ready to activate</strong
+    >:
+  </p>
   <ol>
-    <li>Run one final representative simulation against the active global version.</li>
+    <li>
+      Run one final representative simulation against the active global version.
+    </li>
     <li>Select <strong>Activate for future enrollments</strong>.</li>
     <li>Read the impact dialog carefully.</li>
     <li>Confirm activation.</li>
-    <li>Create a test enrollment through each supported entry path and verify the pinned workflow object.</li>
+    <li>
+      Create a test enrollment through each supported entry path and verify the
+      pinned workflow object.
+    </li>
   </ol>
   <div class="doc-callout doc-callout-tip">
     <p class="doc-callout-label">Recommended rollout</p>
@@ -133,8 +170,20 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Next steps</h2>
   <ul>
-    <li><a href="/docs/enrollment-policies/scopes-inheritance">Create scoped overrides</a></li>
-    <li><a href="/docs/enrollment-policies/simulation-publication">Understand the simulation report</a></li>
-    <li><a href="/docs/enrollment-policies/troubleshooting-deployment">Use the deployment-safety checklist</a></li>
+    <li>
+      <a href="/docs/enrollment-policies/scopes-inheritance"
+        >Create scoped overrides</a
+      >
+    </li>
+    <li>
+      <a href="/docs/enrollment-policies/simulation-publication"
+        >Understand the simulation report</a
+      >
+    </li>
+    <li>
+      <a href="/docs/enrollment-policies/troubleshooting-deployment"
+        >Use the deployment-safety checklist</a
+      >
+    </li>
   </ul>
 </DocsLayout>

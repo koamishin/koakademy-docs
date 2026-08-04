@@ -8,17 +8,19 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   description="Inertia + React portals, Wayfinder route helpers, the shadcn/Tailwind design system, and the build pipeline."
 >
   <p>
-    KoAkademy's interactive UI is <strong>Inertia 3 with React 19</strong> —
-    server-side routing and authorization, client-side rendering — with SSR
-    enabled (<code>ssr.tsx</code>). There is no separate SPA or client-side
-    router.
+    KoAkademy's interactive UI is <strong>Inertia 3 with React 19</strong> — server-side
+    routing and authorization, client-side rendering — with SSR enabled (<code
+      >ssr.tsx</code
+    >). There is no separate SPA or client-side router.
   </p>
 
   <h2>Page map</h2>
   <p>
     Pages live in <code>resources/js/pages/</code> (~184 <code>.tsx</code> pages)
     and mirror the audiences from
-    <a href="/docs/system/architecture-domain">Architecture &amp; domain model</a>:
+    <a href="/docs/system/architecture-domain"
+      >Architecture &amp; domain model</a
+    >:
   </p>
   <table>
     <thead>
@@ -32,17 +34,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td><code>administrators/</code></td>
         <td>Staff</td>
-        <td>Dashboard, students (documents, signature pad, checklists), classes and scheduling, curriculum, enrollments (applicants, assessment preview, analytics), finance, users and online users, roles, audit logs, feature toggles, system management (school, branding, grading, identifiers, mail, notifications, API keys, SEO, social providers, enrollment-policy blueprints)</td>
+        <td
+          >Dashboard, students (documents, signature pad, checklists), classes
+          and scheduling, curriculum, enrollments (applicants, assessment
+          preview, analytics), finance, users and online users, roles, audit
+          logs, feature toggles, system management (school, branding, grading,
+          identifiers, mail, notifications, API keys, SEO, social providers,
+          enrollment-policy blueprints)</td
+        >
       </tr>
       <tr>
         <td><code>faculty/</code></td>
         <td>Teachers</td>
-        <td>Dashboard, action center, attendance, classes (posts, submissions, grading), schedule (agenda and bird's-eye), forms, resources, toolkit</td>
+        <td
+          >Dashboard, action center, attendance, classes (posts, submissions,
+          grading), schedule (agenda and bird's-eye), forms, resources, toolkit</td
+        >
       </tr>
       <tr>
         <td><code>student/</code></td>
         <td>Students</td>
-        <td>Dashboard, classes and submissions, schedule, tuition and statements of account, digital ID card</td>
+        <td
+          >Dashboard, classes and submissions, schedule, tuition and statements
+          of account, digital ID card</td
+        >
       </tr>
       <tr>
         <td><code>enrollment/</code></td>
@@ -55,20 +70,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
         <td>The institution setup wizard</td>
       </tr>
       <tr>
-        <td><code>auth/</code>, <code>docs/</code>, <code>errors/</code>, <code>NotificationCenter/</code>, <code>Help/</code></td>
+        <td
+          ><code>auth/</code>, <code>docs/</code>, <code>errors/</code>, <code
+            >NotificationCenter/</code
+          >, <code>Help/</code></td
+        >
         <td>Shared</td>
-        <td>Sign-in and 2FA challenge, in-app documentation viewer, error pages, notification center, help tickets</td>
+        <td
+          >Sign-in and 2FA challenge, in-app documentation viewer, error pages,
+          notification center, help tickets</td
+        >
       </tr>
     </tbody>
   </table>
 
   <h2>Routing: Wayfinder + Ziggy</h2>
   <p>
-    Frontend code calls backend routes through <strong>Laravel Wayfinder</strong>
-    — typed helpers generated from the server's controllers/routes
-    (<code>@/actions</code>, <code>@/routes</code>), wired by the Wayfinder Vite
-    plugin. <strong>Do not hard-code URLs</strong> in React code; import the
-    generated helper. Ziggy remains available for dynamic cases.
+    Frontend code calls backend routes through <strong>Laravel Wayfinder</strong
+    >
+    — typed helpers generated from the server's controllers/routes (<code
+      >@/actions</code
+    >, <code>@/routes</code>), wired by the Wayfinder Vite plugin. <strong
+      >Do not hard-code URLs</strong
+    > in React code; import the generated helper. Ziggy remains available for dynamic
+    cases.
   </p>
 
   <h2>Design system</h2>
@@ -78,10 +103,13 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       primitives and base-ui — compose these before adding dependencies.
     </li>
     <li><strong>Tailwind CSS 4</strong> via <code>@tailwindcss/vite</code>.</li>
-    <li>Icons: lucide, tabler, phosphor (pick one per surface; lucide is the default).</li>
     <li>
-      The documentation site maps the same shadcn palette onto Starlight, so docs
-      and product share one visual identity.
+      Icons: lucide, tabler, phosphor (pick one per surface; lucide is the
+      default).
+    </li>
+    <li>
+      The documentation site maps the same shadcn palette onto Starlight, so
+      docs and product share one visual identity.
     </li>
   </ul>
   <p>Notable libraries and their roles:</p>
@@ -138,10 +166,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Build pipeline</h2>
   <p>
-    <strong>Vite 8</strong> with <code>laravel-vite-plugin</code> 3 handles dev
-    HMR and production builds; <code>vite-module-loader.js</code> wires
-    module-provided frontend entries (Laravel Modules). The production Docker
-    image builds assets with Bun in a dedicated stage; CI builds with
+    <strong>Vite 8</strong> with <code>laravel-vite-plugin</code> 3 handles dev HMR
+    and production builds; <code>vite-module-loader.js</code> wires module-provided
+    frontend entries (Laravel Modules). The production Docker image builds assets
+    with Bun in a dedicated stage; CI builds with
     <code>npm run build</code> on Node 22.
   </p>
 
@@ -149,8 +177,18 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <ul>
     <li><strong>TypeScript</strong> for all React code.</li>
     <li>Prefer existing design-system primitives; justify new dependencies.</li>
-    <li>Preserve keyboard access, visible focus, meaningful labels, reduced-motion behavior, loading states, and actionable error messages.</li>
-    <li>Forms: Inertia <code>useForm</code> (or Wayfinder form helpers) with server-side validation as the source of truth.</li>
-    <li>Formatting: <code>npm run format</code> (Prettier); linting: <code>npm run lint</code> (ESLint).</li>
+    <li>
+      Preserve keyboard access, visible focus, meaningful labels, reduced-motion
+      behavior, loading states, and actionable error messages.
+    </li>
+    <li>
+      Forms: Inertia <code>useForm</code> (or Wayfinder form helpers) with server-side
+      validation as the source of truth.
+    </li>
+    <li>
+      Formatting: <code>npm run format</code> (Prettier); linting: <code
+        >npm run lint</code
+      > (ESLint).
+    </li>
   </ul>
 </DocsLayout>

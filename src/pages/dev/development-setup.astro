@@ -16,21 +16,21 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>Alternative local setups</h2>
   <p>
     The native path below is canonical and works anywhere PHP 8.5 and Composer
-    run. If you prefer a managed local environment, these guides set up the
-    same toolchain in a different way:
+    run. If you prefer a managed local environment, these guides set up the same
+    toolchain in a different way:
   </p>
   <ul>
     <li>
-      <a href="/dev/laravel-herd">Laravel Herd</a> — native PHP
-      and services on Windows and macOS, no Docker.
+      <a href="/dev/laravel-herd">Laravel Herd</a> — native PHP and services on Windows
+      and macOS, no Docker.
     </li>
     <li>
-      <a href="/dev/laravel-sail">Laravel Sail</a> — a
-      per-project Docker environment with PostgreSQL and Redis.
+      <a href="/dev/laravel-sail">Laravel Sail</a> — a per-project Docker environment
+      with PostgreSQL and Redis.
     </li>
     <li>
-      <a href="/dev/laravel-valet">Laravel Valet (macOS)</a> —
-      the classic minimal PHP environment.
+      <a href="/dev/laravel-valet">Laravel Valet (macOS)</a> — the classic minimal
+      PHP environment.
     </li>
   </ul>
 
@@ -38,14 +38,22 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <ul>
     <li>PHP 8.5 and Composer 2</li>
     <li>Node.js 22 and npm</li>
-    <li><code>rsvg-convert</code> from <code>librsvg2-bin</code> for SVG brand uploads</li>
-    <li>SQLite for the default test/development path, or PostgreSQL for integration work</li>
-    <li>Redis and Gotenberg when working on queues, sessions, cache, or PDF features</li>
+    <li>
+      <code>rsvg-convert</code> from <code>librsvg2-bin</code> for SVG brand uploads
+    </li>
+    <li>
+      SQLite for the default test/development path, or PostgreSQL for
+      integration work
+    </li>
+    <li>
+      Redis and Gotenberg when working on queues, sessions, cache, or PDF
+      features
+    </li>
   </ul>
   <p>
     The repository includes a development-oriented <code>compose.yaml</code>. It
-    is <strong>not</strong> the production topology and publishes additional
-    tools and ports.
+    is <strong>not</strong> the production topology and publishes additional tools
+    and ports.
   </p>
 
   <h2>Native setup</h2>
@@ -60,8 +68,8 @@ php artisan migrate
 npm run build
 php artisan serve</code></pre>
   <p>
-    Open <code>http://127.0.0.1:8000/setup</code> to create development data and
-    the first administrator. Run a Vite development server with
+    Open <code>http://127.0.0.1:8000/setup</code> to create development data and the
+    first administrator. Run a Vite development server with
     <code>npm run dev</code> when editing frontend assets.
   </p>
 
@@ -86,35 +94,44 @@ php artisan test --compact --filter="shows the setup screen"</code></pre>
 npm run docs:check</code></pre>
   <p>
     The sync command generates marked MDX mirrors consumed by both the Astro
-    docs site and the in-app documentation viewer. <strong>Never edit generated
-    mirrors directly.</strong> Operator guides and enrollment blueprints under
-    <code>docs/src/content/docs/</code> remain native MDX and are edited in
-    place.
+    docs site and the in-app documentation viewer. <strong
+      >Never edit generated mirrors directly.</strong
+    > Operator guides and enrollment blueprints under
+    <code>docs/src/content/docs/</code> remain native MDX and are edited in place.
   </p>
 
   <h2>Application structure</h2>
   <ul>
-    <li><code>app/</code> — application services, models, middleware, jobs, policies, and support code</li>
+    <li>
+      <code>app/</code> — application services, models, middleware, jobs, policies,
+      and support code
+    </li>
     <li><code>routes/</code> — web, API, console, and channel routes</li>
-    <li><code>resources/js/</code> — Inertia React pages and frontend components</li>
-    <li><code>Modules/</code> — optional domain modules loaded by Laravel Modules</li>
+    <li>
+      <code>resources/js/</code> — Inertia React pages and frontend components
+    </li>
+    <li>
+      <code>Modules/</code> — optional domain modules loaded by Laravel Modules
+    </li>
     <li><code>database/</code> — migrations, factories, and seeders</li>
     <li><code>tests/</code> — Pest feature and unit tests</li>
-    <li><code>docs/</code> — Astro documentation site and in-app Markdown sources</li>
+    <li>
+      <code>docs/</code> — Astro documentation site and in-app Markdown sources
+    </li>
     <li><code>docker/</code> — production image and runtime scripts</li>
   </ul>
   <p>
-    See <a href="/docs/start-here/architecture">Architecture</a> for boundaries
-    and production dependencies.
+    See <a href="/docs/start-here/architecture">Architecture</a> for boundaries and
+    production dependencies.
   </p>
 
   <h2>Database changes</h2>
   <p>
-    Create <strong>migrations</strong> rather than modifying historical
-    migrations. Include factories or test fixtures when a behavior needs
-    representative data. Test migrations against SQLite when supported and
-    PostgreSQL when using database-specific features. Production migrations must
-    be compatible with the documented explicit <code>migrate --force</code>
+    Create <strong>migrations</strong> rather than modifying historical migrations.
+    Include factories or test fixtures when a behavior needs representative data.
+    Test migrations against SQLite when supported and PostgreSQL when using database-specific
+    features. Production migrations must be compatible with the documented explicit
+    <code>migrate --force</code>
     upgrade step.
   </p>
 
@@ -122,10 +139,18 @@ npm run docs:check</code></pre>
   <ul>
     <li>Use strict types in new PHP files.</li>
     <li>Validate request input and authorize protected actions.</li>
-    <li>Keep controllers focused on HTTP translation; place reusable workflows in services or actions.</li>
-    <li>Use Eloquent relationships, eager loading, and database constraints deliberately.</li>
+    <li>
+      Keep controllers focused on HTTP translation; place reusable workflows in
+      services or actions.
+    </li>
+    <li>
+      Use Eloquent relationships, eager loading, and database constraints
+      deliberately.
+    </li>
     <li>Dispatch expensive exports, mail, indexing, and PDF work to queues.</li>
-    <li>Keep secrets and host-specific values in configuration, never source code.</li>
+    <li>
+      Keep secrets and host-specific values in configuration, never source code.
+    </li>
   </ul>
 
   <h2>Frontend conventions</h2>

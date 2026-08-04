@@ -7,9 +7,7 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   path="/docs/maintainers/releases"
   description="Release Please, edge and stable container channels, version metadata, recovery, and rollback."
 >
-  <p>
-    KoAkademy deliberately separates rolling delivery from stable releases:
-  </p>
+  <p>KoAkademy deliberately separates rolling delivery from stable releases:</p>
   <table>
     <thead>
       <tr>
@@ -27,12 +25,22 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td>Merged <code>master</code> commit</td>
         <td>None</td>
-        <td>Immutable <code>sha-&lt;40-character-commit&gt;</code> and mutable <code>edge</code></td>
+        <td
+          >Immutable <code>sha-&lt;40-character-commit&gt;</code> and mutable <code
+            >edge</code
+          ></td
+        >
       </tr>
       <tr>
         <td>Merged Release Please PR</td>
         <td>Draft until publication succeeds</td>
-        <td><code>sha-&lt;commit&gt;</code>, <code>edge</code>, <code>vX.Y.Z</code>, <code>X.Y.Z</code>, <code>X.Y</code>, <code>X</code>, and <code>latest</code></td>
+        <td
+          ><code>sha-&lt;commit&gt;</code>, <code>edge</code>, <code
+            >vX.Y.Z</code
+          >, <code>X.Y.Z</code>, <code>X.Y</code>, <code>X</code>, and <code
+            >latest</code
+          ></td
+        >
       </tr>
       <tr>
         <td>Manual version request</td>
@@ -41,16 +49,20 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       </tr>
     </tbody>
   </table>
-  <p>Both registries receive the same <code>linux/amd64</code> and <code>linux/arm64</code> manifest:</p>
+  <p>
+    Both registries receive the same <code>linux/amd64</code> and <code
+      >linux/arm64</code
+    > manifest:
+  </p>
   <ul>
     <li><code>ghcr.io/yukazakiri/koakademy</code></li>
     <li><code>yukazaki/koakademy</code></li>
   </ul>
   <p>
-    Use an exact <code>vX.Y.Z</code> image in production. <code>latest</code> is
-    a convenience alias for the newest verified stable release.
-    <code>edge</code> is unsupported rolling software and may change after every
-    successfully delivered <code>master</code> commit. The historical
+    Use an exact <code>vX.Y.Z</code> image in production. <code>latest</code> is a
+    convenience alias for the newest verified stable release.
+    <code>edge</code> is unsupported rolling software and may change after every successfully
+    delivered <code>master</code> commit. The historical
     <code>dev-latest</code> and <code>v*-dev.*</code> tags and prereleases remain
     available but are frozen.
   </p>
@@ -80,11 +92,17 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
         <td>Minor</td>
       </tr>
       <tr>
-        <td><code>feat!:, fix!:</code> or a <code>BREAKING CHANGE:</code> footer</td>
+        <td
+          ><code>feat!:, fix!:</code> or a <code>BREAKING CHANGE:</code> footer</td
+        >
         <td>Major</td>
       </tr>
       <tr>
-        <td><code>docs:</code>, <code>chore:</code>, <code>ci:</code>, <code>test:</code>, and similar</td>
+        <td
+          ><code>docs:</code>, <code>chore:</code>, <code>ci:</code>, <code
+            >test:</code
+          >, and similar</td
+        >
         <td>Patch</td>
       </tr>
     </tbody>
@@ -99,14 +117,14 @@ chore(release): release 1.12.0</code></pre>
     <code>CI / required</code> check. Release Please is initialized from
     <code>v1.11.0</code>; later historical <code>-dev</code> tags are not release
     boundaries. The first generated release PR is expected to propose
-    <code>1.12.0</code> from the feature commits after that stable boundary, and
-    remains subject to maintainer review.
+    <code>1.12.0</code> from the feature commits after that stable boundary, and remains
+    subject to maintainer review.
   </p>
   <p>
-    An exact Release Please metadata-only pull request takes the fast CI path: it
-    validates the manifest version, tracked version, title, changelog entry, and
-    allowed three-file change set without rerunning the application suite. Any
-    unexpected file falls back to full CI.
+    An exact Release Please metadata-only pull request takes the fast CI path:
+    it validates the manifest version, tracked version, title, changelog entry,
+    and allowed three-file change set without rerunning the application suite.
+    Any unexpected file falls back to full CI.
   </p>
 
   <h2>Trusted delivery</h2>
@@ -119,7 +137,9 @@ chore(release): release 1.12.0</code></pre>
     <li>the event is <code>push</code>;</li>
     <li>the ref is exactly <code>refs/heads/master</code>;</li>
     <li>the event repository exactly matches this repository;</li>
-    <li>the immutable event <code>after</code> SHA matches the workflow SHA.</li>
+    <li>
+      the immutable event <code>after</code> SHA matches the workflow SHA.
+    </li>
   </ul>
   <p>
     No checkout or secret access occurs before that trust decision. Pull-request
@@ -128,14 +148,20 @@ chore(release): release 1.12.0</code></pre>
     Commit type creates or updates one reviewed Release Please PR: breaking
     commits propose a major version, features propose a minor version, and all
     other visible types — including <code>fix</code>, <code>ci</code>,
-    <code>docs</code>, <code>test</code>, and <code>chore</code> — propose a
-    patch. Delivery performs the only multi-architecture build for every
-    <code>master</code> commit, verifies it, and moves <code>edge</code> only if
-    that commit is still the current branch head.
+    <code>docs</code>, <code>test</code>, and <code>chore</code> — propose a patch.
+    Delivery performs the only multi-architecture build for every
+    <code>master</code> commit, verifies it, and moves <code>edge</code> only if that
+    commit is still the current branch head.
   </p>
   <p>When the release PR is merged, Release Please:</p>
   <ol>
-    <li>updates <code>CHANGELOG.md</code>, <code>.release-please-manifest.json</code>, and only the <code>version</code> field in tracked <code>version.json</code>;</li>
+    <li>
+      updates <code>CHANGELOG.md</code>, <code
+        >.release-please-manifest.json</code
+      >, and only the <code>version</code> field in tracked <code
+        >version.json</code
+      >;
+    </li>
     <li>force-creates the strict <code>vX.Y.Z</code> tag;</li>
     <li>creates a draft GitHub Release.</li>
   </ol>
@@ -144,11 +170,12 @@ chore(release): release 1.12.0</code></pre>
     and pushes immutable SHA tags to both registries, verifies identical digests
     and both architectures, generates BuildKit SBOM/provenance records plus
     GitHub provenance attestations, and only then promotes release aliases.
-    Every automatic delivery promotes the same verified image to <code>edge</code>;
-    a stable release commit therefore updates both <code>edge</code> and its
-    stable aliases without a duplicate build. Exact SemVer aliases are immutable.
-    Major, minor, and <code>latest</code> aliases move only when the recovered or
-    newly released version is the newest applicable stable tag.
+    Every automatic delivery promotes the same verified image to <code
+      >edge</code
+    >; a stable release commit therefore updates both <code>edge</code> and its stable
+    aliases without a duplicate build. Exact SemVer aliases are immutable. Major,
+    minor, and <code>latest</code> aliases move only when the recovered or newly released
+    version is the newest applicable stable tag.
   </p>
   <p>
     The draft is published and marked latest only after container verification,
@@ -158,10 +185,10 @@ chore(release): release 1.12.0</code></pre>
 
   <h2>Version metadata</h2>
   <p>
-    The tracked <code>version.json</code> records the latest stable source
-    version. Release Please changes only its <code>version</code> field. During
-    delivery, <code>scripts/generate-version-metadata.sh</code> creates the
-    image-specific file in the runner, including:
+    The tracked <code>version.json</code> records the latest stable source version.
+    Release Please changes only its <code>version</code> field. During delivery, <code
+      >scripts/generate-version-metadata.sh</code
+    > creates the image-specific file in the runner, including:
   </p>
   <ul>
     <li>stable version or edge SemVer build identity;</li>
@@ -201,7 +228,11 @@ chore(release): release 1.12.0</code></pre>
     <tbody>
       <tr>
         <td><code>RELEASE_PLEASE_TOKEN</code></td>
-        <td><code>release-automation</code> environment secret containing a dedicated fine-grained repository token with Contents, Pull requests, and Issues read/write; do not reuse <code>PROJECT_AUTOMATION_TOKEN</code></td>
+        <td
+          ><code>release-automation</code> environment secret containing a dedicated
+          fine-grained repository token with Contents, Pull requests, and Issues read/write;
+          do not reuse <code>PROJECT_AUTOMATION_TOKEN</code></td
+        >
       </tr>
       <tr>
         <td><code>DOCKERHUB_IMAGE</code></td>
@@ -209,11 +240,15 @@ chore(release): release 1.12.0</code></pre>
       </tr>
       <tr>
         <td><code>DOCKERHUB_USERNAME</code></td>
-        <td>Repository or <code>container-publishing</code> environment secret</td>
+        <td
+          >Repository or <code>container-publishing</code> environment secret</td
+        >
       </tr>
       <tr>
         <td><code>DOCKERHUB_TOKEN</code></td>
-        <td>Repository or <code>container-publishing</code> environment secret</td>
+        <td
+          >Repository or <code>container-publishing</code> environment secret</td
+        >
       </tr>
       <tr>
         <td><code>release-automation</code></td>
@@ -229,19 +264,38 @@ chore(release): release 1.12.0</code></pre>
     Docker Hub is mandatory, not an optional mirror. The built-in GitHub token
     publishes GHCR packages and GitHub attestations.
     <code>RELEASE_PLEASE_TOKEN</code> must be fine-grained and restricted to this
-    repository. Both privileged environments accept deployments from protected
-    branches only, so a manual run cannot select an unreviewed workflow ref.
+    repository. Both privileged environments accept deployments from protected branches
+    only, so a manual run cannot select an unreviewed workflow ref.
   </p>
   <p>
     Create <code>RELEASE_PLEASE_TOKEN</code> from
-    <strong>GitHub profile → Settings → Developer settings → Personal access
-    tokens → Fine-grained tokens → Generate new token</strong>:
+    <strong
+      >GitHub profile → Settings → Developer settings → Personal access tokens →
+      Fine-grained tokens → Generate new token</strong
+    >:
   </p>
   <ol>
-    <li>Set the resource owner to <code>yukazakiri</code> and select only <code>koakademy</code>.</li>
-    <li>Set repository permissions <strong>Contents</strong>, <strong>Pull requests</strong>, and <strong>Issues</strong> to <strong>Read and write</strong>. Leave every other permission at its default.</li>
-    <li>Choose a finite expiration and generate the token. Copy it immediately; GitHub does not show it again.</li>
-    <li>Open <strong>koakademy → Settings → Environments → release-automation → Environment secrets</strong>, create <code>RELEASE_PLEASE_TOKEN</code>, and paste the token value.</li>
+    <li>
+      Set the resource owner to <code>yukazakiri</code> and select only <code
+        >koakademy</code
+      >.
+    </li>
+    <li>
+      Set repository permissions <strong>Contents</strong>, <strong
+        >Pull requests</strong
+      >, and <strong>Issues</strong> to <strong>Read and write</strong>. Leave
+      every other permission at its default.
+    </li>
+    <li>
+      Choose a finite expiration and generate the token. Copy it immediately;
+      GitHub does not show it again.
+    </li>
+    <li>
+      Open <strong
+        >koakademy → Settings → Environments → release-automation → Environment
+        secrets</strong
+      >, create <code>RELEASE_PLEASE_TOKEN</code>, and paste the token value.
+    </li>
   </ol>
   <p>
     Never paste the token into a workflow, issue, pull request, command history,
@@ -256,25 +310,25 @@ chore(release): release 1.12.0</code></pre>
   </p>
   <ul>
     <li>
-      Set <strong>version</strong> to a new strict <code>X.Y.Z</code> version to
-      create or update a reviewed Release Please PR at that exact version. The
-      requested version must be newer than the latest stable tag. This
-      metadata-only request does not rebuild a container; merge the resulting
-      release PR to run the normal verified stable publication.
+      Set <strong>version</strong> to a new strict <code>X.Y.Z</code> version to create
+      or update a reviewed Release Please PR at that exact version. The requested
+      version must be newer than the latest stable tag. This metadata-only request
+      does not rebuild a container; merge the resulting release PR to run the normal
+      verified stable publication.
     </li>
     <li>
-      Set <strong>tag</strong> to an existing strict <code>vX.Y.Z</code> tag to
-      recover its publication. The workflow rejects prerelease, missing,
-      malformed, or invented tags and never creates or moves a Git tag during
-      recovery. It may rebuild a missing immutable SHA image, recreate a missing
-      draft for the existing tag, re-upload assets, and finalize publication.
+      Set <strong>tag</strong> to an existing strict <code>vX.Y.Z</code> tag to recover
+      its publication. The workflow rejects prerelease, missing, malformed, or invented
+      tags and never creates or moves a Git tag during recovery. It may rebuild a
+      missing immutable SHA image, recreate a missing draft for the existing tag,
+      re-upload assets, and finalize publication.
     </li>
   </ul>
   <p>
     Recovery of an older stable version never rolls back <code>latest</code>, a
     major alias, or a minor alias past a newer matching stable version. If an
-    immutable SemVer tag already points to another digest, recovery fails instead
-    of moving it.
+    immutable SemVer tag already points to another digest, recovery fails
+    instead of moving it.
   </p>
 
   <h2>Verification and rollback</h2>
@@ -287,8 +341,8 @@ docker buildx imagetools inspect yukazaki/koakademy:vX.Y.Z</code></pre>
     <code>/up</code>, then exercise login, queues, uploads, and one PDF render.
   </p>
   <p>
-    Rollback by selecting the previous reviewed exact <code>vX.Y.Z</code> tag,
-    never by guessing the former value of <code>latest</code> or
+    Rollback by selecting the previous reviewed exact <code>vX.Y.Z</code> tag, never
+    by guessing the former value of <code>latest</code> or
     <code>edge</code>. Read that release's migration notes first; if the earlier
     application cannot read the migrated schema, restore the matching database
     backup and image together.

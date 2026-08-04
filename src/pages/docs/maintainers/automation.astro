@@ -9,8 +9,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 >
   <p>
     Four lightweight workflows keep the issue tracker and PR queue manageable
-    without a bot account. All use <code>actions/github-script</code> and run
-    with minimal permissions.
+    without a bot account. All use <code>actions/github-script</code> and run with
+    minimal permissions.
   </p>
 
   <h2>Auto Label (<code>auto-label.yml</code>)</h2>
@@ -20,8 +20,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
   <ul>
     <li>
-      <strong>Issues and PRs:</strong> scans title/body keywords and adds
-      matching labels — <code>bug</code>, <code>feature</code>,
+      <strong>Issues and PRs:</strong> scans title/body keywords and adds matching
+      labels — <code>bug</code>, <code>feature</code>,
       <code>documentation</code>, <code>refactor</code>, <code>breaking</code>,
       <code>chore</code>, <code>performance</code>, <code>security</code>,
       <code>good first issue</code>, <code>ui/ux</code>, <code>database</code>,
@@ -29,8 +29,9 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <code>priority: high/low</code>.
     </li>
     <li>
-      <strong>PRs additionally:</strong> maps changed file paths to area labels
-      (<code>frontend</code>, <code>backend</code>, <code>ci/cd</code>,
+      <strong>PRs additionally:</strong> maps changed file paths to area labels (<code
+        >frontend</code
+      >, <code>backend</code>, <code>ci/cd</code>,
       <code>docker</code>, <code>tests</code>, <code>database</code>,
       <code>ui/ux</code>).
     </li>
@@ -47,7 +48,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Issue Quality Check (<code>issue-quality.yml</code>)</h2>
   <p>
-    Triggers on issues (opened/edited). Skips the repo owner and anything labeled
+    Triggers on issues (opened/edited). Skips the repo owner and anything
+    labeled
     <code>enhancement</code>.
   </p>
   <p>It enforces the bug-report template by extracting three sections:</p>
@@ -81,15 +83,23 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     bot's close is a nudge, not a verdict.
   </p>
 
-  <h2>Project Roadmap Automation (<code>project-roadmap-automation.yml</code>)</h2>
+  <h2>
+    Project Roadmap Automation (<code>project-roadmap-automation.yml</code>)
+  </h2>
   <p>
     Keeps a Projects v2 board in sync (requires
     <code>secrets.PROJECT_AUTOMATION_TOKEN</code>; board IDs are configured in
     the workflow):
   </p>
   <ul>
-    <li>New issues → added to the board with <strong>Status: Todo</strong> (polled until the item appears).</li>
-    <li>PRs → <strong>Todo</strong> when draft, <strong>In Progress</strong> when ready, <strong>Done</strong> on close.</li>
+    <li>
+      New issues → added to the board with <strong>Status: Todo</strong> (polled until
+      the item appears).
+    </li>
+    <li>
+      PRs → <strong>Todo</strong> when draft, <strong>In Progress</strong> when ready,
+      <strong>Done</strong> on close.
+    </li>
   </ul>
   <p>
     Without the secret configured the workflow fails soft at the API call — safe
@@ -114,8 +124,7 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <strong>Bug report</strong> (auto-labels <code>bug</code>,
       <code>unconfirmed</code>) — area/module dropdown, KoAkademy/Laravel/PHP
       versions, problem, expected behavior, steps, and a required
-      <strong>reproduction repository</strong> (enforced by the quality check
-      above).
+      <strong>reproduction repository</strong> (enforced by the quality check above).
     </li>
     <li>
       <strong>Feature request</strong> (auto-labels <code>enhancement</code>) —
@@ -135,8 +144,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       required beyond removing a label or reopening.
     </li>
     <li>
-      Changing label names? Update <code>auto-label.yml</code> and the
-      quality-check label (<code>needs more info</code>) together.
+      Changing label names? Update <code>auto-label.yml</code> and the quality-check
+      label (<code>needs more info</code>) together.
     </li>
   </ul>
 </DocsLayout>

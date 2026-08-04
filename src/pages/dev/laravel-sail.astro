@@ -21,10 +21,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 php artisan sail:install --with=pgsql,redis</code></pre>
   <p>
     The <code>--with</code> option selects PostgreSQL and Redis non-interactively;
-    running <code>php artisan sail:install</code> without it shows the service
-    menu. This publishes a <code>docker-compose.yml</code> in the project root
-    and a PHP image folder (for example <code>docker/8.5</code>) that the
-    compose file references.
+    running <code>php artisan sail:install</code> without it shows the service menu.
+    This publishes a <code>docker-compose.yml</code> in the project root and a PHP
+    image folder (for example <code>docker/8.5</code>) that the compose file
+    references.
   </p>
 
   <h2>2. Configure .env</h2>
@@ -53,10 +53,9 @@ QUEUE_CONNECTION=redis</code></pre>
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate</code></pre>
   <p>
-    The first <code>sail up</code> builds the image and takes a few minutes.
-    Sail serves the application on port 80, so open
-    <code>http://localhost/setup</code> to create development data and the first
-    administrator.
+    The first <code>sail up</code> builds the image and takes a few minutes. Sail
+    serves the application on port 80, so open
+    <code>http://localhost/setup</code> to create development data and the first administrator.
   </p>
 
   <h2>4. Frontend work</h2>
@@ -66,8 +65,8 @@ QUEUE_CONNECTION=redis</code></pre>
 
   <h2>5. Gotenberg (optional)</h2>
   <p>
-    Sail has no Gotenberg service by default. If you work on PDF generation,
-    add it to the published <code>docker-compose.yml</code>:
+    Sail has no Gotenberg service by default. If you work on PDF generation, add
+    it to the published <code>docker-compose.yml</code>:
   </p>
   <pre><code>  gotenberg:
     image: gotenberg/gotenberg:8
@@ -75,7 +74,9 @@ QUEUE_CONNECTION=redis</code></pre>
     ports:
       - '3000:3000'</code></pre>
   <p>
-    then set <code>GOTENBERG_URL=http://gotenberg:3000</code> in <code>.env</code>
+    then set <code>GOTENBERG_URL=http://gotenberg:3000</code> in <code
+      >.env</code
+    >
     and run <code>./vendor/bin/sail up -d</code> again.
   </p>
 
@@ -92,9 +93,8 @@ QUEUE_CONNECTION=redis</code></pre>
     <p class="doc-callout-label">Windows and WSL2</p>
     <p>
       On Windows, install Docker Desktop with the WSL2 backend and run every
-      command inside a WSL2 distribution. Keep the project on the WSL
-      filesystem — not <code>/mnt/c</code> — for acceptable file I/O
-      performance.
+      command inside a WSL2 distribution. Keep the project on the WSL filesystem
+      — not <code>/mnt/c</code> — for acceptable file I/O performance.
     </p>
   </div>
 </DocsLayout>

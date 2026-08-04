@@ -20,18 +20,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <a href="/docs/self-hosting/dokploy">Dokploy</a>,
       <a href="/docs/self-hosting/coolify">Coolify</a>,
       <a href="/docs/self-hosting/caprover">CapRover</a>, and
-      <a href="/docs/self-hosting/vps">bare-metal VPS</a> guides for
-      platform-specific steps built on the same production Compose file.
+      <a href="/docs/self-hosting/vps">bare-metal VPS</a> guides for platform-specific
+      steps built on the same production Compose file.
     </p>
   </div>
 
   <h2>Prerequisites</h2>
   <ul>
-    <li>Linux host with Bash and Docker Engine, or Windows x64 with PowerShell and Docker Desktop using Linux containers</li>
+    <li>
+      Linux host with Bash and Docker Engine, or Windows x64 with PowerShell and
+      Docker Desktop using Linux containers
+    </li>
     <li>Docker daemon access from the account running the installer</li>
-    <li>4 GB RAM minimum for a small evaluation; size from observed workload</li>
-    <li>Free host port <code>8000</code>; local RustFS also uses host port <code>9000</code></li>
-    <li>Outbound access to GitHub, GitHub Container Registry, Docker Hub, and any external object-storage endpoint</li>
+    <li>
+      4 GB RAM minimum for a small evaluation; size from observed workload
+    </li>
+    <li>
+      Free host port <code>8000</code>; local RustFS also uses host port <code
+        >9000</code
+      >
+    </li>
+    <li>
+      Outbound access to GitHub, GitHub Container Registry, Docker Hub, and any
+      external object-storage endpoint
+    </li>
   </ul>
   <p>
     Only PostgreSQL is supported by the prebuilt production image. SQLite is
@@ -68,10 +80,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       availability. The RustFS console is not published.
     </li>
     <li>
-      The default application URL is <code>http://&lt;detected-ip&gt;:8000</code>.
-      HTTP is suitable only for local or LAN evaluation. Before production use,
-      put an HTTPS reverse proxy or tunnel in front of port <code>8000</code>. If
-      local RustFS is used with HTTPS, also provide an HTTPS edge for port
+      The default application URL is <code>http://&lt;detected-ip&gt;:8000</code
+      >. HTTP is suitable only for local or LAN evaluation. Before production
+      use, put an HTTPS reverse proxy or tunnel in front of port <code
+        >8000</code
+      >. If local RustFS is used with HTTPS, also provide an HTTPS edge for port
       <code>9000</code> and set <code>KOAKADEMY_S3_PUBLIC_URL</code>.
     </li>
     <li>
@@ -79,8 +92,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <code>KOAKADEMY_VERSION</code>, <code>RUSTFS_VERSION</code>,
       <code>KOAKADEMY_APP_URL</code>, <code>KOAKADEMY_APP_PORT</code>,
       <code>KOAKADEMY_STORAGE=rustfs|external</code>, and the
-      <code>KOAKADEMY_S3_*</code> values. Without <code>KOAKADEMY_VERSION</code>,
-      version discovery fails closed if GitHub cannot return a stable tag; it
+      <code>KOAKADEMY_S3_*</code> values. Without <code>KOAKADEMY_VERSION</code
+      >, version discovery fails closed if GitHub cannot return a stable tag; it
       never silently falls back to a mutable image.
     </li>
   </ul>
@@ -88,28 +101,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <p class="doc-callout-label">Running remote code is privileged</p>
     <p>
       To inspect the Linux installer first:
-      <code>curl -fsSLO https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh</code>,
-      then <code>less install.sh</code>, then <code>bash install.sh</code>. On
-      Windows, download <code>install.ps1</code> with
-      <code>Invoke-WebRequest</code>, read it with <code>Get-Content</code>, then
-      run <code>&amp; .\install.ps1</code>.
+      <code
+        >curl -fsSLO
+        https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh</code
+      >, then <code>less install.sh</code>, then <code>bash install.sh</code>.
+      On Windows, download <code>install.ps1</code> with
+      <code>Invoke-WebRequest</code>, read it with <code>Get-Content</code>,
+      then run <code>&amp; .\install.ps1</code>.
     </p>
   </div>
   <div class="doc-callout doc-callout-caution">
     <p class="doc-callout-label">The edge channel is unsupported</p>
     <p>
-      An explicit <code>KOAKADEMY_VERSION=edge</code> selects the unsupported
-      rolling channel and prints a warning. Use it only for disposable
-      evaluation or pre-release compatibility testing. Automatic discovery never
-      selects <code>edge</code>, and production installations should pin an exact
+      An explicit <code>KOAKADEMY_VERSION=edge</code> selects the unsupported rolling
+      channel and prints a warning. Use it only for disposable evaluation or pre-release
+      compatibility testing. Automatic discovery never selects <code>edge</code
+      >, and production installations should pin an exact
       <code>vX.Y.Z</code> stable tag.
     </p>
   </div>
 
   <h2>Manual Docker Compose installation</h2>
   <p>
-    Use this path when an operator-managed Compose topology is preferred over the
-    default Swarm installer.
+    Use this path when an operator-managed Compose topology is preferred over
+    the default Swarm installer.
   </p>
 
   <h3>1. Obtain a supported release</h3>
@@ -118,9 +133,9 @@ cd koakademy
 git fetch --tags
 git checkout &lt;latest-stable-tag&gt;</code></pre>
   <p>
-    Replace <code>&lt;latest-stable-tag&gt;</code> with the latest
-    non-prerelease tag shown on the GitHub Releases page. KoAkademy supports
-    only the latest stable release; do not deploy <code>edge</code>,
+    Replace <code>&lt;latest-stable-tag&gt;</code> with the latest non-prerelease
+    tag shown on the GitHub Releases page. KoAkademy supports only the latest stable
+    release; do not deploy <code>edge</code>,
     <code>-dev</code>, prerelease, or arbitrary branch images as production
     releases.
   </p>
@@ -130,9 +145,18 @@ git checkout &lt;latest-stable-tag&gt;</code></pre>
 chmod 600 .env</code></pre>
   <p>At minimum, replace:</p>
   <ul>
-    <li><code>APP_URL</code>, <code>PORTAL_HOST</code>, and <code>ADMIN_HOST</code> with the same production hostname</li>
-    <li><code>DB_PASSWORD</code> and <code>REDIS_PASSWORD</code> with unique random values</li>
-    <li>every <code>AWS_*</code> value with credentials for a dedicated S3-compatible bucket</li>
+    <li>
+      <code>APP_URL</code>, <code>PORTAL_HOST</code>, and <code>ADMIN_HOST</code
+      > with the same production hostname
+    </li>
+    <li>
+      <code>DB_PASSWORD</code> and <code>REDIS_PASSWORD</code> with unique random
+      values
+    </li>
+    <li>
+      every <code>AWS_*</code> value with credentials for a dedicated S3-compatible
+      bucket
+    </li>
     <li><code>MAIL_*</code> when real email delivery is required</li>
     <li><code>KOAKADEMY_VERSION</code> with the matching stable image tag</li>
   </ul>
@@ -160,26 +184,39 @@ docker compose --env-file .env -f compose.production.yaml ps
 curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
   <p>
     If <code>/up</code> fails, inspect
-    <code>docker compose --env-file .env -f compose.production.yaml logs app</code>
+    <code
+      >docker compose --env-file .env -f compose.production.yaml logs app</code
+    >
     and use <a href="/docs/self-hosting/troubleshooting">Troubleshooting</a>.
   </p>
 
   <h3>5. Add HTTPS and complete setup</h3>
   <p>
     Forward your HTTPS edge to <code>http://127.0.0.1:8000</code> and preserve
-    <code>Host</code>, <code>X-Forwarded-For</code>, <code>X-Forwarded-Host</code>,
-    and <code>X-Forwarded-Proto</code> headers. Then visit
+    <code>Host</code>, <code>X-Forwarded-For</code>, <code
+      >X-Forwarded-Host</code
+    >, and <code>X-Forwarded-Proto</code> headers. Then visit
     <code>https://school.example/setup</code>. The one-time wizard creates the
     institution, initial academic period, and first super administrator. After
-    completion, verify <code>https://school.example/admin</code>. The setup route
-    returns <code>403</code> after the application is initialized.
+    completion, verify <code>https://school.example/admin</code>. The setup
+    route returns <code>403</code> after the application is initialized.
   </p>
 
   <h2>Next steps</h2>
   <ul>
-    <li>Finish the production checklist in <a href="/docs/self-hosting/deployment">Deployment</a>.</li>
-    <li>Review every variable in <a href="/docs/self-hosting/configuration">Configuration</a>.</li>
-    <li>Configure scheduled backups for PostgreSQL and external object storage.</li>
+    <li>
+      Finish the production checklist in <a href="/docs/self-hosting/deployment"
+        >Deployment</a
+      >.
+    </li>
+    <li>
+      Review every variable in <a href="/docs/self-hosting/configuration"
+        >Configuration</a
+      >.
+    </li>
+    <li>
+      Configure scheduled backups for PostgreSQL and external object storage.
+    </li>
     <li>Subscribe to security and release notifications for the repository.</li>
   </ul>
 </DocsLayout>

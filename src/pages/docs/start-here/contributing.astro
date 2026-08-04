@@ -9,8 +9,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 >
   <p>
     Thank you for improving KoAkademy. Contributions should be
-    <strong>focused, testable, and safe</strong> for institutions that self-host
-    the application.
+    <strong>focused, testable, and safe</strong> for institutions that self-host the
+    application.
   </p>
 
   <h2>Before opening work</h2>
@@ -22,7 +22,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </li>
     <li>
       Do not use a public issue for vulnerabilities; follow
-      <a href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md" target="_blank" rel="noreferrer">SECURITY.md</a>.
+      <a
+        href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md"
+        target="_blank"
+        rel="noreferrer">SECURITY.md</a
+      >.
     </li>
     <li>
       Keep product changes separate from formatting, generated files, or
@@ -50,22 +54,39 @@ KOAKADEMY_ENV_FILE=.env.production.example \
   docker compose --env-file .env.production.example -f compose.production.yaml config --quiet</code></pre>
   <ul>
     <li>Add or update Pest tests for behavior changes.</li>
-    <li>Add migrations for schema changes; do not rewrite released migration history.</li>
-    <li>Update canonical root docs when installation, configuration, architecture, or operations change.</li>
-    <li>Run <code>npm run docs:sync</code> and commit the generated MDX mirrors.</li>
-    <li>Keep API examples limited to tested routes and real response shapes.</li>
-    <li>Avoid new services, dependencies, network calls, or telemetry without explaining the tradeoff.</li>
-    <li>Confirm no credentials, personal data, production logs, or generated <code>.env</code> files are included.</li>
+    <li>
+      Add migrations for schema changes; do not rewrite released migration
+      history.
+    </li>
+    <li>
+      Update canonical root docs when installation, configuration, architecture,
+      or operations change.
+    </li>
+    <li>
+      Run <code>npm run docs:sync</code> and commit the generated MDX mirrors.
+    </li>
+    <li>
+      Keep API examples limited to tested routes and real response shapes.
+    </li>
+    <li>
+      Avoid new services, dependencies, network calls, or telemetry without
+      explaining the tradeoff.
+    </li>
+    <li>
+      Confirm no credentials, personal data, production logs, or generated <code
+        >.env</code
+      > files are included.
+    </li>
     <li>
       Give the pull request a clear topic-focused title. Automation converts
       non-conventional titles to a Conventional Commit title such as
       <code>fix(installer): preserve swarm state</code> or
-      <code>feat(enrollments): add fee overrides</code>; review the inferred type
-      and scope before merge.
+      <code>feat(enrollments): add fee overrides</code>; review the inferred
+      type and scope before merge.
     </li>
     <li>
-      Keep the branch current with <code>master</code> so the merge queue can
-      validate the exact candidate.
+      Keep the branch current with <code>master</code> so the merge queue can validate
+      the exact candidate.
     </li>
   </ul>
 
@@ -79,10 +100,10 @@ KOAKADEMY_ENV_FILE=.env.production.example \
   <p>
     Prefer small commits with imperative messages. KoAkademy squash-merges pull
     requests, so the automatically normalized and maintainer-reviewed
-    Conventional Commit PR title becomes the <code>master</code> commit and the
-    Release Please changelog/version input. Pull request descriptions should
-    explain the problem, solution, validation performed, user-visible impact,
-    migration or rollback concerns, and screenshots for interface changes.
+    Conventional Commit PR title becomes the <code>master</code> commit and the Release
+    Please changelog/version input. Pull request descriptions should explain the problem,
+    solution, validation performed, user-visible impact, migration or rollback concerns,
+    and screenshots for interface changes.
   </p>
 
   <h2>Documentation ownership</h2>
@@ -91,9 +112,9 @@ KOAKADEMY_ENV_FILE=.env.production.example \
     <code>DEPLOYMENT.md</code>, <code>CONFIGURATION.md</code>,
     <code>TROUBLESHOOTING.md</code>, <code>DEVELOPMENT.md</code>,
     <code>CONTRIBUTING.md</code>, <code>ARCHITECTURE.md</code>, and
-    <code>FAQ.md</code> are canonical. Their generated MDX mirrors contain a
-    warning header and must not be edited by hand. Operator guides, enrollment
-    blueprints, and API pages remain native under
+    <code>FAQ.md</code> are canonical. Their generated MDX mirrors contain a warning
+    header and must not be edited by hand. Operator guides, enrollment blueprints,
+    and API pages remain native under
     <code>docs/src/content/docs/</code>.
   </p>
 
@@ -101,9 +122,12 @@ KOAKADEMY_ENV_FILE=.env.production.example \
   <p>
     By contributing, you agree that your contribution is licensed under the
     repository's
-    <a href="https://github.com/yukazakiri/koakademy/blob/master/LICENSE.md" target="_blank" rel="noreferrer">GNU AGPL-3.0-or-later license</a>.
-    Ensure you have the right to submit the work and preserve required notices
-    for third-party material.
+    <a
+      href="https://github.com/yukazakiri/koakademy/blob/master/LICENSE.md"
+      target="_blank"
+      rel="noreferrer">GNU AGPL-3.0-or-later license</a
+    >. Ensure you have the right to submit the work and preserve required
+    notices for third-party material.
   </p>
   <p>
     The project has not adopted a Code of Conduct yet — an explicit maintainer

@@ -13,15 +13,15 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <p>
     The default installer deploys KoAkademy, PostgreSQL, Redis, and Gotenberg as
     manager-pinned Docker Swarm services on an attachable overlay. It publishes
-    KoAkademy on host port <code>8000</code>; local RustFS additionally publishes
-    its S3 API on host port <code>9000</code>. PostgreSQL, Redis, Gotenberg, and
-    the RustFS console are not published.
+    KoAkademy on host port <code>8000</code>; local RustFS additionally
+    publishes its S3 API on host port <code>9000</code>. PostgreSQL, Redis,
+    Gotenberg, and the RustFS console are not published.
   </p>
   <p>
-    The manual <code>compose.production.yaml</code> topology remains supported.
-    It runs the application, PostgreSQL, Redis, and Gotenberg and binds only the
-    application to <code>127.0.0.1:8000</code>. Manual Compose uploads use
-    external S3-compatible storage.
+    The manual <code>compose.production.yaml</code> topology remains supported. It
+    runs the application, PostgreSQL, Redis, and Gotenberg and binds only the application
+    to <code>127.0.0.1:8000</code>. Manual Compose uploads use external
+    S3-compatible storage.
   </p>
   <p>
     Both topologies require an operator-managed Caddy, Nginx, Traefik, or tunnel
@@ -32,19 +32,21 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Image channels</h2>
   <p>
-    Stable releases are published identically to GHCR
-    (<code>ghcr.io/yukazakiri/koakademy</code>) and Docker Hub
-    (<code>yukazaki/koakademy</code>) for AMD64 and ARM64. Production
-    deployments should use an exact <code>vX.Y.Z</code> tag. <code>latest</code>
-    follows only the newest verified stable release; it is not the production
-    recommendation because its target changes.
+    Stable releases are published identically to GHCR (<code
+      >ghcr.io/yukazakiri/koakademy</code
+    >) and Docker Hub (<code>yukazaki/koakademy</code>) for AMD64 and ARM64.
+    Production deployments should use an exact <code>vX.Y.Z</code> tag. <code
+      >latest</code
+    >
+    follows only the newest verified stable release; it is not the production recommendation
+    because its target changes.
   </p>
   <p>
     The <code>edge</code> tag follows the newest successfully delivered
-    <code>master</code> commit, including documentation, workflow, and stable
-    release commits. It is unsupported rolling software. Immutable
-    <code>sha-&lt;40-character-commit&gt;</code> tags are available for audit,
-    canary pinning, and exact rollback. Historical <code>dev-latest</code> and
+    <code>master</code> commit, including documentation, workflow, and stable release
+    commits. It is unsupported rolling software. Immutable
+    <code>sha-&lt;40-character-commit&gt;</code> tags are available for audit, canary
+    pinning, and exact rollback. Historical <code>dev-latest</code> and
     <code>v*-dev.*</code> images are frozen and receive no new publications.
   </p>
   <p>The default is one hostname:</p>
@@ -52,8 +54,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 https://school.example/admin   administration</code></pre>
   <p>
     Split portal and admin subdomains are an advanced configuration. Add both
-    hostnames to <code>PORTAL_HOST</code>, <code>ADMIN_HOST</code>, and the proxy
-    certificate/routing configuration.
+    hostnames to <code>PORTAL_HOST</code>, <code>ADMIN_HOST</code>, and the
+    proxy certificate/routing configuration.
   </p>
 
   <h2>First deployment</h2>
@@ -62,20 +64,40 @@ https://school.example/admin   administration</code></pre>
     installer performs this order:
   </p>
   <ol>
-    <li>Verify Docker's Linux engine and initialize Swarm only when it is inactive.</li>
-    <li>Preserve an existing manager cluster and create an attachable KoAkademy overlay.</li>
-    <li>Resolve stable image tags and create generated credentials as Docker secrets.</li>
-    <li>Start manager-pinned PostgreSQL, Redis, Gotenberg, and optional RustFS services.</li>
+    <li>
+      Verify Docker's Linux engine and initialize Swarm only when it is
+      inactive.
+    </li>
+    <li>
+      Preserve an existing manager cluster and create an attachable KoAkademy
+      overlay.
+    </li>
+    <li>
+      Resolve stable image tags and create generated credentials as Docker
+      secrets.
+    </li>
+    <li>
+      Start manager-pinned PostgreSQL, Redis, Gotenberg, and optional RustFS
+      services.
+    </li>
     <li>Create the local RustFS bucket or validate the external S3 bucket.</li>
-    <li>Run <code>php artisan migrate --force</code> as a restartable one-off Swarm job.</li>
-    <li>Start KoAkademy and verify the host-published <code>/up</code> endpoint.</li>
-    <li>Print <code>/setup</code> and <code>/admin</code>, then leave HTTPS configuration to the operator.</li>
+    <li>
+      Run <code>php artisan migrate --force</code> as a restartable one-off Swarm
+      job.
+    </li>
+    <li>
+      Start KoAkademy and verify the host-published <code>/up</code> endpoint.
+    </li>
+    <li>
+      Print <code>/setup</code> and <code>/admin</code>, then leave HTTPS
+      configuration to the operator.
+    </li>
   </ol>
   <p>
     The installer is idempotent for an already-complete installation: it reports
     the existing service instead of recreating the Swarm or rotating secrets. It
-    never calls <code>docker swarm leave</code>, removes the existing overlay, or
-    deletes persistent services. Container startup keeps
+    never calls <code>docker swarm leave</code>, removes the existing overlay,
+    or deletes persistent services. Container startup keeps
     <code>RUN_MIGRATIONS=false</code>; schema changes remain explicit one-off
     jobs.
   </p>
@@ -87,13 +109,13 @@ X-Forwarded-For
 X-Forwarded-Host
 X-Forwarded-Proto</code></pre>
   <p>
-    <code>TRUSTED_HOSTS</code> accepts additional comma-separated exact
-    hostnames. <code>TRUSTED_PROXIES</code> accepts <code>*</code>, IP addresses,
-    or CIDRs. The Swarm installer leaves <code>TRUSTED_PROXIES</code> empty
-    because its host port is not loopback-only; set
-    <code>KOAKADEMY_TRUSTED_PROXIES</code> to the explicit edge addresses/CIDRs
-    before installation when forwarded headers are required. Trusting all
-    proxies is appropriate only for the loopback-only Compose origin.
+    <code>TRUSTED_HOSTS</code> accepts additional comma-separated exact hostnames.
+    <code>TRUSTED_PROXIES</code> accepts <code>*</code>, IP addresses, or CIDRs.
+    The Swarm installer leaves <code>TRUSTED_PROXIES</code> empty because its host
+    port is not loopback-only; set
+    <code>KOAKADEMY_TRUSTED_PROXIES</code> to the explicit edge addresses/CIDRs before
+    installation when forwarded headers are required. Trusting all proxies is appropriate
+    only for the loopback-only Compose origin.
   </p>
   <p>Example Caddy site:</p>
   <pre><code>school.example &#123;
@@ -105,8 +127,8 @@ X-Forwarded-Proto</code></pre>
     <p>
       When local RustFS backs an HTTPS KoAkademy installation, expose port
       <code>9000</code> through a separate HTTPS storage hostname and set
-      <code>KOAKADEMY_S3_PUBLIC_URL</code> to the bucket base URL. Serving an
-      HTTP object URL inside an HTTPS page is blocked as mixed content.
+      <code>KOAKADEMY_S3_PUBLIC_URL</code> to the bucket base URL. Serving an HTTP
+      object URL inside an HTTPS page is blocked as mixed content.
     </p>
   </div>
 
@@ -114,16 +136,21 @@ X-Forwarded-Proto</code></pre>
   <p>Back up both data planes:</p>
   <ul>
     <li>PostgreSQL database, including a periodic restore test</li>
-    <li>S3-compatible bucket or local RustFS volume, per the storage system's versioning and retention controls</li>
-    <li>Swarm manager state when installer-generated Docker secrets are used</li>
+    <li>
+      S3-compatible bucket or local RustFS volume, per the storage system's
+      versioning and retention controls
+    </li>
+    <li>
+      Swarm manager state when installer-generated Docker secrets are used
+    </li>
   </ul>
   <p>
     The Redis volume is operational state, not the source of record. Compose
     operators preserve <code>.env</code> and <code>APP_KEY</code> in an encrypted
-    secret store. Swarm operators back up the manager's Swarm state using
-    Docker's documented procedure, because generated secret values are not
-    written to a plaintext recovery file. Losing <code>APP_KEY</code> can make
-    encrypted application data and sessions unreadable.
+    secret store. Swarm operators back up the manager's Swarm state using Docker's
+    documented procedure, because generated secret values are not written to a plaintext
+    recovery file. Losing <code>APP_KEY</code> can make encrypted application data
+    and sessions unreadable.
   </p>
   <p>Example Swarm database backup:</p>
   <pre><code>docker ps --filter label=com.docker.swarm.service.name=koakademy-postgres \
@@ -147,13 +174,12 @@ docker exec -i &lt;postgres-container-id&gt; sh -c \
   </p>
   <p>
     The one-line installer is deliberately conservative when
-    <code>koakademy-app</code> already exists: it reports the installation and
-    does not mutate it. A supported Swarm upgrade needs a backup, an explicit
-    migration job using the existing service's secrets and environment, an image
-    update to a reviewed stable tag, and post-update smoke tests. Until a
-    dedicated upgrade command is published, operators who need a fully scripted
-    upgrade path should use the manual Compose topology or maintain an equivalent
-    reviewed Swarm stack definition.
+    <code>koakademy-app</code> already exists: it reports the installation and does
+    not mutate it. A supported Swarm upgrade needs a backup, an explicit migration
+    job using the existing service's secrets and environment, an image update to a
+    reviewed stable tag, and post-update smoke tests. Until a dedicated upgrade command
+    is published, operators who need a fully scripted upgrade path should use the
+    manual Compose topology or maintain an equivalent reviewed Swarm stack definition.
   </p>
   <p>Manual Compose upgrade:</p>
   <pre><code># 1. Back up PostgreSQL and verify object-storage protection.
@@ -176,10 +202,10 @@ curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
       When an upgrade includes the Digital Library migrations, run the migration
       command once as the release job before replacing the application replicas.
       Never let both Swarm replicas run migrations during startup. After the
-      private bucket and its exact-origin CORS policy are configured,
-      smoke-test through the public KoAkademy origin (catalog-only title,
-      draft upload, published reading, downloads, replica routing, and
-      unpublish/signed-URL expiry).
+      private bucket and its exact-origin CORS policy are configured, smoke-test
+      through the public KoAkademy origin (catalog-only title, draft upload,
+      published reading, downloads, replica routing, and unpublish/signed-URL
+      expiry).
     </p>
   </div>
 
@@ -188,30 +214,54 @@ curl --fail --silent --show-error http://127.0.0.1:8000/up</code></pre>
     Application-image rollback is safe only when the previous code supports the
     migrated database schema. If release notes do not explicitly allow a
     code-only rollback, restore the pre-upgrade database backup and matching
-    image together in a maintenance window. <strong>Never run
-    <code>migrate:rollback</code> blindly on production data.</strong>
+    image together in a maintenance window. <strong
+      >Never run
+      <code>migrate:rollback</code> blindly on production data.</strong
+    >
   </p>
   <p>
-    Record the exact current and previous <code>vX.Y.Z</code> image references
-    before every upgrade. Roll back by restoring the previous exact tag, not by
-    selecting <code>latest</code> or <code>edge</code>; those aliases do not
-    preserve historical state. For incident forensics, compare the release tag
-    with its <code>sha-&lt;commit&gt;</code> image and the checksummed
+    Record the exact current and previous <code>vX.Y.Z</code> image references before
+    every upgrade. Roll back by restoring the previous exact tag, not by selecting
+    <code>latest</code> or <code>edge</code>; those aliases do not preserve
+    historical state. For incident forensics, compare the release tag with its <code
+      >sha-&lt;commit&gt;</code
+    > image and the checksummed
     <code>version.json</code> attached to the GitHub Release.
   </p>
 
   <h2>Production checklist</h2>
   <ul>
     <li><code>APP_ENV=production</code> and <code>APP_DEBUG=false</code></li>
-    <li>Unique <code>APP_KEY</code>, database password, Redis password, and S3 credentials</li>
-    <li><code>SESSION_SECURE_COOKIE=true</code>, HTTPS active, and correct trusted hosts/proxies</li>
-    <li>Swarm ports <code>8000</code> and optional <code>9000</code> restricted to the intended edge, or Compose bound only to <code>127.0.0.1:8000</code></li>
+    <li>
+      Unique <code>APP_KEY</code>, database password, Redis password, and S3
+      credentials
+    </li>
+    <li>
+      <code>SESSION_SECURE_COOKIE=true</code>, HTTPS active, and correct trusted
+      hosts/proxies
+    </li>
+    <li>
+      Swarm ports <code>8000</code> and optional <code>9000</code> restricted to the
+      intended edge, or Compose bound only to <code>127.0.0.1:8000</code>
+    </li>
     <li>PostgreSQL, Redis, and Gotenberg have no host port mappings</li>
     <li><code>RUN_MIGRATIONS=false</code></li>
-    <li><code>/up</code>, <code>/setup</code> or <code>/admin</code>, upload, queue, mail, and PDF smoke tests pass</li>
-    <li>Private Digital Library bucket has no public domain, exact-origin CORS supports PDF range requests, and the takedown address is monitored</li>
-    <li>Librarian and legal approval exists before publishing production digital editions</li>
+    <li>
+      <code>/up</code>, <code>/setup</code> or <code>/admin</code>, upload,
+      queue, mail, and PDF smoke tests pass
+    </li>
+    <li>
+      Private Digital Library bucket has no public domain, exact-origin CORS
+      supports PDF range requests, and the takedown address is monitored
+    </li>
+    <li>
+      Librarian and legal approval exists before publishing production digital
+      editions
+    </li>
     <li>Database and object-storage recovery tested</li>
-    <li>Logs, disk use, queue depth, certificate expiry, and backup failures monitored</li>
+    <li>
+      Logs, disk use, queue depth, certificate expiry, and backup failures
+      monitored
+    </li>
   </ul>
 </DocsLayout>

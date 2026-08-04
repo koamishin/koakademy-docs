@@ -17,9 +17,17 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Prerequisites</h2>
   <ul>
-    <li>A Linux VPS running Ubuntu or Debian with at least 2 GB RAM and 30 GB disk (Dokploy's own recommendation)</li>
-    <li>Ports <code>80</code>, <code>443</code>, and <code>3000</code> reachable from the internet</li>
-    <li>A domain (for example <code>school.example</code>) pointing to the server</li>
+    <li>
+      A Linux VPS running Ubuntu or Debian with at least 2 GB RAM and 30 GB disk
+      (Dokploy's own recommendation)
+    </li>
+    <li>
+      Ports <code>80</code>, <code>443</code>, and <code>3000</code> reachable from
+      the internet
+    </li>
+    <li>
+      A domain (for example <code>school.example</code>) pointing to the server
+    </li>
     <li>A stable KoAkademy release tag and an external S3-compatible bucket</li>
   </ul>
 
@@ -47,9 +55,9 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <pre><code>git clone --depth 1 --branch &lt;latest-stable-tag&gt; https://github.com/yukazakiri/koakademy.git
 cd koakademy</code></pre>
   <p>
-    <code>compose.production.yaml</code> defines the application, PostgreSQL,
-    Redis, and Gotenberg services. <code>.env.production.example</code> is the
-    public contract for every variable. Three adaptations matter for Dokploy:
+    <code>compose.production.yaml</code> defines the application, PostgreSQL, Redis,
+    and Gotenberg services. <code>.env.production.example</code> is the public contract
+    for every variable. Three adaptations matter for Dokploy:
   </p>
   <ul>
     <li>
@@ -70,14 +78,21 @@ cd koakademy</code></pre>
   <p>
     Because only Dokploy's Traefik can reach the application on the internal
     network, <code>TRUSTED_PROXIES=*</code> is acceptable here — see
-    <a href="/docs/self-hosting/configuration">Configuration</a> for the
-    warning behind that choice.
+    <a href="/docs/self-hosting/configuration">Configuration</a> for the warning behind
+    that choice.
   </p>
 
   <h2>3. Create the Compose service</h2>
   <ol>
-    <li>In a project and environment, choose <strong>Create Service → Docker Compose</strong>.</li>
-    <li>Paste the adapted <code>compose.production.yaml</code> into the editor, or point the service at your repository and the compose file path.</li>
+    <li>
+      In a project and environment, choose <strong
+        >Create Service → Docker Compose</strong
+      >.
+    </li>
+    <li>
+      Paste the adapted <code>compose.production.yaml</code> into the editor, or point
+      the service at your repository and the compose file path.
+    </li>
     <li>
       In the <strong>Environment</strong> tab, add every value from
       <code>.env.production.example</code>: <code>APP_URL</code>,
@@ -85,11 +100,12 @@ cd koakademy</code></pre>
       <code>DB_*</code>, <code>REDIS_*</code>, <code>GOTENBERG_URL</code>,
       <code>AWS_*</code> storage credentials, <code>MAIL_*</code>, and
       <code>KOAKADEMY_VERSION</code>. Dokploy writes these to the service's
-      <code>.env</code>, which the compose file loads with <code>env_file</code>.
+      <code>.env</code>, which the compose file loads with <code>env_file</code
+      >.
     </li>
     <li>
-      Leave <code>COMPOSE_PROJECT_NAME</code> at its default — Dokploy relies on
-      it to target the service containers.
+      Leave <code>COMPOSE_PROJECT_NAME</code> at its default — Dokploy relies on it
+      to target the service containers.
     </li>
   </ol>
   <p>Deploy the service, then continue with domains.</p>
@@ -111,47 +127,54 @@ cd koakademy</code></pre>
   <p>
     KoAkademy keeps <code>RUN_MIGRATIONS=false</code>; schema changes are
     deliberate one-off operations. First set a stable application key: generate
-    one once with <code>php artisan key:generate --show</code> (locally, or in
-    the service terminal) and paste the complete value into <code>APP_KEY</code>
+    one once with <code>php artisan key:generate --show</code> (locally, or in the
+    service terminal) and paste the complete value into <code>APP_KEY</code>
     in the Environment tab. A key written only to the container's
     <code>.env</code> would be lost on the next redeploy.
   </p>
   <p>
-    Then open the service's <strong>Terminal</strong> (or define a Dokploy
-    schedule job) and run:
+    Then open the service's <strong>Terminal</strong> (or define a Dokploy schedule
+    job) and run:
   </p>
   <pre><code>php artisan migrate --force</code></pre>
   <p>
-    Visit <code>https://school.example/setup</code> to create the institution,
-    initial academic period, and first administrator, then verify
+    Visit <code>https://school.example/setup</code> to create the institution, initial
+    academic period, and first administrator, then verify
     <code>/admin</code>.
   </p>
 
   <h2>6. Backups</h2>
   <ul>
     <li>
-      Use Dokploy's <strong>Volume Backups</strong> feature to push the
-      PostgreSQL named volume to an S3-compatible destination on a schedule.
-      Enable the "turn off container during backup" option for a consistent
-      snapshot.
+      Use Dokploy's <strong>Volume Backups</strong> feature to push the PostgreSQL
+      named volume to an S3-compatible destination on a schedule. Enable the "turn
+      off container during backup" option for a consistent snapshot.
     </li>
     <li>
       Back up the S3 bucket that holds uploads separately, with the storage
       provider's versioning and retention controls.
     </li>
     <li>
-      Preserve <code>.env</code> and <code>APP_KEY</code> in an encrypted secret
-      store — losing <code>APP_KEY</code> can make encrypted data and sessions
-      unreadable.
+      Preserve <code>.env</code> and <code>APP_KEY</code> in an encrypted secret store
+      — losing <code>APP_KEY</code> can make encrypted data and sessions unreadable.
     </li>
   </ul>
 
   <h2>7. Upgrades</h2>
   <ol>
     <li>Read the release notes and take a database backup.</li>
-    <li>Update the image tag (<code>KOAKADEMY_VERSION</code>) to the new stable release and redeploy.</li>
-    <li>Run <code>php artisan migrate --force</code> from the terminal before or immediately after the new container starts.</li>
-    <li>Smoke-test the portal, <code>/admin</code>, uploads, a queued job, and a PDF export.</li>
+    <li>
+      Update the image tag (<code>KOAKADEMY_VERSION</code>) to the new stable
+      release and redeploy.
+    </li>
+    <li>
+      Run <code>php artisan migrate --force</code> from the terminal before or immediately
+      after the new container starts.
+    </li>
+    <li>
+      Smoke-test the portal, <code>/admin</code>, uploads, a queued job, and a
+      PDF export.
+    </li>
   </ol>
   <p>
     The full upgrade and rollback rules in
@@ -161,9 +184,9 @@ cd koakademy</code></pre>
   <h2>Troubleshooting</h2>
   <p>
     Start with the service logs and the general
-    <a href="/docs/self-hosting/troubleshooting">Troubleshooting</a> guide.
-    Common Dokploy-specific causes: environment changes not followed by a
-    redeploy, a missing or rotated <code>APP_KEY</code>, PostgreSQL volume not
-    attached, and a domain added before <code>APP_URL</code> was updated.
+    <a href="/docs/self-hosting/troubleshooting">Troubleshooting</a> guide. Common
+    Dokploy-specific causes: environment changes not followed by a redeploy, a missing
+    or rotated <code>APP_KEY</code>, PostgreSQL volume not attached, and a
+    domain added before <code>APP_URL</code> was updated.
   </p>
 </DocsLayout>

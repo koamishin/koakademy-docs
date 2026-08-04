@@ -17,25 +17,26 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <p>
     KoAkademy is a <strong>modular monolith</strong>. One Laravel 12 application
     serves everything — admin panel, portals, public pages, and API — running on
-    <strong>PHP 8.5 under Laravel Octane with FrankenPHP</strong> in production.
-    The long-running worker means application boot happens once per worker, not
-    per request; code must not leak mutable state between requests (Octane-safe
-    patterns are expected in contributions).
+    <strong>PHP 8.5 under Laravel Octane with FrankenPHP</strong> in production. The
+    long-running worker means application boot happens once per worker, not per request;
+    code must not leak mutable state between requests (Octane-safe patterns are expected
+    in contributions).
   </p>
   <p>
-    The production container image is a multi-stage build
-    (<code>docker/Dockerfile</code>): Composer dependencies → Wayfinder route
-    generation → Bun/Vite asset build → a
-    <code>dunglas/frankenphp:1.9-php8.5</code> runtime. Supervisord variants in
-    the image can run the web worker, queue workers ("station"), scheduler, and
-    Pulse processes; alternative nginx/php-fpm, RoadRunner, and Swoole
-    configurations ship for operators who need them.
+    The production container image is a multi-stage build (<code
+      >docker/Dockerfile</code
+    >): Composer dependencies → Wayfinder route generation → Bun/Vite asset
+    build → a
+    <code>dunglas/frankenphp:1.9-php8.5</code> runtime. Supervisord variants in the
+    image can run the web worker, queue workers ("station"), scheduler, and Pulse
+    processes; alternative nginx/php-fpm, RoadRunner, and Swoole configurations ship
+    for operators who need them.
   </p>
   <p>
     Supporting services are external: <strong>PostgreSQL</strong> (primary data),
     <strong>Redis</strong> (cache, sessions, queues), <strong>Gotenberg</strong>
-    (PDF rendering), and <strong>S3-compatible object storage</strong> (uploads
-    via media library).
+    (PDF rendering), and <strong>S3-compatible object storage</strong> (uploads via
+    media library).
   </p>
 
   <h2>Entry points</h2>
@@ -75,7 +76,13 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       </tr>
       <tr>
         <td>Public pages</td>
-        <td><code>/</code>, <code>/enrollment*</code>, <code>/setup</code>, <code>/docs</code>, <code>/changelog</code>, <code>/id-card/verify/&#123;token&#125;</code></td>
+        <td
+          ><code>/</code>, <code>/enrollment*</code>, <code>/setup</code>, <code
+            >/docs</code
+          >, <code>/changelog</code>, <code
+            >/id-card/verify/&#123;token&#125;</code
+          ></td
+        >
         <td>Inertia + React pages</td>
         <td>Everyone</td>
       </tr>
@@ -101,27 +108,31 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </ol>
 
   <h2>Core domain entities</h2>
-  <p>The domain is school administration. The principal entities and their relationships:</p>
+  <p>
+    The domain is school administration. The principal entities and their
+    relationships:
+  </p>
   <ul>
     <li>
       <strong>School</strong> — the tenant. Most records carry a
       <code>school_id</code> (see Multi-school tenancy below).
     </li>
     <li>
-      <strong>Student</strong> — a person enrolled or enrollable; holds
-      documents, signature, clearances, medical records (module), and a generated
-      institutional <strong>identifier</strong> (configurable format).
-    </li>
-    <li><strong>Faculty</strong> — teaching staff; assigned to classes and departments.</li>
-    <li>
-      <strong>Course / Department / Program</strong> — the curriculum structure
-      students enroll into. Senior High is modeled as its own cluster (SHS
-      strands and SHS students).
+      <strong>Student</strong> — a person enrolled or enrollable; holds documents,
+      signature, clearances, medical records (module), and a generated institutional
+      <strong>identifier</strong> (configurable format).
     </li>
     <li>
-      <strong>Class</strong> — a taught section of a subject: schedule, room,
-      capacity, assigned faculty, roster. Timetable conflict detection guards
-      scheduling.
+      <strong>Faculty</strong> — teaching staff; assigned to classes and departments.
+    </li>
+    <li>
+      <strong>Course / Department / Program</strong> — the curriculum structure students
+      enroll into. Senior High is modeled as its own cluster (SHS strands and SHS
+      students).
+    </li>
+    <li>
+      <strong>Class</strong> — a taught section of a subject: schedule, room, capacity,
+      assigned faculty, roster. Timetable conflict detection guards scheduling.
     </li>
     <li>
       <strong>StudentEnrollment</strong> — a student's enrollment for an academic
@@ -129,29 +140,28 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <a href="/docs/system/enrollment-engine">Enrollment engine</a>).
     </li>
     <li>
-      <strong>ClassEnrollment / SubjectEnrollment</strong> — the join between an
-      enrollment and the classes/subjects it includes; <strong>grades</strong>
+      <strong>ClassEnrollment / SubjectEnrollment</strong> — the join between an enrollment
+      and the classes/subjects it includes; <strong>grades</strong>
       live at this level and follow a submit → finalize → verify workflow.
     </li>
     <li>
-      <strong>Transactions / Invoices</strong> — assessments, payments, and
-      statements of account issued to students.
+      <strong>Transactions / Invoices</strong> — assessments, payments, and statements
+      of account issued to students.
     </li>
     <li>
-      <strong>Events, Announcements, NotificationTemplates</strong> — calendar,
-      broadcast messaging, and templated notifications.
+      <strong>Events, Announcements, NotificationTemplates</strong> — calendar, broadcast
+      messaging, and templated notifications.
     </li>
   </ul>
   <p>
-    Around these sit cross-cutting records: <code>User</code> accounts with
-    roles, activity-log entries, media attachments, export jobs, and
-    enrollment-policy records.
+    Around these sit cross-cutting records: <code>User</code> accounts with roles,
+    activity-log entries, media attachments, export jobs, and enrollment-policy records.
   </p>
 
   <h2>Multi-school tenancy</h2>
   <p>
-    Tenancy is <strong>lightweight and school-scoped</strong> — there is no
-    stancl/tenancy package and no database-per-tenant:
+    Tenancy is <strong>lightweight and school-scoped</strong> — there is no stancl/tenancy
+    package and no database-per-tenant:
   </p>
   <ul>
     <li>
@@ -159,19 +169,20 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       filtering to tenant-owned models.
     </li>
     <li>
-      <code>TenantContext</code> resolves the active school from the session
-      (<code>current_school_id</code>), falling back to the user's default
-      school; super administrators bypass the scope.
+      <code>TenantContext</code> resolves the active school from the session (<code
+        >current_school_id</code
+      >), falling back to the user's default school; super administrators bypass
+      the scope.
     </li>
     <li>
-      <code>SetTenantContext</code> middleware establishes the context per
-      request; the <code>/organizations</code> API (list, current, switch, store,
-      clear-context) powers the organization switcher in the UI.
+      <code>SetTenantContext</code> middleware establishes the context per request;
+      the <code>/organizations</code> API (list, current, switch, store, clear-context)
+      powers the organization switcher in the UI.
     </li>
   </ul>
   <p>
-    When you add a tenant-owned model, give it a <code>school_id</code> and the
-    global scope — never filter by school manually in controllers.
+    When you add a tenant-owned model, give it a <code>school_id</code> and the global
+    scope — never filter by school manually in controllers.
   </p>
 
   <h2>Data planes</h2>
@@ -192,12 +203,17 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td>Cache / sessions / queues</td>
         <td>Redis</td>
-        <td>Separate <code>redis</code> and <code>redis-pdf</code> queue connections (see Queues &amp; PDF)</td>
+        <td
+          >Separate <code>redis</code> and <code>redis-pdf</code> queue connections
+          (see Queues &amp; PDF)</td
+        >
       </tr>
       <tr>
         <td>Files</td>
         <td>S3-compatible storage</td>
-        <td>spatie/laravel-medialibrary; <strong>required</strong> in production</td>
+        <td
+          >spatie/laravel-medialibrary; <strong>required</strong> in production</td
+        >
       </tr>
       <tr>
         <td>Search</td>
@@ -207,7 +223,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td>Settings</td>
         <td>Database via spatie/laravel-settings</td>
-        <td><code>GeneralSetting</code> holds institution-wide configuration</td>
+        <td><code>GeneralSetting</code> holds institution-wide configuration</td
+        >
       </tr>
       <tr>
         <td>Feature flags</td>
@@ -228,7 +245,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <tbody>
       <tr>
         <td><code>app/</code></td>
-        <td>Services, models, middleware, jobs, policies, Filament panel, enrollment engine (<code>app/Enrollment/</code>)</td>
+        <td
+          >Services, models, middleware, jobs, policies, Filament panel,
+          enrollment engine (<code>app/Enrollment/</code>)</td
+        >
       </tr>
       <tr>
         <td><code>Modules/</code></td>
@@ -236,7 +256,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       </tr>
       <tr>
         <td><code>routes/</code></td>
-        <td>Web route files split per audience, <code>api.php</code>, <code>channels.php</code></td>
+        <td
+          >Web route files split per audience, <code>api.php</code>, <code
+            >channels.php</code
+          ></td
+        >
       </tr>
       <tr>
         <td><code>resources/js/</code></td>
@@ -259,11 +283,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Reading guide for the rest of this section</h2>
   <ol>
-    <li><a href="/docs/system/auth-authorization">Auth, roles &amp; permissions</a> — who can do what, and how sign-in is hardened.</li>
-    <li><a href="/docs/system/modules-flags">Modules &amp; feature flags</a> — how optional functionality is composed and toggled.</li>
-    <li><a href="/docs/system/enrollment-engine">The enrollment engine</a> — the deepest subsystem: pipeline, policies, blueprints.</li>
-    <li><a href="/docs/system/queues-pdf">Queues, jobs &amp; PDF</a> — background work and document generation.</li>
-    <li><a href="/docs/system/frontend">Frontend architecture</a> — Inertia, React, Wayfinder, and the design system.</li>
-    <li><a href="/dev/enrollment-policy-extensions">Extending the enrollment engine</a> — contracts for custom rules and actions.</li>
+    <li>
+      <a href="/docs/system/auth-authorization">Auth, roles &amp; permissions</a
+      > — who can do what, and how sign-in is hardened.
+    </li>
+    <li>
+      <a href="/docs/system/modules-flags">Modules &amp; feature flags</a> — how optional
+      functionality is composed and toggled.
+    </li>
+    <li>
+      <a href="/docs/system/enrollment-engine">The enrollment engine</a> — the deepest
+      subsystem: pipeline, policies, blueprints.
+    </li>
+    <li>
+      <a href="/docs/system/queues-pdf">Queues, jobs &amp; PDF</a> — background work
+      and document generation.
+    </li>
+    <li>
+      <a href="/docs/system/frontend">Frontend architecture</a> — Inertia, React,
+      Wayfinder, and the design system.
+    </li>
+    <li>
+      <a href="/dev/enrollment-policy-extensions"
+        >Extending the enrollment engine</a
+      > — contracts for custom rules and actions.
+    </li>
   </ol>
 </DocsLayout>

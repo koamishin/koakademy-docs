@@ -25,8 +25,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </li>
     <li>
       <strong>Windows:</strong> run the installer as administrator. The
-      <code>HerdHelper</code> service manages the hosts file and maps parked
-      directories to <code>.test</code> domains.
+      <code>HerdHelper</code> service manages the hosts file and maps parked directories
+      to <code>.test</code> domains.
     </li>
   </ul>
   <p>Confirm PHP 8.5 is available and set it as the default:</p>
@@ -47,9 +47,9 @@ npm ci
 cp .env.example .env
 php artisan key:generate</code></pre>
   <p>
-    Because <code>~/Herd</code> is a parked folder, the project is immediately
-    available at <code>http://koakademy.test</code>. If you clone it anywhere
-    else, register it with <code>herd link koakademy</code>.
+    Because <code>~/Herd</code> is a parked folder, the project is immediately available
+    at <code>http://koakademy.test</code>. If you clone it anywhere else,
+    register it with <code>herd link koakademy</code>.
   </p>
 
   <h2>3. Database</h2>
@@ -73,8 +73,9 @@ herd services:start postgresql</code></pre>
     </li>
   </ul>
   <p>
-    Working on queues, cache, or sessions? Add Redis the same way
-    (<code>herd services:create redis</code>) and point
+    Working on queues, cache, or sessions? Add Redis the same way (<code
+      >herd services:create redis</code
+    >) and point
     <code>REDIS_HOST=127.0.0.1</code>.
   </p>
 
@@ -83,15 +84,23 @@ herd services:start postgresql</code></pre>
   <p>
     Run the Vite dev server for frontend work with <code>npm run dev</code>, or
     build once with <code>npm run build</code>. Open
-    <code>http://koakademy.test/setup</code> to create development data and the
-    first administrator.
+    <code>http://koakademy.test/setup</code> to create development data and the first
+    administrator.
   </p>
 
   <h2>5. HTTPS and sharing</h2>
   <ul>
-    <li><code>herd secure</code> serves the site over a trusted local HTTPS certificate.</li>
-    <li><code>herd share</code> publishes a public tunnel URL for webhooks or device testing (backed by Expose).</li>
-    <li><code>herd isolate 8.5</code> pins a PHP version per project when the global default differs.</li>
+    <li>
+      <code>herd secure</code> serves the site over a trusted local HTTPS certificate.
+    </li>
+    <li>
+      <code>herd share</code> publishes a public tunnel URL for webhooks or device
+      testing (backed by Expose).
+    </li>
+    <li>
+      <code>herd isolate 8.5</code> pins a PHP version per project when the global
+      default differs.
+    </li>
   </ul>
 
   <h2>6. Validate</h2>
@@ -105,8 +114,8 @@ npm run format:check</code></pre>
     <p>
       Herd does not bundle Gotenberg. If you work on PDF generation, run
       <code>docker run -d -p 3000:3000 gotenberg/gotenberg:8</code> and set
-      <code>GOTENBERG_URL=http://127.0.0.1:3000</code> in <code>.env</code> — or
-      skip PDF work locally.
+      <code>GOTENBERG_URL=http://127.0.0.1:3000</code> in <code>.env</code> — or skip
+      PDF work locally.
     </p>
   </div>
 </DocsLayout>

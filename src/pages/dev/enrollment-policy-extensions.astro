@@ -15,18 +15,30 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
 
   <h2>Extension contracts</h2>
-  <p>Implement one of the public contracts in <code>app/Contracts/Enrollment</code>:</p>
+  <p>
+    Implement one of the public contracts in <code
+      >app/Contracts/Enrollment</code
+    >:
+  </p>
   <ul>
-    <li><code>EnrollmentRuleHandler</code> evaluates an <code>EnrollmentContext</code> and returns a <code>RuleResult</code>.</li>
-    <li><code>EnrollmentActionHandler</code> performs one atomic, idempotent action and returns an <code>ActionResult</code>.</li>
     <li>
-      <code>EnrollmentAssignmentStrategy</code> describes or simulates
-      subject/class assignment. A strategy selected for live rollout must also
-      implement <code>RuntimeEnrollmentAssignmentStrategy</code>.
+      <code>EnrollmentRuleHandler</code> evaluates an <code
+        >EnrollmentContext</code
+      > and returns a <code>RuleResult</code>.
     </li>
     <li>
-      <code>EnrollmentBillingStrategy</code> describes or simulates fees and
-      payment gates. A strategy selected for live rollout must also implement
+      <code>EnrollmentActionHandler</code> performs one atomic, idempotent action
+      and returns an <code>ActionResult</code>.
+    </li>
+    <li>
+      <code>EnrollmentAssignmentStrategy</code> describes or simulates subject/class
+      assignment. A strategy selected for live rollout must also implement <code
+        >RuntimeEnrollmentAssignmentStrategy</code
+      >.
+    </li>
+    <li>
+      <code>EnrollmentBillingStrategy</code> describes or simulates fees and payment
+      gates. A strategy selected for live rollout must also implement
       <code>RuntimeEnrollmentBillingStrategy</code>.
     </li>
   </ul>
@@ -37,7 +49,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
 
   <h2>Registration</h2>
-  <p>Register handlers from a service provider after resolving <code>EnrollmentPolicyRegistry</code>:</p>
+  <p>
+    Register handlers from a service provider after resolving <code
+      >EnrollmentPolicyRegistry</code
+    >:
+  </p>
   <pre><code>use App\Enrollment\EnrollmentPolicyRegistry;
 
 $this-&gt;app-&gt;afterResolving(
@@ -63,11 +79,11 @@ $this-&gt;app-&gt;afterResolving(
   <p>
     To make an extension editable by school operators, also implement the
     optional <code>EnrollmentOperatorSchemaProvider</code> contract. Its
-    <code>operatorSchema()</code> manifest supplies help content and fields for
-    the guided editor. Supported controls are boolean, text, number, money,
-    percentage, date/date range, select, multi-select, role, permission, school,
-    program, period, and notification channel. Dynamic choices must use one of
-    the registry's whitelisted option-source keys.
+    <code>operatorSchema()</code> manifest supplies help content and fields for the
+    guided editor. Supported controls are boolean, text, number, money, percentage,
+    date/date range, select, multi-select, role, permission, school, program, period,
+    and notification channel. Dynamic choices must use one of the registry's whitelisted
+    option-source keys.
   </p>
   <p>
     Extensions without this optional contract still execute and can be restored
@@ -140,8 +156,8 @@ $this-&gt;app-&gt;afterResolving(
     Field metadata is also optional. Use <code>description</code>,
     <code>placeholder</code>, <code>example</code>, <code>prefix</code>,
     <code>suffix</code>, <code>min</code>, <code>max</code>, <code>step</code>,
-    and <code>recommended</code> to make the form self-explanatory. Conditional
-    fields may use a deterministic <code>visible_when</code> descriptor:
+    and <code>recommended</code> to make the form self-explanatory. Conditional fields
+    may use a deterministic <code>visible_when</code> descriptor:
   </p>
   <pre><code>[
     'key' =&gt; 'minimum_amount',
@@ -161,13 +177,33 @@ $this-&gt;app-&gt;afterResolving(
 
   <h2>Operator-schema compatibility</h2>
   <ul>
-    <li>Adding help text, bounds, examples, or conditional visibility is backward-compatible when it does not reinterpret stored values.</li>
-    <li>Removing a field requires the runtime handler to keep accepting configurations written by every supported published schema version.</li>
-    <li>Renaming a field or changing its semantics is incompatible. Add a new handler key or schema version instead.</li>
-    <li>Missing optional metadata receives generic guidance from the registry.</li>
-    <li>A handler with no operator schema remains executable and importable but read-only in the guided editor.</li>
-    <li>Option sources are allowlisted by the application. Unknown source names are rejected during draft save, import, simulation, and publication.</li>
-    <li>The manifest must never contain a class name to execute, a script, a closure, an arbitrary URL, or a request-specific object.</li>
+    <li>
+      Adding help text, bounds, examples, or conditional visibility is
+      backward-compatible when it does not reinterpret stored values.
+    </li>
+    <li>
+      Removing a field requires the runtime handler to keep accepting
+      configurations written by every supported published schema version.
+    </li>
+    <li>
+      Renaming a field or changing its semantics is incompatible. Add a new
+      handler key or schema version instead.
+    </li>
+    <li>
+      Missing optional metadata receives generic guidance from the registry.
+    </li>
+    <li>
+      A handler with no operator schema remains executable and importable but
+      read-only in the guided editor.
+    </li>
+    <li>
+      Option sources are allowlisted by the application. Unknown source names
+      are rejected during draft save, import, simulation, and publication.
+    </li>
+    <li>
+      The manifest must never contain a class name to execute, a script, a
+      closure, an arbitrary URL, or a request-specific object.
+    </li>
   </ul>
   <p>
     Rules should fail closed when required facts are unavailable. Actions run
@@ -187,10 +223,9 @@ $this-&gt;app-&gt;afterResolving(
     "configuration": &#123;&#125;
 &#125;</code></pre>
   <p>
-    Only <code>configuration</code> is executable by the policy compiler, and
-    only through registered keys. Imports containing unknown handler keys,
-    unsupported schema versions, PHP class names, or script/code fields are
-    rejected.
+    Only <code>configuration</code> is executable by the policy compiler, and only
+    through registered keys. Imports containing unknown handler keys, unsupported
+    schema versions, PHP class names, or script/code fields are rejected.
   </p>
 
   <h2>Version compatibility</h2>
@@ -212,12 +247,21 @@ $this-&gt;app-&gt;afterResolving(
   <ul>
     <li>Every supported control converts to and from stored configuration.</li>
     <li>Recommended values and numeric bounds validate correctly.</li>
-    <li><code>visible_when</code> hides only the intended field and server-side validation follows the same condition.</li>
+    <li>
+      <code>visible_when</code> hides only the intended field and server-side validation
+      follows the same condition.
+    </li>
     <li>Unknown option sources fail with an actionable validation message.</li>
     <li>Missing help metadata receives registry defaults.</li>
-    <li>An extension without <code>EnrollmentOperatorSchemaProvider</code> renders read-only without losing stored configuration.</li>
+    <li>
+      An extension without <code>EnrollmentOperatorSchemaProvider</code> renders read-only
+      without losing stored configuration.
+    </li>
     <li>Import/export contains stable keys and plain configuration only.</li>
-    <li>A representative simulation and the published version produce the same resolved checksum.</li>
+    <li>
+      A representative simulation and the published version produce the same
+      resolved checksum.
+    </li>
   </ul>
   <p>
     When a handler can block a student, test that its failure includes an

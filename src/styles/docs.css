@@ -1,6 +1,9 @@
 /* ==========================================================================
    Documentation styles — prose, code, tables, callouts, sidebar, pager.
-   Tokens are inlined here to keep this file self-contained.
+   Colors reference the global design tokens (--color-*) from global.css, so
+   the `.dark` class re-themes every docs page automatically; the few
+   always-light accents (callouts, method badges) get explicit .dark
+   overrides at the bottom of this file.
    ========================================================================== */
 
 /* ---- Page title block (rendered by DocsLayout) ------------------------- */
@@ -12,12 +15,12 @@
   font-size: clamp(1.9rem, 3.6vw, 2.5rem);
   line-height: 1.12;
   letter-spacing: -0.012em;
-  color: #1a2a21;
+  color: var(--color-ink);
   text-wrap: balance;
   margin: 0.6rem 0 0;
 }
 .doc-lede {
-  color: #5d6a60;
+  color: var(--color-ink-soft);
   font-size: 15.5px;
   line-height: 1.7;
   margin-top: 0.9rem;
@@ -27,7 +30,7 @@
 /* ---- Prose -------------------------------------------------------------- */
 
 .doc-prose {
-  color: #5d6a60;
+  color: var(--color-ink-soft);
   font-size: 15px;
   line-height: 1.8;
 }
@@ -38,7 +41,7 @@
   font-size: 1.45rem;
   letter-spacing: -0.01em;
   line-height: 1.25;
-  color: #1a2a21;
+  color: var(--color-ink);
   margin: 3rem 0 0.9rem;
   padding-top: 0.4rem;
   scroll-margin-top: 6rem;
@@ -48,38 +51,38 @@
   display: block;
   width: 2.25rem;
   height: 2px;
-  background: #a37b26;
+  background: var(--color-brass);
   margin-bottom: 0.75rem;
 }
 .doc-prose h3 {
   font-size: 1.02rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #1a2a21;
+  color: var(--color-ink);
   margin: 2.1rem 0 0.6rem;
   scroll-margin-top: 6rem;
 }
 .doc-prose h4 {
   font-size: 0.92rem;
   font-weight: 600;
-  color: #1a2a21;
+  color: var(--color-ink);
   margin: 1.6rem 0 0.5rem;
 }
 .doc-prose p {
   margin: 0.85rem 0;
 }
 .doc-prose a {
-  color: #7c5b14;
+  color: var(--color-brass-deep);
   text-decoration: underline;
-  text-decoration-color: rgba(124, 91, 20, 0.35);
+  text-decoration-color: color-mix(in oklch, var(--color-brass-deep) 38%, transparent);
   text-underline-offset: 3px;
   transition: color 0.15s ease;
 }
 .doc-prose a:hover {
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 .doc-prose strong {
-  color: #1a2a21;
+  color: var(--color-ink);
   font-weight: 600;
 }
 
@@ -101,7 +104,7 @@
   width: 6px;
   height: 6px;
   transform: rotate(45deg);
-  background: #a37b26;
+  background: var(--color-brass);
 }
 
 .doc-prose ol {
@@ -123,7 +126,7 @@
   top: 0.06em;
   font-family: "Fraunces Variable", Georgia, "Times New Roman", serif;
   font-size: 0.8rem;
-  color: #a37b26;
+  color: var(--color-brass);
 }
 .doc-prose li > ul,
 .doc-prose li > ol {
@@ -136,11 +139,11 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
     monospace;
   font-size: 0.84em;
-  background: #ece9dc;
-  border: 1px solid #e0dcc9;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
   border-radius: 5px;
   padding: 0.12em 0.4em;
-  color: #1a2a21;
+  color: var(--color-ink);
   white-space: normal;
   overflow-wrap: break-word;
 }
@@ -179,16 +182,16 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: #7c5b14;
+  color: var(--color-brass-deep);
   text-align: left;
   padding: 0.55rem 0.85rem;
-  border-bottom: 1px solid #1a2a21;
+  border-bottom: 1px solid var(--color-ink);
 }
 .doc-prose td {
   padding: 0.62rem 0.85rem;
-  border-bottom: 1px solid #e0dcc9;
+  border-bottom: 1px solid var(--color-line);
   vertical-align: top;
-  color: #5d6a60;
+  color: var(--color-ink-soft);
 }
 .doc-prose tr:last-child td {
   border-bottom: 0;
@@ -213,7 +216,7 @@
   border: 1px solid;
   font-size: 0.895rem;
   line-height: 1.65;
-  color: #4c574e;
+  color: var(--color-ink-soft);
 }
 .doc-callout .doc-callout-label {
   display: flex;
@@ -238,20 +241,20 @@
   background: #eef0e6;
 }
 .doc-callout-note .doc-callout-label {
-  color: #5d6a60;
+  color: var(--color-ink-soft);
 }
 .doc-callout-note .doc-callout-label::before {
-  background: #7d8a7c;
+  background: var(--color-sage);
 }
 .doc-callout-tip {
   border-color: #e3cd97;
   background: #f6f0de;
 }
 .doc-callout-tip .doc-callout-label {
-  color: #7c5b14;
+  color: var(--color-brass-deep);
 }
 .doc-callout-tip .doc-callout-label::before {
-  background: #a37b26;
+  background: var(--color-brass);
 }
 .doc-callout-caution {
   border-color: #e2b39c;
@@ -269,12 +272,12 @@
 .doc-kbd {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.74em;
-  background: #ece9dc;
-  border: 1px solid #d3cfbd;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
   border-bottom-width: 2px;
   border-radius: 5px;
   padding: 0.08em 0.45em;
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 
 /* ---- Sidebar --------------------------------------------------------------- */
@@ -300,7 +303,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #7c5b14;
+  color: var(--color-brass-deep);
   margin: 1.15rem 0 0.4rem;
 }
 .doc-side-label:first-child {
@@ -310,17 +313,17 @@
   display: block;
   font-size: 13.5px;
   line-height: 1.35;
-  color: #5d6a60;
+  color: var(--color-ink-soft);
   padding: 0.26rem 0 0.26rem 0.8rem;
   border-left: 2px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .doc-side-link:hover {
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 .doc-side-link.is-active {
-  color: #1a2a21;
-  border-left-color: #a37b26;
+  color: var(--color-ink);
+  border-left-color: var(--color-brass);
   font-weight: 500;
 }
 
@@ -337,14 +340,14 @@
   }
 }
 .doc-pager a {
-  border: 1px solid #e0dcc9;
+  border: 1px solid var(--color-line);
   border-radius: 12px;
   padding: 0.9rem 1.15rem;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 .doc-pager a:hover {
-  border-color: rgba(26, 42, 33, 0.35);
-  background: #ece9dc;
+  border-color: color-mix(in oklch, var(--color-ink) 35%, transparent);
+  background: var(--color-paper-2);
   transform: translateY(-1px);
 }
 .doc-pager .doc-pager-label {
@@ -353,13 +356,13 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: #7c5b14;
+  color: var(--color-brass-deep);
 }
 .doc-pager .doc-pager-title {
   margin-top: 0.35rem;
   font-size: 14.5px;
   font-weight: 600;
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 .doc-pager .doc-pager-next {
   text-align: right;
@@ -380,12 +383,12 @@
   padding: 0.72rem 1.1rem 0.85rem;
   font-size: 13.5px;
   font-weight: 500;
-  color: #5d6a60;
+  color: var(--color-ink-soft);
   transition: color 0.15s ease;
   white-space: nowrap;
 }
 .doc-tab:hover {
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 .doc-tab::after {
   content: "";
@@ -398,10 +401,10 @@
   background: transparent;
 }
 .doc-tab-active {
-  color: #1a2a21;
+  color: var(--color-ink);
 }
 .doc-tab-active::after {
-  background: #a37b26;
+  background: var(--color-brass);
 }
 @media (max-width: 639px) {
   .doc-tab {
@@ -475,7 +478,7 @@
   background: #eef0e6;
 }
 .api-method-post {
-  color: #7c5b14;
+  color: var(--color-brass-deep);
   border-color: #c9a44c;
   background: #f6f0de;
 }
@@ -499,16 +502,16 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #5d6a60;
+  color: var(--color-ink-soft);
   border: 1px dashed #c6c2ae;
   border-radius: 6px;
   padding: 0.2rem 0.45rem;
   line-height: 1;
 }
 .api-endpoint {
-  border: 1px solid #e0dcc9;
+  border: 1px solid var(--color-line);
   border-radius: 12px;
-  background: #f5f3ec;
+  background: var(--color-paper);
   margin: 1.25rem 0;
   overflow: hidden;
 }
@@ -518,13 +521,13 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.7rem 1rem;
-  border-bottom: 1px solid #e0dcc9;
-  background: #ece9dc;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-paper-2);
 }
 .api-endpoint-path {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.85rem;
-  color: #1a2a21;
+  color: var(--color-ink);
   overflow-wrap: break-word;
 }
 .api-endpoint-body {
@@ -532,6 +535,68 @@
 }
 .api-endpoint-body > :first-child {
   margin-top: 0;
+}
+
+/* ---- Dark mode ----------------------------------------------------------
+   The design tokens flip via the `.dark` class (see global.css); the rules
+   below cover only the surfaces that keep hard-coded colors above — pastel
+   callouts, API method badges, the sidebar scrollbar, and the code-block
+   shadow. Code blocks themselves are dark in both themes. */
+
+.dark .doc-prose pre {
+  box-shadow: 0 24px 44px -32px rgba(0, 0, 0, 0.65);
+  border-color: rgba(201, 164, 76, 0.26);
+}
+
+.dark .doc-callout-note {
+  border-color: #3d4d40;
+  background: rgba(125, 138, 124, 0.12);
+}
+.dark .doc-callout-tip {
+  border-color: rgba(201, 164, 76, 0.38);
+  background: rgba(201, 164, 76, 0.1);
+}
+.dark .doc-callout-caution {
+  border-color: rgba(216, 138, 122, 0.42);
+  background: rgba(216, 138, 122, 0.09);
+}
+.dark .doc-callout-caution .doc-callout-label {
+  color: #d98a7a;
+}
+.dark .doc-callout-caution .doc-callout-label::before {
+  background: #d98a7a;
+}
+
+.dark .doc-sidebar {
+  scrollbar-color: var(--color-line) transparent;
+}
+.dark .doc-sidebar::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+}
+
+.dark .api-method-get {
+  color: #9fb8a4;
+  border-color: rgba(159, 184, 164, 0.4);
+  background: rgba(159, 184, 164, 0.1);
+}
+.dark .api-method-post {
+  color: #e0b35e;
+  border-color: rgba(224, 179, 94, 0.42);
+  background: rgba(224, 179, 94, 0.1);
+}
+.dark .api-method-put,
+.dark .api-method-patch {
+  color: #dccb98;
+  border-color: rgba(220, 203, 152, 0.38);
+  background: rgba(220, 203, 152, 0.09);
+}
+.dark .api-method-delete {
+  color: #d98a7a;
+  border-color: rgba(217, 138, 122, 0.42);
+  background: rgba(217, 138, 122, 0.1);
+}
+.dark .api-status {
+  border-color: var(--color-line);
 }
 .api-endpoint-body > :last-child {
   margin-bottom: 0;

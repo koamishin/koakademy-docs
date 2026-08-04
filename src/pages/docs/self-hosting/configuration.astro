@@ -32,7 +32,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td><code>KOAKADEMY_VERSION</code></td>
         <td>Latest published stable GitHub Release</td>
-        <td>Pin an exact stable KoAkademy image tag. Explicit <code>edge</code> is accepted only for unsupported rolling evaluation.</td>
+        <td
+          >Pin an exact stable KoAkademy image tag. Explicit <code>edge</code> is
+          accepted only for unsupported rolling evaluation.</td
+        >
       </tr>
       <tr>
         <td><code>KOAKADEMY_APP_URL</code></td>
@@ -71,7 +74,9 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       </tr>
       <tr>
         <td><code>KOAKADEMY_S3_REGION</code></td>
-        <td><code>us-east-1</code> for RustFS; <code>auto</code> for external</td>
+        <td
+          ><code>us-east-1</code> for RustFS; <code>auto</code> for external</td
+        >
         <td>Provider region value.</td>
       </tr>
       <tr>
@@ -97,15 +102,18 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td><code>GITHUB_TOKEN</code></td>
         <td>Empty</td>
-        <td>Optional GitHub token for authenticated tag lookup and a higher API rate limit.</td>
+        <td
+          >Optional GitHub token for authenticated tag lookup and a higher API
+          rate limit.</td
+        >
       </tr>
     </tbody>
   </table>
   <p>
     On Bash, prefix the installer command with non-secret values such as
     <code>KOAKADEMY_APP_URL=https://school.example</code>. On PowerShell, set
-    <code>$env:KOAKADEMY_APP_URL</code> first. Prefer the hidden credential
-    prompt over putting secrets in shell history.
+    <code>$env:KOAKADEMY_APP_URL</code> first. Prefer the hidden credential prompt
+    over putting secrets in shell history.
   </p>
   <p>
     Generated application, database, Redis, and storage credentials live in
@@ -167,7 +175,10 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <tr>
         <td><code>TRUSTED_PROXIES</code></td>
         <td>Yes</td>
-        <td><code>*</code>, addresses, or CIDRs for the HTTPS edge. See the warning below.</td>
+        <td
+          ><code>*</code>, addresses, or CIDRs for the HTTPS edge. See the
+          warning below.</td
+        >
       </tr>
     </tbody>
   </table>
@@ -175,16 +186,16 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     Host-header validation derives exact patterns from <code>APP_URL</code>,
     <code>PORTAL_HOST</code>, <code>ADMIN_HOST</code>, and
     <code>TRUSTED_HOSTS</code>. Invalid entries are ignored.
-    <code>localhost</code> and <code>127.0.0.1</code> remain accepted for local
-    health and maintenance operations.
+    <code>localhost</code> and <code>127.0.0.1</code> remain accepted for local health
+    and maintenance operations.
   </p>
   <div class="doc-callout doc-callout-caution">
     <p class="doc-callout-label">Trusted proxies warning</p>
     <p>
-      <code>TRUSTED_PROXIES=*</code> is safe in the supplied Compose topology
-      because the origin binds only to loopback. If the application is reachable
-      from another host or network, replace it with explicit proxy IPs/CIDRs so
-      clients cannot forge forwarded headers.
+      <code>TRUSTED_PROXIES=*</code> is safe in the supplied Compose topology because
+      the origin binds only to loopback. If the application is reachable from another
+      host or network, replace it with explicit proxy IPs/CIDRs so clients cannot
+      forge forwarded headers.
     </p>
   </div>
 
@@ -193,24 +204,24 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <code>DB_CONNECTION=pgsql</code> is required by the prebuilt image. Set
     <code>DB_HOST=postgres</code>, <code>DB_PORT=5432</code>, a dedicated
     database and user, and a random <code>DB_PASSWORD</code>. Do not publish the
-    database service port. Use a separately managed PostgreSQL service only after
-    matching backup, TLS, availability, and connection-limit requirements.
+    database service port. Use a separately managed PostgreSQL service only
+    after matching backup, TLS, availability, and connection-limit requirements.
   </p>
 
   <h2>Redis</h2>
   <p>
     The production template uses Redis for cache, sessions, and queues. Keep
     <code>CACHE_STORE=redis</code>, <code>SESSION_DRIVER=redis</code>, and
-    <code>QUEUE_CONNECTION=redis</code>. Set a random <code>REDIS_PASSWORD</code>;
-    the Compose service requires it and is not host-published.
+    <code>QUEUE_CONNECTION=redis</code>. Set a random <code>REDIS_PASSWORD</code
+    >; the Compose service requires it and is not host-published.
   </p>
 
   <h2>Sessions</h2>
   <p>
     Production defaults encrypt server-side session data and mark cookies
-    Secure, HttpOnly, and SameSite=Lax. Leave <code>SESSION_DOMAIN</code> empty
-    for a host-only cookie in the one-host topology. Split subdomains may require
-    an explicit shared cookie domain and a security review.
+    Secure, HttpOnly, and SameSite=Lax. Leave <code>SESSION_DOMAIN</code> empty for
+    a host-only cookie in the one-host topology. Split subdomains may require an explicit
+    shared cookie domain and a security review.
   </p>
 
   <h2>Object storage</h2>
@@ -229,9 +240,9 @@ AWS_USE_PATH_STYLE_ENDPOINT=true</code></pre>
   <p>
     Use a bucket dedicated to this installation and credentials limited to that
     bucket. <code>AWS_ENDPOINT</code> is the provider API endpoint.
-    <code>AWS_URL</code> is the public or CDN base URL if objects are served
-    publicly; leave it empty when the provider and application generate URLs
-    without an override. Path-style behavior depends on the provider.
+    <code>AWS_URL</code> is the public or CDN base URL if objects are served publicly;
+    leave it empty when the provider and application generate URLs without an override.
+    Path-style behavior depends on the provider.
   </p>
   <p>
     Application-container storage is retained only for framework runtime files,
@@ -264,8 +275,10 @@ LIBRARY_R2_ENDPOINT=https://account-id.r2.cloudflarestorage.com</code></pre>
     URL. Keep downloads disabled unless the documented license permits them.
   </p>
   <p>
-    Configure bucket CORS for the exact KoAkademy HTTPS origin so PDF.js can make
-    range requests. Do not use <code>*</code> for <code>AllowedOrigins</code>:
+    Configure bucket CORS for the exact KoAkademy HTTPS origin so PDF.js can
+    make range requests. Do not use <code>*</code> for <code
+      >AllowedOrigins</code
+    >:
   </p>
   <pre><code>[
     &#123;
@@ -281,8 +294,8 @@ LIBRARY_R2_ENDPOINT=https://account-id.r2.cloudflarestorage.com</code></pre>
     basis and attest that the KoAkademy operator may reproduce and communicate
     the file. Use the takedown address for rights complaints and unpublish or
     remove disputed material immediately. The feature flag
-    <code>library_module_enabled</code> hides and blocks the authenticated
-    Digital Library without affecting the restricted Library Management records.
+    <code>library_module_enabled</code> hides and blocks the authenticated Digital
+    Library without affecting the restricted Library Management records.
   </p>
 
   <h2>PDF rendering</h2>
@@ -303,10 +316,10 @@ GOTENBERG_URL=http://gotenberg:3000</code></pre>
   <h2>Mail and broadcasting</h2>
   <p>
     The template uses <code>MAIL_MAILER=log</code> and
-    <code>BROADCAST_CONNECTION=log</code> so first boot needs no third-party
-    credentials. Configure an authenticated production mail transport before
-    relying on invitations, password resets, or notifications. Do not claim
-    email delivery is working until a real message is verified.
+    <code>BROADCAST_CONNECTION=log</code> so first boot needs no third-party credentials.
+    Configure an authenticated production mail transport before relying on invitations,
+    password resets, or notifications. Do not claim email delivery is working until
+    a real message is verified.
   </p>
 
   <h2>Optional observability and search</h2>
@@ -322,7 +335,7 @@ GOTENBERG_URL=http://gotenberg:3000</code></pre>
   <p>
     Keep <code>RUN_MIGRATIONS=false</code>. Database migrations are explicit
     install and upgrade steps. <code>RUN_SCOUT_SETTINGS</code> and
-    <code>RUN_DOCKER_SCRIPTS</code> are also disabled in the baseline; invoke
-    maintenance work deliberately and observe it to completion.
+    <code>RUN_DOCKER_SCRIPTS</code> are also disabled in the baseline; invoke maintenance
+    work deliberately and observe it to completion.
   </p>
 </DocsLayout>

@@ -41,50 +41,64 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </tbody>
   </table>
   <p>
-    Sign-in options: email/password, <strong>Socialite</strong> social providers
-    (configurable per installation), <strong>passkeys</strong> (WebAuthn —
-    public login options/verify endpoints), and a demo-login route used for
-    evaluation. Signup supports email lookup with OTP verification, and there is
-    a faculty-verification flow for staff accounts.
+    Sign-in options: email/password, <strong>Socialite</strong> social providers (configurable
+    per installation), <strong>passkeys</strong> (WebAuthn — public login options/verify
+    endpoints), and a demo-login route used for evaluation. Signup supports email
+    lookup with OTP verification, and there is a faculty-verification flow for staff
+    accounts.
   </p>
 
   <h2>Multi-factor authentication</h2>
-  <p>Two second factors ship in the box, implemented as custom Filament authentication responses:</p>
+  <p>
+    Two second factors ship in the box, implemented as custom Filament
+    authentication responses:
+  </p>
   <ul>
-    <li><strong>TOTP authenticator apps</strong> — recoverable app-based codes (<code>SecurityAwareAppAuthentication</code>).</li>
-    <li><strong>Email codes</strong> — 30-minute one-time codes (<code>SecurityAwareEmailAuthentication</code>).</li>
+    <li>
+      <strong>TOTP authenticator apps</strong> — recoverable app-based codes (<code
+        >SecurityAwareAppAuthentication</code
+      >).
+    </li>
+    <li>
+      <strong>Email codes</strong> — 30-minute one-time codes (<code
+        >SecurityAwareEmailAuthentication</code
+      >).
+    </li>
   </ul>
   <p>
-    Users manage 2FA, passkeys, active sessions, and personal API keys from their
-    profile settings — in the admin panel (Edit Profile) and in the React
+    Users manage 2FA, passkeys, active sessions, and personal API keys from
+    their profile settings — in the admin panel (Edit Profile) and in the React
     portals alike. A dedicated 2FA challenge route handles the post-login step.
   </p>
 
   <h2>Roles</h2>
   <p>
     Roles come from <strong>spatie/laravel-permission</strong> with
-    <strong>Filament Shield</strong> generating and enforcing per-resource
-    permissions in the admin panel.
+    <strong>Filament Shield</strong> generating and enforcing per-resource permissions
+    in the admin panel.
   </p>
   <ul>
-    <li><code>super_admin</code> bypasses checks and can cross school boundaries.</li>
     <li>
-      A <code>UserRole</code> enum defines roughly <strong>30 institution
-      roles</strong> — developer, super admin, admin, president, registrar,
-      cashier, librarian, support staff, professor ranks, student, graduate, SHS
-      student, and more.
+      <code>super_admin</code> bypasses checks and can cross school boundaries.
+    </li>
+    <li>
+      A <code>UserRole</code> enum defines roughly <strong
+        >30 institution roles</strong
+      > — developer, super admin, admin, president, registrar, cashier, librarian,
+      support staff, professor ranks, student, graduate, SHS student, and more.
     </li>
     <li>
       The enum carries <strong>hierarchy levels</strong>,
-      <code>getManageableRoles()</code> (which roles a given role may assign),
-      and portal-access helpers — use these instead of hard-coding role names.
+      <code>getManageableRoles()</code> (which roles a given role may assign), and
+      portal-access helpers — use these instead of hard-coding role names.
     </li>
   </ul>
   <p>
-    Typical permission shapes in the panel are Shield-generated
-    (<code>view_any_student</code>, <code>update_student</code>, …); outside the
-    panel, per-model <strong>policies</strong> authorize actions for both app and
-    module models.
+    Typical permission shapes in the panel are Shield-generated (<code
+      >view_any_student</code
+    >, <code>update_student</code>, …); outside the panel, per-model <strong
+      >policies</strong
+    > authorize actions for both app and module models.
   </p>
 
   <h2>Where authorization is enforced</h2>
@@ -92,45 +106,66 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <li>
       <strong>Middleware</strong> — first gate at the route level:
       <ul>
-        <li><code>role:</code> (spatie) and custom <code>administrators.only</code></li>
-        <li><code>EnsureAdministrativePortalAccess</code>, <code>EnsureFacultyAccess</code>, <code>EnsureStudentAccess</code> — keep each audience in its own portal</li>
-        <li><code>EnsureFeatureEnabled</code> — blocks disabled features (see Modules &amp; feature flags)</li>
+        <li>
+          <code>role:</code> (spatie) and custom <code>administrators.only</code
+          >
+        </li>
+        <li>
+          <code>EnsureAdministrativePortalAccess</code>, <code
+            >EnsureFacultyAccess</code
+          >, <code>EnsureStudentAccess</code> — keep each audience in its own portal
+        </li>
+        <li>
+          <code>EnsureFeatureEnabled</code> — blocks disabled features (see Modules
+          &amp; feature flags)
+        </li>
         <li><code>EnsureSystemIsSetup</code> — guards the first-run wizard</li>
-        <li><code>SetTenantContext</code> — establishes the school scope (see Architecture &amp; domain model)</li>
+        <li>
+          <code>SetTenantContext</code> — establishes the school scope (see Architecture
+          &amp; domain model)
+        </li>
       </ul>
     </li>
     <li>
-      <strong>Policies</strong> — model-level authorization in controllers,
-      Filament resources, and API handlers. Filament resources defer to the same
-      policies, so a rule change applies everywhere.
+      <strong>Policies</strong> — model-level authorization in controllers, Filament
+      resources, and API handlers. Filament resources defer to the same policies,
+      so a rule change applies everywhere.
     </li>
     <li>
       <strong>Form requests / controllers</strong> — validate input and call
-      <code>authorize</code> for protected actions; never trust portal-side
-      hiding as a security boundary.
+      <code>authorize</code> for protected actions; never trust portal-side hiding
+      as a security boundary.
     </li>
   </ol>
 
   <h2>Audit and impersonation</h2>
   <ul>
     <li>
-      <strong>Activity logging</strong> (spatie/laravel-activitylog) records
-      administrative changes; the admin workspace exposes them under
+      <strong>Activity logging</strong> (spatie/laravel-activitylog) records administrative
+      changes; the admin workspace exposes them under
       <strong>Audit Logs</strong>.
     </li>
     <li>
-      <strong>Impersonation</strong> (stechstudio/filament-impersonate) lets
-      privileged staff sign in as another user for support, with an explicit
-      stop-impersonation route. Treat impersonation as an audited,
-      permission-gated action.
+      <strong>Impersonation</strong> (stechstudio/filament-impersonate) lets privileged
+      staff sign in as another user for support, with an explicit stop-impersonation
+      route. Treat impersonation as an audited, permission-gated action.
     </li>
   </ul>
 
   <h2>Contributing rules of thumb</h2>
   <ul>
-    <li>New protected action → new or existing <strong>policy</strong> ability, enforced in the controller/resource — not just hidden UI.</li>
-    <li>New portal route → attach the <strong>audience middleware</strong> for that portal.</li>
-    <li>Never bypass the school scope; super-admin-only features should check the role explicitly.</li>
+    <li>
+      New protected action → new or existing <strong>policy</strong> ability, enforced
+      in the controller/resource — not just hidden UI.
+    </li>
+    <li>
+      New portal route → attach the <strong>audience middleware</strong> for that
+      portal.
+    </li>
+    <li>
+      Never bypass the school scope; super-admin-only features should check the
+      role explicitly.
+    </li>
     <li>Tokens, codes, and secrets never appear in logs, URLs, or source.</li>
   </ul>
 </DocsLayout>

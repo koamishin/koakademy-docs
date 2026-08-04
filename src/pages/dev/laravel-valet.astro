@@ -10,11 +10,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 >
   <p>
     Valet is the lightweight classic: PHP and Nginx on macOS with automatic
-    <code>.test</code> domains and no database management. Herd is the newer,
-    actively developed alternative that bundles PHP, Node, and database
-    services — most macOS users should prefer
-    <a href="/dev/laravel-herd">Herd</a>. This guide covers Valet
-    for those who already use it.
+    <code>.test</code> domains and no database management. Herd is the newer, actively
+    developed alternative that bundles PHP, Node, and database services — most macOS
+    users should prefer
+    <a href="/dev/laravel-herd">Herd</a>. This guide covers Valet for those who
+    already use it.
   </p>
 
   <h2>1. Install</h2>
@@ -58,13 +58,14 @@ brew services start postgresql@16
 createdb koakademy</code></pre>
       In <code>.env</code>, set <code>DB_CONNECTION=pgsql</code>,
       <code>DB_HOST=127.0.0.1</code>, <code>DB_PORT=5432</code>,
-      <code>DB_DATABASE=koakademy</code>, <code>DB_USERNAME</code> to your macOS
-      username, and an empty password for the default local trust setup.
+      <code>DB_DATABASE=koakademy</code>, <code>DB_USERNAME</code> to your macOS username,
+      and an empty password for the default local trust setup.
     </li>
   </ul>
   <p>
-    For queues, cache, or sessions, install Redis the same way
-    (<code>brew install redis</code> and
+    For queues, cache, or sessions, install Redis the same way (<code
+      >brew install redis</code
+    > and
     <code>brew services start redis</code>) and point
     <code>REDIS_HOST=127.0.0.1</code>.
   </p>
@@ -73,12 +74,12 @@ createdb koakademy</code></pre>
   <pre><code>php artisan migrate
 valet secure</code></pre>
   <p>
-    <code>valet secure</code> serves the site over HTTPS with a trusted local
-    certificate (<code>https://koakademy.test</code>). Run
+    <code>valet secure</code> serves the site over HTTPS with a trusted local certificate
+    (<code>https://koakademy.test</code>). Run
     <code>npm run dev</code> for Vite during frontend work, or
     <code>npm run build</code> once. Open
-    <code>https://koakademy.test/setup</code> to create development data and the
-    first administrator.
+    <code>https://koakademy.test/setup</code> to create development data and the first
+    administrator.
   </p>
 
   <h2>5. Validate</h2>
@@ -89,10 +90,9 @@ npm run build</code></pre>
   <div class="doc-callout doc-callout-note">
     <p class="doc-callout-label">Sharing and PDFs</p>
     <p>
-      <code>valet share</code> exposes a public tunnel and requires an external
-      tunnel tool or account. PDF generation needs Gotenberg, which Valet does
-      not provide — run the Gotenberg Docker image if you work on PDFs, or skip
-      that work locally.
+      <code>valet share</code> exposes a public tunnel and requires an external tunnel
+      tool or account. PDF generation needs Gotenberg, which Valet does not provide
+      — run the Gotenberg Docker image if you work on PDFs, or skip that work locally.
     </p>
   </div>
 </DocsLayout>

@@ -17,7 +17,12 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 
   <h2>Prerequisites</h2>
   <ul>
-    <li>A CapRover installation (dashboard on port <code>3000</code>) with a captain root domain and a wildcard DNS record for <code>*.apps.&lt;root&gt;</code></li>
+    <li>
+      A CapRover installation (dashboard on port <code>3000</code>) with a
+      captain root domain and a wildcard DNS record for <code
+        >*.apps.&lt;root&gt;</code
+      >
+    </li>
     <li>A stable KoAkademy release tag</li>
     <li>An external S3-compatible bucket for uploads</li>
   </ul>
@@ -28,39 +33,37 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
   <ul>
     <li>
-      <strong>PostgreSQL</strong> — set a strong database password during
-      creation (it cannot be changed from the dashboard afterwards). The app
-      becomes reachable internally at <code>srv-captain--postgres</code> on
-      port <code>5432</code>, and its data lives on its own persistent volume.
+      <strong>PostgreSQL</strong> — set a strong database password during creation
+      (it cannot be changed from the dashboard afterwards). The app becomes reachable
+      internally at <code>srv-captain--postgres</code> on port <code>5432</code
+      >, and its data lives on its own persistent volume.
     </li>
     <li>
       <strong>Redis</strong> — with a password if you set one; reachable at
       <code>srv-captain--redis</code> on port <code>6379</code>.
     </li>
   </ul>
-  <p>
-    Enable HTTPS on both apps and note the passwords for the next step.
-  </p>
+  <p>Enable HTTPS on both apps and note the passwords for the next step.</p>
 
   <h2>2. Gotenberg</h2>
-  <p>
-    Create a custom app from the Gotenberg image:
-  </p>
+  <p>Create a custom app from the Gotenberg image:</p>
   <ul>
     <li>Image: <code>gotenberg/gotenberg:8</code></li>
     <li>Container HTTP Port: <code>3000</code></li>
     <li>No environment variables required</li>
   </ul>
   <p>
-    KoAkademy reaches it internally at <code>http://srv-captain--gotenberg:3000</code>.
+    KoAkademy reaches it internally at <code
+      >http://srv-captain--gotenberg:3000</code
+    >.
   </p>
 
   <h2>3. The KoAkademy app</h2>
-  <p>
-    Create a custom app for KoAkademy itself:
-  </p>
+  <p>Create a custom app for KoAkademy itself:</p>
   <ul>
-    <li>Image: <code>ghcr.io/yukazakiri/koakademy:&lt;latest-stable-tag&gt;</code></li>
+    <li>
+      Image: <code>ghcr.io/yukazakiri/koakademy:&lt;latest-stable-tag&gt;</code>
+    </li>
     <li>Container HTTP Port: <code>8000</code></li>
   </ul>
   <p>Set these environment variables in the app:</p>
@@ -97,15 +100,14 @@ AWS_ENDPOINT=
 AWS_USE_PATH_STYLE_ENDPOINT=true</code></pre>
   <p>
     Replace the placeholder hostnames, credentials, and storage values with your
-    own, and generate <code>APP_KEY</code> in the next step. In this topology
-    the application is effectively stateless — uploads go to S3 and sessions,
-    cache, and queues use Redis — so no persistent directory is required for
-    the app. Attach one only if you need container logs or runtime workspace to
-    survive a redeploy.
+    own, and generate <code>APP_KEY</code> in the next step. In this topology the
+    application is effectively stateless — uploads go to S3 and sessions, cache, and
+    queues use Redis — so no persistent directory is required for the app. Attach
+    one only if you need container logs or runtime workspace to survive a redeploy.
   </p>
   <p>
-    <code>TRUSTED_PROXIES=*</code> is acceptable here because only CapRover's
-    internal Nginx can reach the application; see
+    <code>TRUSTED_PROXIES=*</code> is acceptable here because only CapRover's internal
+    Nginx can reach the application; see
     <a href="/docs/self-hosting/configuration">Configuration</a>.
   </p>
 
@@ -117,37 +119,50 @@ AWS_USE_PATH_STYLE_ENDPOINT=true</code></pre>
   <pre><code>docker exec srv-captain--postgres createdb -U postgres koakademy</code></pre>
   <p>
     Set a stable application key: generate one once with
-    <code>docker exec -it srv-captain--koakademy php artisan key:generate --show</code>
-    and paste the complete value into <code>APP_KEY</code> in the dashboard. A
-    key written only to the container's <code>.env</code> would be lost on the
-    next redeploy. Then run the migration inside the application container:
+    <code
+      >docker exec -it srv-captain--koakademy php artisan key:generate --show</code
+    >
+    and paste the complete value into <code>APP_KEY</code> in the dashboard. A key
+    written only to the container's <code>.env</code> would be lost on the next redeploy.
+    Then run the migration inside the application container:
   </p>
   <pre><code>docker exec -it srv-captain--koakademy php artisan migrate --force</code></pre>
   <p>
     In the dashboard, enable HTTPS for the app and force HTTP to HTTPS
-    redirects. Visit <code>https://koakademy.apps.example.org/setup</code> to
-    create the institution, initial academic period, and first administrator,
-    then verify <code>/admin</code>.
+    redirects. Visit <code>https://koakademy.apps.example.org/setup</code> to create
+    the institution, initial academic period, and first administrator, then verify
+    <code>/admin</code>.
   </p>
 
   <h2>5. Backups</h2>
   <ul>
     <li>
       Dump the PostgreSQL app's volume regularly:
-      <code>docker exec srv-captain--postgres pg_dump -U postgres koakademy &gt; koakademy.sql</code>,
-      and push the dump offsite. Redis is operational state, not the source of
-      record.
+      <code
+        >docker exec srv-captain--postgres pg_dump -U postgres koakademy &gt;
+        koakademy.sql</code
+      >, and push the dump offsite. Redis is operational state, not the source
+      of record.
     </li>
     <li>Back up the S3 upload bucket with the provider's controls.</li>
-    <li>Preserve <code>APP_KEY</code> and the database password in a secret store.</li>
+    <li>
+      Preserve <code>APP_KEY</code> and the database password in a secret store.
+    </li>
   </ul>
 
   <h2>6. Upgrades</h2>
   <ol>
     <li>Read the release notes and take a database backup.</li>
     <li>Update the app's image to the new stable tag and redeploy.</li>
-    <li>Run <code>docker exec -it srv-captain--koakademy php artisan migrate --force</code>.</li>
-    <li>Smoke-test the portal, <code>/admin</code>, uploads, a queued job, and a PDF export.</li>
+    <li>
+      Run <code
+        >docker exec -it srv-captain--koakademy php artisan migrate --force</code
+      >.
+    </li>
+    <li>
+      Smoke-test the portal, <code>/admin</code>, uploads, a queued job, and a
+      PDF export.
+    </li>
   </ol>
   <p>
     The upgrade and rollback rules in

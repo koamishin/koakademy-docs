@@ -18,8 +18,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
       <p>
         Checks whether one student ID and email address match the same record.
         It requires Laravel Sanctum authentication. It is
-        <strong>not</strong> authentication for the student and must not be
-        used as proof of identity by itself.
+        <strong>not</strong> authentication for the student and must not be used as
+        proof of identity by itself.
       </p>
     </div>
   </div>
@@ -67,10 +67,10 @@ Authorization: Bearer YOUR_TOKEN
   &#125;
 &#125;</code></pre>
   <p>
-    The current model serializes a matched <code>student_id</code> as an
-    integer. The request field remains a string; unmatched responses echo the
-    submitted string. Clients should accept this existing distinction until a
-    future version explicitly announces a normalized response contract.
+    The current model serializes a matched <code>student_id</code> as an integer.
+    The request field remains a string; unmatched responses echo the submitted string.
+    Clients should accept this existing distinction until a future version explicitly
+    announces a normalized response contract.
   </p>
 
   <h2>No matching record</h2>
@@ -91,8 +91,14 @@ Authorization: Bearer YOUR_TOKEN
 
   <h2>Other responses</h2>
   <ul>
-    <li><span class="api-status">401</span> when Sanctum authentication is missing or invalid</li>
-    <li><span class="api-status">422</span> with field errors when either input fails validation</li>
+    <li>
+      <span class="api-status">401</span> when Sanctum authentication is missing or
+      invalid
+    </li>
+    <li>
+      <span class="api-status">422</span> with field errors when either input fails
+      validation
+    </li>
   </ul>
   <p>
     Because this endpoint handles personal data, integrations should minimize

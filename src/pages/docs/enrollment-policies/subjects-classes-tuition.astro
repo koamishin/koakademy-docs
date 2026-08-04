@@ -15,9 +15,18 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>Subject assignment</h2>
   <p>Choose one assignment strategy for a matched blueprint:</p>
   <ul>
-    <li><strong>Manual</strong> — staff select subjects. Safest for a first rollout or irregular curricula.</li>
-    <li><strong>Recommendation only</strong> — the system suggests curriculum subjects but staff confirm them.</li>
-    <li><strong>Automatic curriculum</strong> — valid curriculum subjects are assigned automatically.</li>
+    <li>
+      <strong>Manual</strong> — staff select subjects. Safest for a first rollout
+      or irregular curricula.
+    </li>
+    <li>
+      <strong>Recommendation only</strong> — the system suggests curriculum subjects
+      but staff confirm them.
+    </li>
+    <li>
+      <strong>Automatic curriculum</strong> — valid curriculum subjects are assigned
+      automatically.
+    </li>
   </ul>
   <div class="doc-callout doc-callout-note">
     <p class="doc-callout-label">What this does</p>
@@ -52,8 +61,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <p>
     An authorized enrollment submission may carry a one-off miscellaneous
     override and a billing override. The assessment stores both the reusable
-    <code>discount_id</code> and the applied percentage snapshot so later edits
-    to a discount preset do not rewrite historical tuition.
+    <code>discount_id</code> and the applied percentage snapshot so later edits to
+    a discount preset do not rewrite historical tuition.
   </p>
 
   <h2>Payment methods</h2>
@@ -64,16 +73,28 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   </p>
   <p>Receipt behavior is also explicit:</p>
   <ul>
-    <li><strong>Required</strong> — a receipt or invoice identifier must be supplied.</li>
-    <li><strong>Optional</strong> — a configured transition may accept either form.</li>
-    <li><strong>None</strong> — permitted only by an authorized no-receipt transition with an audited reason.</li>
+    <li>
+      <strong>Required</strong> — a receipt or invoice identifier must be supplied.
+    </li>
+    <li>
+      <strong>Optional</strong> — a configured transition may accept either form.
+    </li>
+    <li>
+      <strong>None</strong> — permitted only by an authorized no-receipt transition
+      with an audited reason.
+    </li>
   </ul>
 
   <h2>Minimum-payment gates</h2>
   <ul>
-    <li><strong>No minimum</strong> — payment does not block the configured completion action.</li>
+    <li>
+      <strong>No minimum</strong> — payment does not block the configured completion
+      action.
+    </li>
     <li><strong>Fixed amount</strong> — require a specific currency amount.</li>
-    <li><strong>Percentage</strong> — require a portion of calculated tuition.</li>
+    <li>
+      <strong>Percentage</strong> — require a portion of calculated tuition.
+    </li>
   </ul>
   <p>
     Minimum-payment rules are deferred while an applicant starts enrollment.

@@ -29,31 +29,34 @@ curl --verbose http://127.0.0.1:8000/up</code></pre>
   <div class="doc-callout doc-callout-caution">
     <p class="doc-callout-label">Never paste secrets into issues</p>
     <p>
-      Do not include <code>.env</code> contents, access tokens, student data,
-      database dumps, or unredacted production logs in a public issue.
+      Do not include <code>.env</code> contents, access tokens, student data, database
+      dumps, or unredacted production logs in a public issue.
     </p>
   </div>
 
   <h2>The installer cannot resolve the latest tag</h2>
   <p>
     The installer intentionally reads immutable tags from published GitHub
-    Releases and never falls back to draft tags or <code>latest</code>. Anonymous
-    release discovery works after the repository is public. Until then,
-    authenticated maintainers can run a local script with an explicit stable tag:
+    Releases and never falls back to draft tags or <code>latest</code>.
+    Anonymous release discovery works after the repository is public. Until
+    then, authenticated maintainers can run a local script with an explicit
+    stable tag:
   </p>
   <pre><code>KOAKADEMY_VERSION=&lt;stable-tag&gt; bash scripts/install.sh</code></pre>
   <p>
     Also confirm outbound HTTPS access to <code>api.github.com</code>,
     <code>github.com</code>, <code>ghcr.io</code>, and Docker Hub. For local
-    RustFS, <code>RUSTFS_VERSION</code> can pin a reviewed stable or non-preview
-    beta tag.
+    RustFS, <code>RUSTFS_VERSION</code> can pin a reviewed stable or non-preview beta
+    tag.
   </p>
 
   <h2>The installer says Swarm is unavailable</h2>
   <p>
-    Docker must already be installed and running with the Linux container engine.
-    The installer initializes Swarm only when
-    <code>docker info --format '&#123;&#123;.Swarm.LocalNodeState&#125;&#125;'</code> reports
+    Docker must already be installed and running with the Linux container
+    engine. The installer initializes Swarm only when
+    <code
+      >docker info --format '&#123;&#123;.Swarm.LocalNodeState&#125;&#125;'</code
+    > reports
     <code>inactive</code>. An active worker is preserved but rejected because
     service creation requires a manager; run the installer on an existing
     manager instead of forcing the worker to leave.
@@ -77,8 +80,8 @@ docker node ls</code></pre>
   <pre><code>docker compose --env-file .env -f compose.production.yaml config --quiet</code></pre>
   <p>
     Errors usually mean <code>.env</code> is missing, <code>DB_PASSWORD</code> or
-    <code>REDIS_PASSWORD</code> is empty, or a value contains Compose
-    interpolation characters that need escaping. Compare variable names with
+    <code>REDIS_PASSWORD</code> is empty, or a value contains Compose interpolation
+    characters that need escaping. Compare variable names with
     <code>.env.production.example</code>; do not copy values from that example
     unchanged.
   </p>
@@ -98,7 +101,10 @@ docker service logs koakademy-migrate
 docker service ps --no-trunc koakademy-postgres
 docker service ps --no-trunc koakademy-redis
 docker service ps --no-trunc koakademy-gotenberg</code></pre>
-  <p>For manual Compose, run the explicit migration after dependencies are healthy:</p>
+  <p>
+    For manual Compose, run the explicit migration after dependencies are
+    healthy:
+  </p>
   <pre><code>docker compose --env-file .env -f compose.production.yaml run --rm app php artisan migrate:status
 docker compose --env-file .env -f compose.production.yaml run --rm app php artisan migrate --force</code></pre>
 
@@ -106,9 +112,9 @@ docker compose --env-file .env -f compose.production.yaml run --rm app php artis
   <p>
     Check the external proxy or tunnel, host firewall, DNS, certificate, and
     forwarding headers. A Swarm install listens on manager host port
-    <code>8000</code>; manual Compose listens on <code>127.0.0.1:8000</code>. The
-    edge must target the matching address, not a database or container-private
-    address.
+    <code>8000</code>; manual Compose listens on <code>127.0.0.1:8000</code>.
+    The edge must target the matching address, not a database or
+    container-private address.
   </p>
   <p>
     Confirm <code>APP_URL</code>, <code>PORTAL_HOST</code>, and
@@ -119,27 +125,27 @@ docker compose --env-file .env -f compose.production.yaml run --rm app php artis
 
   <h2>Redirect loop or generated HTTP links behind HTTPS</h2>
   <p>
-    Verify the edge sends <code>X-Forwarded-Proto: https</code> and its source
-    is allowed by <code>TRUSTED_PROXIES</code>. Use explicit proxy
-    addresses/CIDRs for Swarm's host-published port; reserve
-    <code>TRUSTED_PROXIES=*</code> for the loopback-only Compose origin. Clear
-    cached configuration after changing Compose environment values:
+    Verify the edge sends <code>X-Forwarded-Proto: https</code> and its source is
+    allowed by <code>TRUSTED_PROXIES</code>. Use explicit proxy addresses/CIDRs
+    for Swarm's host-published port; reserve
+    <code>TRUSTED_PROXIES=*</code> for the loopback-only Compose origin. Clear cached
+    configuration after changing Compose environment values:
   </p>
   <pre><code>docker compose --env-file .env -f compose.production.yaml exec app php artisan optimize:clear
 docker compose --env-file .env -f compose.production.yaml restart app</code></pre>
   <p>
     The Swarm installer generates its service environment once. Review it with
     <code>docker service inspect koakademy-app</code> and use an explicit
-    <code>docker service update</code> or reviewed redeployment to change proxy
-    settings; rerunning the installer does not overwrite an existing service.
+    <code>docker service update</code> or reviewed redeployment to change proxy settings;
+    rerunning the installer does not overwrite an existing service.
   </p>
 
   <h2><code>/setup</code> is forbidden</h2>
   <p>
-    The setup wizard is one-time. It returns <code>403</code> after core data or
-    completed setup state exists. Use the normal <code>/admin</code> sign-in. Do
-    not delete setup records to recreate an administrator; use supported
-    password-reset or database recovery procedures.
+    The setup wizard is one-time. It returns <code>403</code> after core data or completed
+    setup state exists. Use the normal <code>/admin</code> sign-in. Do not delete
+    setup records to recreate an administrator; use supported password-reset or database
+    recovery procedures.
   </p>
   <p>
     If this happens on a genuinely empty database, verify the app is connected
@@ -149,10 +155,10 @@ docker compose --env-file .env -f compose.production.yaml restart app</code></pr
   <h2>Uploads fail</h2>
   <p>
     Confirm <code>FILESYSTEM_DISK=s3</code>, the bucket exists, and the
-    <code>AWS_*</code> endpoint, region, path-style, and credentials match the
-    provider. Credentials need the operations used by uploads and deletes but
-    should be limited to the installation's bucket. Check clocks on the host and
-    provider when signatures expire unexpectedly.
+    <code>AWS_*</code> endpoint, region, path-style, and credentials match the provider.
+    Credentials need the operations used by uploads and deletes but should be limited
+    to the installation's bucket. Check clocks on the host and provider when signatures
+    expire unexpectedly.
   </p>
   <p>For local RustFS:</p>
   <pre><code>docker service ps --no-trunc koakademy-rustfs
@@ -165,8 +171,8 @@ curl --fail --silent --show-error http://127.0.0.1:9000/health</code></pre>
 
   <h2>PDF generation fails</h2>
   <p>
-    KoAkademy uses <code>spatie/laravel-pdf</code> with Gotenberg. There is no
-    DOMPDF fallback. Check:
+    KoAkademy uses <code>spatie/laravel-pdf</code> with Gotenberg. There is no DOMPDF
+    fallback. Check:
   </p>
   <pre><code>docker service ps --no-trunc koakademy-gotenberg
 docker service logs --tail=100 koakademy-gotenberg
@@ -176,18 +182,19 @@ docker service logs --tail=100 koakademy-app
 docker compose --env-file .env -f compose.production.yaml ps gotenberg
 docker compose --env-file .env -f compose.production.yaml logs --tail=100 gotenberg app</code></pre>
   <p>
-    <code>GOTENBERG_URL</code> must target the private service name
-    (<code>http://koakademy-gotenberg:3000</code> in Swarm or
+    <code>GOTENBERG_URL</code> must target the private service name (<code
+      >http://koakademy-gotenberg:3000</code
+    > in Swarm or
     <code>http://gotenberg:3000</code> in Compose). Restore Gotenberg, then retry
     the failed queued job according to your operational policy.
   </p>
 
   <h2>Queued work does not run</h2>
   <p>
-    Verify Redis health, <code>QUEUE_CONNECTION=redis</code>, and the application
-    logs. Station workers run inside the application container in the production
-    image. Avoid repeatedly dispatching the same export or notification until
-    the original job state is understood.
+    Verify Redis health, <code>QUEUE_CONNECTION=redis</code>, and the
+    application logs. Station workers run inside the application container in
+    the production image. Avoid repeatedly dispatching the same export or
+    notification until the original job state is understood.
   </p>
 
   <h2>Asking for help</h2>
@@ -196,6 +203,10 @@ docker compose --env-file .env -f compose.production.yaml logs --tail=100 gotenb
     KoAkademy version, deployment method, expected/actual behavior, sanitized
     logs, and minimal reproduction. Report security concerns privately according
     to
-    <a href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md" target="_blank" rel="noreferrer">SECURITY.md</a>.
+    <a
+      href="https://github.com/yukazakiri/koakademy/blob/master/SECURITY.md"
+      target="_blank"
+      rel="noreferrer">SECURITY.md</a
+    >.
   </p>
 </DocsLayout>

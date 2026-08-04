@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import Seal from "@/components/Seal.astro"
+import ThemeToggle from "@/components/ThemeToggle.astro"
 
 const github = "https://github.com/yukazakiri/koakademy"
 ---
@@ -39,6 +40,7 @@ const github = "https://github.com/yukazakiri/koakademy"
         </div>
 
         <div class="flex items-center gap-2.5">
+          <ThemeToggle />
           <a
             href={github}
             target="_blank"
@@ -277,7 +279,7 @@ const github = "https://github.com/yukazakiri/koakademy"
               </div>
 
               <div
-                class="hero-dashboard-panel group relative overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_32px_80px_-48px_rgba(26,42,33,0.45)] md:p-3"
+                class="hero-dashboard-panel group relative overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_32px_80px_-48px_rgba(26,42,33,0.45)] md:p-3 dark:bg-paper-2 dark:shadow-[0_32px_80px_-48px_rgba(0,0,0,0.65)]"
               >
                 <div
                   class="grid grid-cols-[1fr_auto_1fr] items-center rounded-t-xl border border-b-0 border-line px-4 py-3"

@@ -20,7 +20,8 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/start-here/introduction",
         title: "Introduction",
-        blurb: "What KoAkademy is, the stack it runs on, and which path to pick.",
+        blurb:
+          "What KoAkademy is, the stack it runs on, and which path to pick.",
       },
       {
         href: "/docs/start-here/architecture",
@@ -40,12 +41,14 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/self-hosting/installation",
         title: "Installation",
-        blurb: "The supported production topology, step by step — Swarm or Compose.",
+        blurb:
+          "The supported production topology, step by step — Swarm or Compose.",
       },
       {
         href: "/docs/self-hosting/deployment",
         title: "Deployment",
-        blurb: "First deploy, reverse proxies, backups, upgrades, and rollback.",
+        blurb:
+          "First deploy, reverse proxies, backups, upgrades, and rollback.",
       },
       {
         href: "/docs/self-hosting/dokploy",
@@ -80,7 +83,8 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/self-hosting/faq",
         title: "FAQ",
-        blurb: "Support, deployment, storage, PDFs, and API questions answered.",
+        blurb:
+          "Support, deployment, storage, PDFs, and API questions answered.",
       },
     ],
   },
@@ -90,17 +94,20 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/user-guide/introduction",
         title: "Using KoAkademy",
-        blurb: "A safe daily workflow for registrars, cashiers, and administrators.",
+        blurb:
+          "A safe daily workflow for registrars, cashiers, and administrators.",
       },
       {
         href: "/docs/user-guide/features-overview",
         title: "Platform features",
-        blurb: "A map of what exists, where it lives, and how it is switched on.",
+        blurb:
+          "A map of what exists, where it lives, and how it is switched on.",
       },
       {
         href: "/docs/user-guide/admin-portal",
         title: "Admin portal",
-        blurb: "Records, enrollment processing, finance, and system management.",
+        blurb:
+          "Records, enrollment processing, finance, and system management.",
       },
       {
         href: "/docs/user-guide/faculty-portal",
@@ -110,12 +117,14 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/user-guide/student-portal",
         title: "Student portal",
-        blurb: "Classes, schedule, tuition, statements, and the digital ID card.",
+        blurb:
+          "Classes, schedule, tuition, statements, and the digital ID card.",
       },
       {
         href: "/docs/user-guide/modules",
         title: "Optional modules",
-        blurb: "Announcements, cashier, inventory, library, notifications, and medical records.",
+        blurb:
+          "Announcements, cashier, inventory, library, notifications, and medical records.",
       },
     ],
   },
@@ -125,12 +134,14 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/enrollment-policies/overview",
         title: "Overview",
-        blurb: "The seven questions a blueprint answers, plus the safety model.",
+        blurb:
+          "The seven questions a blueprint answers, plus the safety model.",
       },
       {
         href: "/docs/enrollment-policies/quick-start",
         title: "Quick start",
-        blurb: "Preset to activation — publish and activate your first blueprint.",
+        blurb:
+          "Preset to activation — publish and activate your first blueprint.",
       },
       {
         href: "/docs/enrollment-policies/scopes-inheritance",
@@ -140,27 +151,32 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/enrollment-policies/availability-eligibility-documents",
         title: "Availability & documents",
-        blurb: "Channels, date windows, eligibility checks, and required documents.",
+        blurb:
+          "Channels, date windows, eligibility checks, and required documents.",
       },
       {
         href: "/docs/enrollment-policies/subjects-classes-tuition",
         title: "Subjects, classes & tuition",
-        blurb: "Assignment strategies, fees, payment methods, and minimum gates.",
+        blurb:
+          "Assignment strategies, fees, payment methods, and minimum gates.",
       },
       {
         href: "/docs/enrollment-policies/approvals-notifications",
         title: "Approvals & notifications",
-        blurb: "Safe acyclic workflows with roles, actions, and conditional branches.",
+        blurb:
+          "Safe acyclic workflows with roles, actions, and conditional branches.",
       },
       {
         href: "/docs/enrollment-policies/simulation-publication",
         title: "Simulation & publication",
-        blurb: "Test journeys, publish immutable versions, activate, roll back, back up.",
+        blurb:
+          "Test journeys, publish immutable versions, activate, roll back, back up.",
       },
       {
         href: "/docs/enrollment-policies/troubleshooting-deployment",
         title: "Troubleshooting & safety",
-        blurb: "Rollout states, common problems, and the deployment-safety checklist.",
+        blurb:
+          "Rollout states, common problems, and the deployment-safety checklist.",
       },
     ],
   },
@@ -190,7 +206,8 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/system/queues-pdf",
         title: "Queues, jobs & PDF",
-        blurb: "Queue connections, background jobs, and the Gotenberg pipeline.",
+        blurb:
+          "Queue connections, background jobs, and the Gotenberg pipeline.",
       },
       {
         href: "/docs/system/frontend",
@@ -234,7 +251,8 @@ export const apiTree: DocGroup[] = [
       {
         href: "/api/api-overview",
         title: "API overview",
-        blurb: "The tested beta contract, base URL, authentication, and errors.",
+        blurb:
+          "The tested beta contract, base URL, authentication, and errors.",
       },
       {
         href: "/api/authenticated-settings",
@@ -258,7 +276,8 @@ export const devTree: DocGroup[] = [
       {
         href: "/dev/development-setup",
         title: "Development setup",
-        blurb: "From clone to running tests — toolchain, commands, and conventions.",
+        blurb:
+          "From clone to running tests — toolchain, commands, and conventions.",
       },
     ],
   },
@@ -288,7 +307,8 @@ export const devTree: DocGroup[] = [
       {
         href: "/dev/enrollment-policy-extensions",
         title: "Policy extensions",
-        blurb: "Contracts for rules, actions, and strategies — no executable classes.",
+        blurb:
+          "Contracts for rules, actions, and strategies — no executable classes.",
       },
     ],
   },
@@ -314,7 +334,9 @@ export function allGroups(): DocGroup[] {
   return [...docsTree, ...apiTree, ...devTree]
 }
 
-export function groupOf(path: string): { group: DocGroup; entry: DocEntry } | null {
+export function groupOf(
+  path: string
+): { group: DocGroup; entry: DocEntry } | null {
   for (const group of allGroups()) {
     const entry = group.links.find((link) => link.href === path)
     if (entry) return { group, entry }

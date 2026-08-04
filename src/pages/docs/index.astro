@@ -14,17 +14,17 @@ import { docsTree } from "@/data/docs"
   </p>
   <ul>
     <li>
-      <strong>Docs</strong> — the product, self-hosting, and operations.
-      Operator self-hosting the platform, school staff using it day to day, and
-      repository maintainers all live here.
+      <strong>Docs</strong> — the product, self-hosting, and operations. Operator
+      self-hosting the platform, school staff using it day to day, and repository
+      maintainers all live here.
     </li>
     <li>
-      <a href="/api">API reference</a> — the tested integration surface for
-      developers building against KoAkademy.
+      <a href="/api">API reference</a> — the tested integration surface for developers
+      building against KoAkademy.
     </li>
     <li>
-      <a href="/dev">Developers</a> — local development setup, environments
-      like Herd and Sail, and extension contracts.
+      <a href="/dev">Developers</a> — local development setup, environments like Herd
+      and Sail, and extension contracts.
     </li>
   </ul>
 
@@ -35,36 +35,28 @@ import { docsTree } from "@/data/docs"
     {
       docsTree.map((group) => (
         <div class="rounded-xl border border-line bg-paper p-6">
-          <p
-            class="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brass-deep"
-          >
+          <p class="font-mono text-[11px] font-medium tracking-[0.22em] text-brass-deep uppercase">
             {group.label}
           </p>
           <ul class="mt-4 space-y-2.5">
-            {
-              group.links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    class="group/link flex items-start gap-2.5"
-                  >
-                    <span
-                      aria-hidden="true"
-                      class="mt-[7px] size-1 shrink-0 rotate-45 bg-brass transition-colors group-hover/link:bg-ink"
-                    ></span>
-                    <span class="min-w-0">
-                      <span
-                        class="block text-[14.5px] font-medium text-ink transition-colors group-hover/link:text-brass-deep"
-                        >{link.title}</span
-                      >
-                      <span class="mt-0.5 block text-[12.5px] leading-relaxed text-ink-soft"
-                        >{link.blurb}</span
-                      >
+            {group.links.map((link) => (
+              <li>
+                <a href={link.href} class="group/link flex items-start gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    class="mt-[7px] size-1 shrink-0 rotate-45 bg-brass transition-colors group-hover/link:bg-ink"
+                  />
+                  <span class="min-w-0">
+                    <span class="block text-[14.5px] font-medium text-ink transition-colors group-hover/link:text-brass-deep">
+                      {link.title}
                     </span>
-                  </a>
-                </li>
-              ))
-            }
+                    <span class="mt-0.5 block text-[12.5px] leading-relaxed text-ink-soft">
+                      {link.blurb}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       ))
@@ -73,12 +65,17 @@ import { docsTree } from "@/data/docs"
 
   <h2>Reading order</h2>
   <p>
-    New to KoAkademy? Start with the <a href="/docs/start-here/introduction">Introduction</a>,
-    then follow <a href="/docs/self-hosting/installation">Installation</a> to stand up a
-    staging instance. Operators continue through <a href="/docs/self-hosting/deployment">Deployment</a>
-    and <a href="/docs/self-hosting/configuration">Configuration</a>. School staff move on
-    to the <a href="/docs/user-guide/introduction">User Guide</a>. Developers and maintainers
-    finish with the <a href="/docs/system/architecture-domain">System Internals</a> and the
+    New to KoAkademy? Start with the <a href="/docs/start-here/introduction"
+      >Introduction</a
+    >, then follow <a href="/docs/self-hosting/installation">Installation</a> to stand
+    up a staging instance. Operators continue through <a
+      href="/docs/self-hosting/deployment">Deployment</a
+    >
+    and <a href="/docs/self-hosting/configuration">Configuration</a>. School
+    staff move on to the <a href="/docs/user-guide/introduction">User Guide</a>.
+    Developers and maintainers finish with the <a
+      href="/docs/system/architecture-domain">System Internals</a
+    > and the
     <a href="/docs/maintainers/ci">Maintainers</a> sections.
   </p>
   <p>
@@ -90,8 +87,9 @@ import { docsTree } from "@/data/docs"
     Switch to the <a href="/dev">Developers</a> section and try
     <a href="/dev/laravel-herd">Laravel Herd</a>,
     <a href="/dev/laravel-sail">Sail</a>, or
-    <a href="/dev/laravel-valet">Valet</a>. Building an integration?
-    See the <a href="/api">API reference</a>.
+    <a href="/dev/laravel-valet">Valet</a>. Building an integration? See the <a
+      href="/api">API reference</a
+    >.
   </p>
 
   <div class="doc-callout doc-callout-note">
@@ -99,12 +97,16 @@ import { docsTree } from "@/data/docs"
     <p>
       This section is a rewritten edition of the official documentation. The
       canonical source of truth remains the repository at
-      <a href="https://github.com/yukazakiri/koakademy" target="_blank" rel="noreferrer"
-        >github.com/yukazakiri/koakademy</a
+      <a
+        href="https://github.com/yukazakiri/koakademy"
+        target="_blank"
+        rel="noreferrer">github.com/yukazakiri/koakademy</a
       >
       and the hosted docs at
-      <a href="https://yukazakiri.github.io/koakademy" target="_blank" rel="noreferrer"
-        >yukazakiri.github.io/koakademy</a
+      <a
+        href="https://yukazakiri.github.io/koakademy"
+        target="_blank"
+        rel="noreferrer">yukazakiri.github.io/koakademy</a
       >. If something here disagrees with what the software does, the software
       and the canonical docs win.
     </p>

@@ -23,8 +23,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </div>
     <div class="api-endpoint-body">
       <p>
-        Collection of general setting resources. Returns <code>404</code> when
-        the collection is empty.
+        Collection of general setting resources. Returns <code>404</code> when the
+        collection is empty.
       </p>
     </div>
   </div>
@@ -37,9 +37,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </div>
     <div class="api-endpoint-body">
       <p>
-        Create settings after validation. Returns <code>201</code> on success
-        and <code>422</code> with an <code>errors</code> object on validation
-        failure.
+        Create settings after validation. Returns <code>201</code> on success and
+        <code>422</code> with an <code>errors</code> object on validation failure.
       </p>
     </div>
   </div>
@@ -133,8 +132,8 @@ Authorization: Bearer YOUR_TOKEN
   "data": &#123;&#125;
 &#125;</code></pre>
   <p>
-    <code>data</code> is a general setting resource and can gain fields. A
-    validation failure returns HTTP <code>422</code> with an <code>errors</code>
+    <code>data</code> is a general setting resource and can gain fields. A validation
+    failure returns HTTP <code>422</code> with an <code>errors</code>
     object.
   </p>
 
@@ -148,8 +147,8 @@ Authorization: Bearer YOUR_TOKEN
     <div class="api-endpoint-body">
       <p>
         Does not require authentication, but an administrator must enable both
-        the public API and public-settings feature and choose allowed fields.
-        A successful response has this form:
+        the public API and public-settings feature and choose allowed fields. A
+        successful response has this form:
       </p>
       <pre><code>&#123;
   "message": "Public website settings retrieved successfully",

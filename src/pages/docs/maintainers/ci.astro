@@ -9,8 +9,8 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
 >
   <p>
     <code>.github/workflows/ci.yml</code> runs for pull requests into
-    <code>master</code> and explicit manual dispatches. It does not repeat the
-    full suite after merge; a <code>master</code> push starts Delivery directly.
+    <code>master</code> and explicit manual dispatches. It does not repeat the full
+    suite after merge; a <code>master</code> push starts Delivery directly.
   </p>
   <p>
     CI is intentionally secret-free and fork-safe. Actions are commit-SHA
@@ -30,19 +30,32 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     <tbody>
       <tr>
         <td>Classify pull request</td>
-        <td>Detect and validate exact same-repository Release Please metadata-only updates</td>
+        <td
+          >Detect and validate exact same-repository Release Please
+          metadata-only updates</td
+        >
       </tr>
       <tr>
         <td>Application and documentation</td>
-        <td>PHP 8.5, Node 22, Composer install/audit, Pint, application build, Pest, docs sync/link checks, Compose, and installer syntax</td>
+        <td
+          >PHP 8.5, Node 22, Composer install/audit, Pint, application build,
+          Pest, docs sync/link checks, Compose, and installer syntax</td
+        >
       </tr>
       <tr>
         <td>Workflow security</td>
-        <td>Check every workflow with checksum-pinned <code>actionlint</code> and <code>zizmor</code></td>
+        <td
+          >Check every workflow with checksum-pinned <code>actionlint</code> and <code
+            >zizmor</code
+          ></td
+        >
       </tr>
       <tr>
         <td>Conventional PR title</td>
-        <td>Automatically infer and apply a Conventional Commit title, then validate the current GitHub title</td>
+        <td
+          >Automatically infer and apply a Conventional Commit title, then
+          validate the current GitHub title</td
+        >
       </tr>
       <tr>
         <td>required</td>
@@ -51,14 +64,15 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     </tbody>
   </table>
   <p>
-    The test environment is hermetic: SQLite in memory, array cache/session/mail,
-    sync queues, null broadcasting, Scout's collection driver, and optional
-    observability disabled. Composer downloads and npm dependencies are cached.
+    The test environment is hermetic: SQLite in memory, array
+    cache/session/mail, sync queues, null broadcasting, Scout's collection
+    driver, and optional observability disabled. Composer downloads and npm
+    dependencies are cached.
   </p>
   <p>
-    Delivery owns the only multi-architecture container build. The
-    path-filtered documentation deployment owns the Astro production build,
-    while CI still catches generated-document and local-link drift before merge.
+    Delivery owns the only multi-architecture container build. The path-filtered
+    documentation deployment owns the Astro production build, while CI still
+    catches generated-document and local-link drift before merge.
   </p>
   <p>
     Release Please pull requests use a fast path because they do not change
@@ -89,18 +103,42 @@ php artisan test --compact --filter="shows the setup screen"</code></pre>
 
   <h2>Maintainer notes</h2>
   <ul>
-    <li><strong>Branch protection:</strong> require only <code>CI / required</code>; individual job names can evolve without changing repository settings.</li>
-    <li><strong>No secrets:</strong> do not add registry credentials or deployment side effects to CI. Privileged publication stays in Delivery (see Releases &amp; versioning).</li>
-    <li><strong>Forks:</strong> pull-request validation remains secret-free and never publishes artifacts.</li>
     <li>
-      <strong>PR titles:</strong> the metadata-only <code>pull_request_target</code>
+      <strong>Branch protection:</strong> require only <code>CI / required</code
+      >; individual job names can evolve without changing repository settings.
+    </li>
+    <li>
+      <strong>No secrets:</strong> do not add registry credentials or deployment side
+      effects to CI. Privileged publication stays in Delivery (see Releases &amp;
+      versioning).
+    </li>
+    <li>
+      <strong>Forks:</strong> pull-request validation remains secret-free and never
+      publishes artifacts.
+    </li>
+    <li>
+      <strong>PR titles:</strong> the metadata-only <code
+        >pull_request_target</code
+      >
       workflow may read the title, description, labels, and changed-file names to
       infer a Conventional Commit type and scope. It never checks out or executes
-      contributor code. Maintainers should review the inferred title because it
-      controls release notes and SemVer.
+      contributor code. Maintainers should review the inferred title because it controls
+      release notes and SemVer.
     </li>
-    <li><strong>Release ordering:</strong> a same-repository <code>master</code> push starts Delivery immediately; CI is not repeated after merge.</li>
-    <li><strong>Administrator bypass:</strong> branch protection does not apply to administrators, so an administrator can intentionally merge and publish before <code>CI / required</code> completes.</li>
-    <li><strong>Existing quality debt:</strong> repository-wide Prettier, PHPStan, strict Composer validation, and npm audit are not blocking until their independent findings are resolved.</li>
+    <li>
+      <strong>Release ordering:</strong> a same-repository <code>master</code> push
+      starts Delivery immediately; CI is not repeated after merge.
+    </li>
+    <li>
+      <strong>Administrator bypass:</strong> branch protection does not apply to administrators,
+      so an administrator can intentionally merge and publish before <code
+        >CI / required</code
+      > completes.
+    </li>
+    <li>
+      <strong>Existing quality debt:</strong> repository-wide Prettier, PHPStan, strict
+      Composer validation, and npm audit are not blocking until their independent
+      findings are resolved.
+    </li>
   </ul>
 </DocsLayout>
