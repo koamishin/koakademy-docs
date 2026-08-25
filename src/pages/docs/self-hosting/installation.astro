@@ -28,8 +28,7 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <h2>Prerequisites</h2>
   <ul>
     <li>
-      Linux host with Bash and Docker Engine, or Windows x64 with PowerShell and
-      Docker Desktop using Linux containers
+      Linux host with Bash and Docker Engine
     </li>
     <li>Docker daemon access from the account running the installer</li>
     <li>
@@ -56,10 +55,16 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
     Swarm is already active, it preserves the cluster, requires the current node
     to be a manager, and pins KoAkademy's stateful services to that manager.
   </p>
-  <p><strong>Linux</strong> — copy and run:</p>
-  <pre><code>bash -c "$(curl -fsSL https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh)"</code></pre>
-  <p><strong>Windows</strong> — open PowerShell and copy and run:</p>
-  <pre><code>& ([scriptblock]::Create((irm https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.ps1)))</code></pre>
+  <p>Copy and run:</p>
+  <pre><code>curl -sSL https://koakademy.koamishin.com/install.sh | bash</code></pre>
+  <div class="doc-callout doc-callout-tip">
+    <p class="doc-callout-label">Windows users</p>
+    <p>
+      The one-line installer requires Linux. Windows users should follow the
+      <a href="#manual-docker-compose-installation">Manual Docker Compose
+      installation</a> below using Docker Desktop with Linux containers enabled.
+    </p>
+  </div>
   <p>
     The installer resolves the newest stable KoAkademy tag from GitHub,
     rejecting development and preview tags; generates the application key and
@@ -100,14 +105,11 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   <div class="doc-callout doc-callout-caution">
     <p class="doc-callout-label">Running remote code is privileged</p>
     <p>
-      To inspect the Linux installer first:
+      To inspect the installer first:
       <code
         >curl -fsSLO
-        https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh</code
+        https://koakademy.koamishin.com/install.sh</code
       >, then <code>less install.sh</code>, then <code>bash install.sh</code>.
-      On Windows, download <code>install.ps1</code> with
-      <code>Invoke-WebRequest</code>, read it with <code>Get-Content</code>,
-      then run <code>&amp; .\install.ps1</code>.
     </p>
   </div>
   <div class="doc-callout doc-callout-caution">
