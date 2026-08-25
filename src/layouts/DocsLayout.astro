@@ -14,13 +14,36 @@ import {
 interface Props {
   title: string
   description?: string
+  /** Canonical URL path (e.g. /docs/self-hosting/installation). */
+  canonicalPath?: string
+  /** Override default keywords for this page. */
+  keywords?: string
+  /** Open Graph / Twitter image path. */
+  image?: string
+  /** Article published date (ISO 8601). */
+  pubDate?: string
+  /** Article last modified date (ISO 8601). */
+  modDate?: string
+  /** Whether to allow indexing (default true). */
+  index?: boolean
   /** Current route path, e.g. /api/student-verification */
   path: string
   /** Which documentation section this page belongs to. */
   section?: DocSection
 }
 
-const { title, description = "", path, section: sectionProp } = Astro.props
+const {
+  title,
+  description = "",
+  canonicalPath,
+  keywords,
+  image,
+  pubDate,
+  modDate,
+  index,
+  path,
+  section: sectionProp,
+} = Astro.props
 const section: DocSection = sectionProp ?? sectionForPath(path)
 const tree = treeFor(section)
 const flat = flattenDocs(tree)
@@ -40,6 +63,46 @@ const groupLabel = current?.group.label ?? sectionLabel
 const eyebrow = current ? `${sectionLabel} · ${groupLabel}` : sectionLabel
 const github = "https://github.com/yukazakiri/koakademy"
 
+// Breadcrumb JSON-LD for structured data
+const site = "https://koakademy.org"
+const breadcrumbItems = [
+  { "@type": "ListItem", position: 1, name: "KoAkademy", item: site },
+  {
+    "@type": "ListItem",
+    position: 2,
+    name: sectionLabel,
+    item: `${site}${homeHref}`,
+  },
+  ...(current
+    ? [
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: current.group.label,
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: current.entry.title,
+          item: `${site}${path}`,
+        },
+      ]
+    : [
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: title,
+          item: `${site}${path}`,
+        },
+      ]),
+]
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbItems,
+}
+const breadcrumbLdRaw = JSON.stringify(breadcrumbLd)
+
 const tabs = [
   { id: "docs" as DocSection, label: "Docs", href: "/docs" },
   { id: "api" as DocSection, label: "API reference", href: "/api" },
@@ -50,6 +113,12 @@ const tabs = [
 <Layout
   title={`${title} — KoAkademy docs`}
   description={description || `KoAkademy documentation — ${sectionLabel}`}
+  canonicalPath={canonicalPath ?? path}
+  keywords={keywords}
+  image={image}
+  pubDate={pubDate}
+  modDate={modDate}
+  index={index}
 >
   <header
     class="site-nav sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md"
@@ -185,6 +254,9 @@ const tabs = [
       </nav>
     </div>
   </main>
+
+  <!-- JSON-LD breadcrumbs for docs pages -->
+  <script type="application/ld+json" set:html={breadcrumbLdRaw}></script>
 
   <footer class="border-t border-line">
     <div
