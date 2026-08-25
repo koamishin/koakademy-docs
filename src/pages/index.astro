@@ -191,44 +191,15 @@ const github = "https://github.com/yukazakiri/koakademy"
               </div>
 
               <div class="min-w-0 self-end">
-                <div class="flex justify-end">
-                  <div
-                    class="flex items-center gap-3 font-mono text-[10px] tracking-[0.12em] uppercase"
-                    role="group"
-                    aria-label="Choose your operating system"
-                  >
-                    <button
-                      type="button"
-                      id="install-tab-linux"
-                      aria-pressed="true"
-                      data-os="linux"
-                      class="install-tab install-tab-active border-b border-transparent pb-1 text-ink-soft transition-colors hover:text-ink"
-                      >Linux / macOS</button
-                    >
-                    <button
-                      type="button"
-                      id="install-tab-windows"
-                      aria-pressed="false"
-                      data-os="windows"
-                      class="install-tab border-b border-transparent pb-1 text-ink-soft transition-colors hover:text-ink"
-                      >Windows</button
-                    >
-                  </div>
-                </div>
-
                 <div class="relative mt-5 border-y border-ink/20 py-3">
                   <button
                     type="button"
                     class="install-copy absolute top-0 right-0 font-mono text-[10px] font-medium tracking-[0.12em] text-brass-deep uppercase transition hover:text-ink"
                     aria-label="Copy the install command">Copy</button
                   >
-                  <div id="install-panel-linux" class="install-panel">
+                  <div class="install-panel">
                     <pre
-                      class="overflow-x-auto pr-12 text-left font-mono text-[12px] leading-relaxed whitespace-nowrap"><span class="text-brass-deep" aria-hidden="true">$ </span><code class="language-bash">bash -c "$(curl -fsSL https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.sh)"</code></pre>
-                  </div>
-                  <div id="install-panel-windows" class="install-panel" hidden>
-                    <pre
-                      class="overflow-x-auto pr-12 text-left font-mono text-[12px] leading-relaxed whitespace-nowrap"><span class="text-brass-deep" aria-hidden="true">PS&gt; </span><code class="language-powershell">&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/yukazakiri/koakademy/master/scripts/install.ps1)))</code></pre>
+                      class="overflow-x-auto pr-12 text-left font-mono text-[12px] leading-relaxed whitespace-nowrap"><span class="text-brass-deep" aria-hidden="true">$ </span><code class="language-bash">curl -sSL https://koakademy.koamishin.com/install.sh | bash</code></pre>
                   </div>
                 </div>
                 <a
