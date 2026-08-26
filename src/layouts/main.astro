@@ -19,8 +19,8 @@ export interface Props {
 }
 
 const {
-  title = "KoAkademy — The school’s system of record, owned by the school",
-  description = "KoAkademy is an open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals — built with Laravel, React, and PostgreSQL. No per-student pricing. No feature gates.",
+  title = "KoAkademy — Open-source school management platform",
+  description = "Open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals. Built with Laravel, React, and PostgreSQL.",
   canonicalPath,
   keywords = "KoAkademy, open-source school management, academic management software, self-hosted LMS, enrollment system, Laravel school platform, school administration, open source education platform",
   image = "/og.png",
@@ -29,7 +29,7 @@ const {
   index = true,
 } = Astro.props
 
-const SITE = "https://koakademy.org"
+const SITE = "https://koakademy.koamishin.com"
 const canonical = canonicalPath
   ? `${SITE}${canonicalPath}`
   : new URL(Astro.url.pathname, SITE).href
@@ -56,17 +56,9 @@ const jsonLd = {
       url: SITE,
       name: "KoAkademy",
       description:
-        "The school's system of record, owned by the school — enrollment, academics, finance, and three portals.",
+        "Open-source, self-hosted academic management platform — enrollment, academics, finance, and three portals.",
       publisher: { "@id": `${SITE}/#organization` },
       inLanguage: "en-US",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: `${SITE}/search?q={search_term_string}`,
-        },
-        "query-input": "required name=search_term_string",
-      },
     },
   ],
 }
@@ -80,7 +72,12 @@ const jsonLdRaw = JSON.stringify(jsonLd)
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f3ec" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Primary meta -->
     <title>{title}</title>
@@ -102,6 +99,7 @@ const jsonLdRaw = JSON.stringify(jsonLd)
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Yuukizaki_kun" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />

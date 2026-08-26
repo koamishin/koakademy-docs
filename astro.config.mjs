@@ -9,7 +9,7 @@ import sitemap from "@astrojs/sitemap"
 // Site URL — change this to your production domain!
 // Used for canonical URLs, sitemap generation, and Open Graph tags.
 // ---------------------------------------------------------------------------
-const SITE = "https://koakademy.org"
+const SITE = "https://koakademy.koamishin.com"
 
 // https://astro.build/config
 export default defineConfig({

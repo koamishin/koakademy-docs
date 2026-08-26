@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://koakademy.org/sitemap-index.xml
+Sitemap: https://koakademy.koamishin.com/sitemap-index.xml
 
 # By default, allow everything. The sitemap ensures all pages are discovered.
 # To exclude specific paths in the future, add Disallow rules below.
