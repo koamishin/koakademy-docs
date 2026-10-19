@@ -36,6 +36,17 @@ const fileMap = [
   { src: "start-here/architecture.mdx", dest: "src/pages/docs/start-here/architecture.astro", path: "/docs/start-here/architecture" },
   { src: "start-here/contributing.mdx", dest: "src/pages/docs/start-here/contributing.astro", path: "/docs/start-here/contributing" },
 
+  // DOCS - Features
+  { src: "features/index.mdx", dest: "src/pages/docs/features/index.astro", path: "/docs/features/index" },
+  { src: "features/student-information-system.mdx", dest: "src/pages/docs/features/student-information-system.astro", path: "/docs/features/student-information-system" },
+  { src: "features/academics-scheduling.mdx", dest: "src/pages/docs/features/academics-scheduling.astro", path: "/docs/features/academics-scheduling" },
+  { src: "features/enrollment-management.mdx", dest: "src/pages/docs/features/enrollment-management.astro", path: "/docs/features/enrollment-management" },
+  { src: "features/grading-transcripts.mdx", dest: "src/pages/docs/features/grading-transcripts.astro", path: "/docs/features/grading-transcripts" },
+  { src: "features/finance-cashiering.mdx", dest: "src/pages/docs/features/finance-cashiering.astro", path: "/docs/features/finance-cashiering" },
+  { src: "features/portals-workspaces.mdx", dest: "src/pages/docs/features/portals-workspaces.astro", path: "/docs/features/portals-workspaces" },
+  { src: "features/bundled-modules.mdx", dest: "src/pages/docs/features/bundled-modules.astro", path: "/docs/features/bundled-modules" },
+  { src: "features/ai-mcp.mdx", dest: "src/pages/docs/features/ai-mcp.astro", path: "/docs/features/ai-mcp" },
+
   // DOCS - Self-hosting
   { src: "self-hosting/installation.mdx", dest: "src/pages/docs/self-hosting/installation.astro", path: "/docs/self-hosting/installation" },
   { src: "self-hosting/deployment.mdx", dest: "src/pages/docs/self-hosting/deployment.astro", path: "/docs/self-hosting/deployment" },
@@ -130,7 +141,6 @@ function rewriteLink(href, currentFile) {
 }
 
 function convert(sourceMdx, routePath, relSrc) {
-  // Extract frontmatter
   const fmMatch = sourceMdx.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   let title = "";
   let description = "";

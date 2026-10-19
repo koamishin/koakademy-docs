@@ -21,7 +21,12 @@ export const docsTree: DocGroup[] = [
         href: "/docs/start-here/introduction",
         title: "Introduction",
         blurb:
-          "What [REDACTED] is, the stack it runs on, and which path to pick.",
+          "What Koakademy is, the stack it runs on, and which path to pick.",
+      },
+      {
+        href: "/docs/self-hosting/installation",
+        title: "Quickstart",
+        blurb: "Evaluate Koakademy in minutes on any server or local host.",
       },
       {
         href: "/docs/start-here/architecture",
@@ -36,25 +41,78 @@ export const docsTree: DocGroup[] = [
     ],
   },
   {
-    label: "Self-hosting",
+    label: "Platform features",
+    links: [
+      {
+        href: "/docs/features/index",
+        title: "Features overview",
+        blurb:
+          "High-level map of capabilities, institutional models, and user roles.",
+      },
+      {
+        href: "/docs/features/student-information-system",
+        title: "Student records & SIS",
+        blurb:
+          "Demographics, PSGC address hierarchy, clearances, and digital ID cards.",
+      },
+      {
+        href: "/docs/features/academics-scheduling",
+        title: "Academics & timetabling",
+        blurb:
+          "Curricula, SHS tracks, prerequisites, sections, and conflict detection.",
+      },
+      {
+        href: "/docs/features/enrollment-management",
+        title: "Enrollment management",
+        blurb:
+          "Guided blueprints, dynamic fee rules, and acyclic approval workflows.",
+      },
+      {
+        href: "/docs/features/grading-transcripts",
+        title: "Grading & transcripts",
+        blurb:
+          "Multi-scale grading rubrics, automated GWA, and verifiable TOR generation.",
+      },
+      {
+        href: "/docs/features/finance-cashiering",
+        title: "Financials & cashiering",
+        blurb:
+          "Tuition assessments, installment plans, cashier POS, and Statements of Account.",
+      },
+      {
+        href: "/docs/features/portals-workspaces",
+        title: "Portals & workspaces",
+        blurb:
+          "Admin Panel, Faculty Portal, and mobile-first Student Portal walkthroughs.",
+      },
+      {
+        href: "/docs/features/bundled-modules",
+        title: "Bundled modules",
+        blurb:
+          "Announcements, Cashier, Inventory, Library, Notifications, and Clinic Records.",
+      },
+      {
+        href: "/docs/features/ai-mcp",
+        title: "AI & MCP server",
+        blurb:
+          "Natural language staff assistants and Model Context Protocol tool endpoints.",
+      },
+    ],
+  },
+  {
+    label: "Self-hosting & operations",
     links: [
       {
         href: "/docs/self-hosting/installation",
-        title: "Installation",
+        title: "Overview & matrix",
         blurb:
-          "The supported production topology, step by step — Swarm or Compose.",
-      },
-      {
-        href: "/docs/self-hosting/deployment",
-        title: "Deployment",
-        blurb:
-          "First deploy, reverse proxies, backups, upgrades, and rollback.",
+          "Supported production topologies, hardware requirements, and runtimes.",
       },
       {
         href: "/docs/self-hosting/docker-compose",
         title: "Docker Compose",
         blurb:
-          "Deploy [REDACTED] using Docker Compose on any Linux server or standalone Docker host.",
+          "Deploy Koakademy using Docker Compose on any Linux server or standalone Docker host.",
       },
       {
         href: "/docs/self-hosting/docker-swarm",
@@ -65,7 +123,7 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/self-hosting/dokploy",
         title: "Dokploy deployment",
-        blurb: "Run [REDACTED] on Dokploy, the open-source Docker PaaS.",
+        blurb: "Run Koakademy on Dokploy, the open-source Docker PaaS.",
       },
       {
         href: "/docs/self-hosting/vps",
@@ -75,13 +133,12 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/self-hosting/coolify",
         title: "Coolify deployment",
-        blurb: "Run [REDACTED] on Coolify from its Docker Compose file.",
+        blurb: "Run Koakademy on Coolify from its Docker Compose file.",
       },
       {
         href: "/docs/self-hosting/caprover",
         title: "CapRover deployment",
-        blurb:
-          "One app per service — PostgreSQL, Redis, Gotenberg, [REDACTED].",
+        blurb: "One app per service — PostgreSQL, Redis, Gotenberg, Koakademy.",
       },
       {
         href: "/docs/self-hosting/kubernetes",
@@ -93,7 +150,13 @@ export const docsTree: DocGroup[] = [
         href: "/docs/self-hosting/openshift",
         title: "Red Hat OpenShift",
         blurb:
-          "Deploy [REDACTED] in enterprise Red Hat OpenShift (OKD, ARO, ROSA, OCP) environments.",
+          "Deploy Koakademy in enterprise Red Hat OpenShift (OKD, ARO, ROSA, OCP) environments.",
+      },
+      {
+        href: "/docs/self-hosting/deployment",
+        title: "Operations & runbook",
+        blurb:
+          "First deploy, reverse proxies, backups, upgrades, and rollback.",
       },
       {
         href: "/docs/self-hosting/configuration",
@@ -114,42 +177,28 @@ export const docsTree: DocGroup[] = [
     ],
   },
   {
-    label: "User guide",
+    label: "Administration & security",
     links: [
       {
-        href: "/docs/user-guide/introduction",
-        title: "Using [REDACTED]",
-        blurb:
-          "A safe daily workflow for registrars, cashiers, and administrators.",
+        href: "/docs/system/architecture-domain",
+        title: "Domain model & tenancy",
+        blurb: "Runtime shape, entry points, core entities, and tenancy.",
       },
       {
-        href: "/docs/user-guide/features-overview",
-        title: "Platform features",
-        blurb:
-          "A map of what exists, where it lives, and how it is switched on.",
+        href: "/docs/system/auth-authorization",
+        title: "Auth, roles & permissions",
+        blurb: "Guards, MFA, passkeys, roles, and where checks are enforced.",
       },
       {
-        href: "/docs/user-guide/admin-portal",
-        title: "Admin portal",
-        blurb:
-          "Records, enrollment processing, finance, and system management.",
+        href: "/docs/system/modules-flags",
+        title: "Modules & feature flags",
+        blurb: "Optional modules, Pennant toggles, and institution settings.",
       },
       {
-        href: "/docs/user-guide/faculty-portal",
-        title: "Faculty portal",
-        blurb: "Classes, attendance, grading, schedules, and submissions.",
-      },
-      {
-        href: "/docs/user-guide/student-portal",
-        title: "Student portal",
+        href: "/docs/system/observability",
+        title: "Observability & audit logs",
         blurb:
-          "Classes, schedule, tuition, statements, and the digital ID card.",
-      },
-      {
-        href: "/docs/user-guide/modules",
-        title: "Optional modules",
-        blurb:
-          "Announcements, cashier, inventory, library, notifications, and medical records.",
+          "Developer observability tools — Laralyze, Pulse, Telescope, Horizon, and log purge.",
       },
     ],
   },
@@ -206,49 +255,41 @@ export const docsTree: DocGroup[] = [
     ],
   },
   {
-    label: "System internals",
+    label: "User guides",
     links: [
       {
-        href: "/docs/system/architecture-domain",
-        title: "Architecture & domain model",
-        blurb: "Runtime shape, entry points, core entities, and tenancy.",
-      },
-      {
-        href: "/docs/system/auth-authorization",
-        title: "Auth, roles & permissions",
-        blurb: "Guards, MFA, passkeys, roles, and where checks are enforced.",
-      },
-      {
-        href: "/docs/system/modules-flags",
-        title: "Modules & feature flags",
-        blurb: "Optional modules, Pennant toggles, and institution settings.",
-      },
-      {
-        href: "/docs/system/enrollment-engine",
-        title: "The enrollment engine",
-        blurb: "Operational pipeline, policy compiler, snapshots, and rollout.",
-      },
-      {
-        href: "/docs/system/queues-pdf",
-        title: "Queues, jobs & PDF",
+        href: "/docs/user-guide/introduction",
+        title: "Using Koakademy",
         blurb:
-          "Queue connections, background jobs, and the Gotenberg pipeline.",
+          "A safe daily workflow for registrars, cashiers, and administrators.",
       },
       {
-        href: "/docs/system/frontend",
-        title: "Frontend architecture",
-        blurb: "Inertia + React, Wayfinder routes, and the design system.",
-      },
-      {
-        href: "/docs/system/observability",
-        title: "Observability",
+        href: "/docs/user-guide/admin-portal",
+        title: "Admin portal",
         blurb:
-          "Developer observability tools — Laralyze, Pulse, Telescope, Horizon, and log purge.",
+          "Records, enrollment processing, finance, and system management.",
+      },
+      {
+        href: "/docs/user-guide/faculty-portal",
+        title: "Faculty portal",
+        blurb: "Classes, attendance, grading, schedules, and submissions.",
+      },
+      {
+        href: "/docs/user-guide/student-portal",
+        title: "Student portal",
+        blurb:
+          "Classes, schedule, tuition, statements, and the digital ID card.",
+      },
+      {
+        href: "/docs/user-guide/modules",
+        title: "Optional modules",
+        blurb:
+          "Announcements, cashier, inventory, library, notifications, and medical records.",
       },
     ],
   },
   {
-    label: "Maintainers",
+    label: "Maintainers & governance",
     links: [
       {
         href: "/docs/maintainers/ci",
@@ -282,7 +323,7 @@ export const docsTree: DocGroup[] = [
       },
       {
         href: "/docs/maintainers/oss-documentation",
-        title: "OSS documentation",
+        title: "OSS standards & readiness",
         blurb:
           "Documentation surface, README checklist, and OSS documentation notes.",
       },
