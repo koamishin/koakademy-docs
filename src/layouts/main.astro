@@ -108,7 +108,7 @@ const jsonLdRaw = JSON.stringify(jsonLd)
     {modDate && <meta property="article:modified_time" content={modDate} />}
 
     <!-- JSON-LD Structured Data: Organization + WebSite -->
-    <script type="application/ld+json" set:html={jsonLdRaw}></script>
+    <script type="application/ld+json" set:html={jsonLdRaw} />
 
     <script is:inline>
       ;(function () {

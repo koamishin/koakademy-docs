@@ -21,7 +21,7 @@ export const docsTree: DocGroup[] = [
         href: "/docs/start-here/introduction",
         title: "Introduction",
         blurb:
-          "What KoAkademy is, the stack it runs on, and which path to pick.",
+          "What [REDACTED] is, the stack it runs on, and which path to pick.",
       },
       {
         href: "/docs/start-here/architecture",
@@ -51,9 +51,21 @@ export const docsTree: DocGroup[] = [
           "First deploy, reverse proxies, backups, upgrades, and rollback.",
       },
       {
+        href: "/docs/self-hosting/docker-compose",
+        title: "Docker Compose",
+        blurb:
+          "Deploy [REDACTED] using Docker Compose on any Linux server or standalone Docker host.",
+      },
+      {
+        href: "/docs/self-hosting/docker-swarm",
+        title: "Docker Swarm",
+        blurb:
+          "Production-grade Docker Swarm deployment with Docker Secrets and rolling updates.",
+      },
+      {
         href: "/docs/self-hosting/dokploy",
         title: "Dokploy deployment",
-        blurb: "Run KoAkademy on Dokploy, the open-source Docker PaaS.",
+        blurb: "Run [REDACTED] on Dokploy, the open-source Docker PaaS.",
       },
       {
         href: "/docs/self-hosting/vps",
@@ -63,12 +75,25 @@ export const docsTree: DocGroup[] = [
       {
         href: "/docs/self-hosting/coolify",
         title: "Coolify deployment",
-        blurb: "Run KoAkademy on Coolify from its Docker Compose file.",
+        blurb: "Run [REDACTED] on Coolify from its Docker Compose file.",
       },
       {
         href: "/docs/self-hosting/caprover",
         title: "CapRover deployment",
-        blurb: "One app per service — PostgreSQL, Redis, Gotenberg, KoAkademy.",
+        blurb:
+          "One app per service — PostgreSQL, Redis, Gotenberg, [REDACTED].",
+      },
+      {
+        href: "/docs/self-hosting/kubernetes",
+        title: "Kubernetes (K8s)",
+        blurb:
+          "Production Kubernetes and K3s deployment with manifests and persistent storage.",
+      },
+      {
+        href: "/docs/self-hosting/openshift",
+        title: "Red Hat OpenShift",
+        blurb:
+          "Deploy [REDACTED] in enterprise Red Hat OpenShift (OKD, ARO, ROSA, OCP) environments.",
       },
       {
         href: "/docs/self-hosting/configuration",
@@ -93,7 +118,7 @@ export const docsTree: DocGroup[] = [
     links: [
       {
         href: "/docs/user-guide/introduction",
-        title: "Using KoAkademy",
+        title: "Using [REDACTED]",
         blurb:
           "A safe daily workflow for registrars, cashiers, and administrators.",
       },
@@ -214,6 +239,12 @@ export const docsTree: DocGroup[] = [
         title: "Frontend architecture",
         blurb: "Inertia + React, Wayfinder routes, and the design system.",
       },
+      {
+        href: "/docs/system/observability",
+        title: "Observability",
+        blurb:
+          "Developer observability tools — Laralyze, Pulse, Telescope, Horizon, and log purge.",
+      },
     ],
   },
   {
@@ -230,6 +261,16 @@ export const docsTree: DocGroup[] = [
         blurb: "Release Please, image channels, metadata, and recovery.",
       },
       {
+        href: "/docs/maintainers/create-module",
+        title: "Create a module",
+        blurb: "Build, test, and release a standalone Composer module package.",
+      },
+      {
+        href: "/docs/maintainers/module-registry",
+        title: "Module registry",
+        blurb: "Publish, install, update, and operate standalone modules.",
+      },
+      {
         href: "/docs/maintainers/automation",
         title: "Repository automation",
         blurb: "Labels, issue quality checks, roadmap board, and PR access.",
@@ -238,6 +279,18 @@ export const docsTree: DocGroup[] = [
         href: "/docs/maintainers/documentation",
         title: "Documentation system",
         blurb: "Canonical Markdown, generated mirrors, and the site build.",
+      },
+      {
+        href: "/docs/maintainers/oss-documentation",
+        title: "OSS documentation",
+        blurb:
+          "Documentation surface, README checklist, and OSS documentation notes.",
+      },
+      {
+        href: "/docs/maintainers/oss-hardening",
+        title: "OSS hardening",
+        blurb:
+          "Current OSS hardening stage, completed artifacts, and maintainer decisions.",
       },
     ],
   },
@@ -253,6 +306,11 @@ export const apiTree: DocGroup[] = [
         title: "API overview",
         blurb:
           "The tested beta contract, base URL, authentication, and errors.",
+      },
+      {
+        href: "/api/mcp",
+        title: "Model Context Protocol (MCP)",
+        blurb: "Tools for students, subjects, enrollments, and admin via MCP.",
       },
       {
         href: "/api/authenticated-settings",
@@ -309,6 +367,18 @@ export const devTree: DocGroup[] = [
         title: "Policy extensions",
         blurb:
           "Contracts for rules, actions, and strategies — no executable classes.",
+      },
+      {
+        href: "/dev/regulatory-report-providers",
+        title: "Regulatory reports",
+        blurb:
+          "Add jurisdiction-specific reporting adapters without coupling the shared registrar workflow.",
+      },
+      {
+        href: "/dev/authority-code-imports",
+        title: "Authority code imports",
+        blurb:
+          "Import per-school regulatory course-code lists without bundling country data.",
       },
     ],
   },

@@ -31,10 +31,13 @@ export default defineConfig({
     "/docs/api/api-overview": "/api/api-overview",
     "/docs/api/developer-api": "/api/authenticated-settings",
     "/docs/api/student-verification-api": "/api/student-verification",
+    "/docs/api/mcp": "/api/mcp",
     "/docs/development/laravel-herd": "/dev/laravel-herd",
     "/docs/development/laravel-sail": "/dev/laravel-sail",
     "/docs/development/laravel-valet": "/dev/laravel-valet",
     "/docs/development/enrollment-policy-extensions": "/dev/enrollment-policy-extensions",
+    "/docs/development/regulatory-report-providers": "/dev/regulatory-report-providers",
+    "/docs/development/authority-code-imports": "/dev/authority-code-imports",
     "/docs/start-here/development": "/dev/development-setup",
   },
 })

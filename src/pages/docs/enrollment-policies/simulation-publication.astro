@@ -1,5 +1,8 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro"
+
+const html =
+  '<p>The last stage separates four different operations so an administrator always knows what changes live behavior.</p>\n<p><img src="/assets/enrollment-policies/student-journey.png" alt="Successful student journey simulation with matched blueprint, passed checks, fee strategy, and expected route"></p>\n<p><em>A successful journey names every matched policy and confirms that no student data was changed.</em></p>\n<h2>Simulation</h2>\n<p>Choose an existing enrollment ID or describe a representative sample student. The server resolves every matching policy layer while substituting the current saved draft at its scope.</p>\n<p>The visual journey reports:</p>\n<ul>\n<li>Matched blueprint names, scopes, and versions</li>\n<li>Source provenance</li>\n<li>Checks that passed</li>\n<li>Blockers with <strong>Review setting</strong> links</li>\n<li>Selected subject and class strategy</li>\n<li>Fee estimate and payment gate</li>\n<li>Expected approval route</li>\n<li>Notifications</li>\n<li>A deterministic checksum</li>\n</ul>\n<div class="doc-callout doc-callout-note">\n  <p class="doc-callout-label">What this does</p><p>Simulation performs no writes. The same deterministic publication candidate is used for simulation and publishing, including generated workflow permission names. If the saved draft changes, run simulation again.</p>\n</div><h2>Publication readiness</h2>\n<p>The publish action requires:</p>\n<ul>\n<li>All draft changes saved</li>\n<li>Full validation completed</li>\n<li>A successful representative simulation with no blockers</li>\n<li>A meaningful change note</li>\n<li>The exact simulated checksum</li>\n</ul>\n<p>A published version is immutable. Editing a published policy creates a new draft.</p>\n<h2>Activation</h2>\n<p>Activation controls which runtime <strong>future enrollments</strong> receive:</p>\n<ul>\n<li>Flag off: new enrollments remain legacy.</li>\n<li>Flag on: new enrollments use the active compiled policy.</li>\n<li>Existing policy enrollments continue through their pinned snapshot even after deactivation.</li>\n</ul>\n<p>Activation requires an active published global blueprint, a successful compatibility report, full validation, and representative simulation.</p>\n<h2>Rollback</h2>\n<p>Rollback selects an older immutable published version for future matching enrollments. It does not rewrite the current version, snapshots, statuses, events, or existing enrollments.</p>\n<h2>Backup export</h2>\n<p>Use <strong>Download backup</strong> to export schema-versioned configuration. The file contains stable handler keys and data only—never PHP class names, scripts, closures, or arbitrary formulas.</p>\n<h2>Backup import</h2>\n<p>Import is under Advanced:</p>\n<ol>\n<li>Choose a trusted KoAkademy JSON backup.</li>\n<li>Review the human-readable count of checks, documents, and workflow steps.</li>\n<li>Import it as a new draft.</li>\n<li>Review every guided section.</li>\n<li>Save, simulate, and publish normally.</li>\n</ol>\n<p>Unknown handlers, unsupported schema versions, executable classes, scripts, code fields, arbitrary URLs, and unapproved option sources are rejected.</p>\n<div class="doc-callout doc-callout-caution">\n  <p class="doc-callout-label">Backups are not a bypass</p><p>An imported file never activates itself and never bypasses validation. Extensions without visual metadata remain read-only but executable only when their stable keys are registered.</p>\n</div><h2>Recommended simulation set</h2>\n<ul>\n<li>A typical passing student</li>\n<li>A student blocked by one academic requirement</li>\n<li>A student with an outstanding balance</li>\n<li>A student at class capacity</li>\n<li>A student matching the most specific combined scope</li>\n<li>Each public, administrator, continuing, and API channel the school supports</li>\n</ul>\n'
 ---
 
 <DocsLayout
@@ -7,118 +10,5 @@ import DocsLayout from "@/layouts/DocsLayout.astro"
   path="/docs/enrollment-policies/simulation-publication"
   description="Test resolved student journeys and safely manage immutable policy versions and rollout state."
 >
-  <p>
-    The last stage separates four different operations so an administrator
-    always knows what changes live behavior.
-  </p>
-
-  <h2>Simulation</h2>
-  <p>
-    Choose an existing enrollment ID or describe a representative sample
-    student. The server resolves every matching policy layer while substituting
-    the current saved draft at its scope.
-  </p>
-  <p>The visual journey reports:</p>
-  <ul>
-    <li>Matched blueprint names, scopes, and versions</li>
-    <li>Source provenance</li>
-    <li>Checks that passed</li>
-    <li>Blockers with <strong>Review setting</strong> links</li>
-    <li>Selected subject and class strategy</li>
-    <li>Fee estimate and payment gate</li>
-    <li>Expected approval route</li>
-    <li>Notifications</li>
-    <li>A deterministic checksum</li>
-  </ul>
-  <div class="doc-callout doc-callout-note">
-    <p class="doc-callout-label">What this does</p>
-    <p>
-      Simulation performs no writes. The same deterministic publication
-      candidate is used for simulation and publishing, including generated
-      workflow permission names. If the saved draft changes, run simulation
-      again.
-    </p>
-  </div>
-
-  <h2>Publication readiness</h2>
-  <p>The publish action requires:</p>
-  <ul>
-    <li>All draft changes saved</li>
-    <li>Full validation completed</li>
-    <li>A successful representative simulation with no blockers</li>
-    <li>A meaningful change note</li>
-    <li>The exact simulated checksum</li>
-  </ul>
-  <p>
-    A published version is <strong>immutable</strong>. Editing a published
-    policy creates a new draft.
-  </p>
-
-  <h2>Activation</h2>
-  <p>
-    Activation controls which runtime <strong>future enrollments</strong> receive:
-  </p>
-  <ul>
-    <li>Flag off: new enrollments remain legacy.</li>
-    <li>Flag on: new enrollments use the active compiled policy.</li>
-    <li>
-      Existing policy enrollments continue through their pinned snapshot even
-      after deactivation.
-    </li>
-  </ul>
-  <p>
-    Activation requires an active published global blueprint, a successful
-    compatibility report, full validation, and representative simulation.
-  </p>
-
-  <h2>Rollback</h2>
-  <p>
-    Rollback selects an older immutable published version for future matching
-    enrollments. It does not rewrite the current version, snapshots, statuses,
-    events, or existing enrollments.
-  </p>
-
-  <h2>Backup export</h2>
-  <p>
-    Use <strong>Download backup</strong> to export schema-versioned configuration.
-    The file contains stable handler keys and data only — never PHP class names, scripts,
-    closures, or arbitrary formulas.
-  </p>
-
-  <h2>Backup import</h2>
-  <p>Import is under Advanced:</p>
-  <ol>
-    <li>Choose a trusted KoAkademy JSON backup.</li>
-    <li>
-      Review the human-readable count of checks, documents, and workflow steps.
-    </li>
-    <li>Import it as a new draft.</li>
-    <li>Review every guided section.</li>
-    <li>Save, simulate, and publish normally.</li>
-  </ol>
-  <p>
-    Unknown handlers, unsupported schema versions, executable classes, scripts,
-    code fields, arbitrary URLs, and unapproved option sources are rejected.
-  </p>
-  <div class="doc-callout doc-callout-caution">
-    <p class="doc-callout-label">Backups are not a bypass</p>
-    <p>
-      An imported file never activates itself and never bypasses validation.
-      Extensions without visual metadata remain read-only but executable only
-      when their stable keys are registered.
-    </p>
-  </div>
-
-  <h2>Recommended simulation set</h2>
-  <ul>
-    <li>A typical passing student</li>
-    <li>A student blocked by one academic requirement</li>
-    <li>A student with an outstanding balance</li>
-    <li>A student at class capacity</li>
-    <li>A student matching the most specific combined scope</li>
-    <li>
-      Each public, administrator, continuing, and API channel the school
-      supports
-    </li>
-  </ul>
+  <Fragment set:html={html} />
 </DocsLayout>

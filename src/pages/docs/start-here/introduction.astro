@@ -1,101 +1,14 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro"
+
+const html =
+  '<p>KoAkademy is an open-source, self-hosted school administration and learning management platform. It gives educational institutions complete ownership of student records, grades, enrollment workflows, and academic data without vendor lock-in or recurring per-seat fees.</p>\n<div class="my-6 grid grid-cols-1 gap-4 md:grid-cols-2"><div class="rounded-lg border border-line bg-paper-2 p-5">\n  <h3 class="font-medium text-ink mb-2">Understand the Architecture</h3>\n  <div class="text-sm text-ink-soft leading-relaxed"><p>Explore how the multi-tenant domain model, enrollment blueprint engine, modular plugins, and React portals connect in <strong>System Internals</strong>.</p>\n  </div>\n</div><div class="rounded-lg border border-line bg-paper-2 p-5">\n  <h3 class="font-medium text-ink mb-2">Contribute Code & Docs</h3>\n  <div class="text-sm text-ink-soft leading-relaxed"><p>Build with PHP 8.5, Laravel 13, Filament 5, Inertia 3, React 19, Tailwind CSS 4, and Pest 5 using our canonical documentation workflow.</p>\n  </div>\n</div><div class="rounded-lg border border-line bg-paper-2 p-5">\n  <h3 class="font-medium text-ink mb-2">Self-Host on Your Servers</h3>\n  <div class="text-sm text-ink-soft leading-relaxed"><p>Run the one-line Docker Swarm installer to provision Caddy HTTPS, FrankenPHP application service, PostgreSQL, Redis, and Gotenberg PDF rendering.</p>\n  </div>\n</div><div class="rounded-lg border border-line bg-paper-2 p-5">\n  <h3 class="font-medium text-ink mb-2">Integrate via Public API</h3>\n  <div class="text-sm text-ink-soft leading-relaxed"><p>Interact with the tested beta API subset for general institution settings and cryptographic student verification.</p>\n  </div>\n</div></div><h2>Pick Your Path</h2>\n<ul>\n<li><strong>Are you a new contributor?</strong> Head to the <a href="/docs/start-here/contributing">Contributing Guide</a> to set up your environment, learn about our testing requirements, and see sample code. Check the <a href="/docs/start-here/architecture">Architecture Overview</a> for an overview of data boundaries.</li>\n<li><strong>Are you building a feature or extension?</strong> Explore the <a href="/docs/system/frontend">Frontend Guide</a>, <a href="/docs/system/auth-authorization">Auth &amp; Authorization</a>, <a href="/docs/system/modules-flags">Modules &amp; Feature Flags</a>, and <a href="/dev/enrollment-policy-extensions">Enrollment Policy Extensions</a>.</li>\n<li><strong>Are you deploying KoAkademy?</strong> Read the <a href="/docs/self-hosting/installation">Installation Guide</a>, followed by <a href="/docs/self-hosting/configuration">Configuration</a> and <a href="/docs/self-hosting/deployment">Deployment &amp; Backups</a>.</li>\n<li><strong>Are you operating a school?</strong> The <a href="/docs/user-guide/introduction">User Guide</a> covers daily administrative and faculty routines, while <a href="/docs/enrollment-policies/overview">Enrollment Blueprints</a> explains no-code policy configuration.</li>\n</ul>\n<h2>Technology Stack</h2>\n<table>\n<thead>\n<tr>\n<th>Layer</th>\n<th>Technology</th>\n<th>Details</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Backend Framework</strong></td>\n<td>PHP 8.5, Laravel 13</td>\n<td>Service layer, Form Requests, Policies, strict types</td>\n</tr>\n<tr>\n<td><strong>Application Runtime</strong></td>\n<td>FrankenPHP (Octane) / Nginx</td>\n<td>High-performance application worker in production Docker image</td>\n</tr>\n<tr>\n<td><strong>Admin Workspace</strong></td>\n<td>Filament 5</td>\n<td>Resource managers, Shield role permissions, custom widgets</td>\n</tr>\n<tr>\n<td><strong>User Portals</strong></td>\n<td>Inertia 3, React 19, TypeScript</td>\n<td>Server-driven client rendering with SSR support (<code>ssr.tsx</code>)</td>\n</tr>\n<tr>\n<td><strong>Styling &amp; Components</strong></td>\n<td>Tailwind CSS 4, shadcn/ui</td>\n<td>Radix UI primitives, Lucide icons, accessible responsive layouts</td>\n</tr>\n<tr>\n<td><strong>Routing Helpers</strong></td>\n<td>Laravel Wayfinder</td>\n<td>Generated typed TypeScript actions/routes (<code>@/actions</code>, <code>@/routes</code>)</td>\n</tr>\n<tr>\n<td><strong>Database &amp; Cache</strong></td>\n<td>PostgreSQL, Redis</td>\n<td>PostgreSQL for durable records, Redis for sessions, cache, and queues</td>\n</tr>\n<tr>\n<td><strong>Document Generation</strong></td>\n<td><code>spatie/laravel-pdf</code> + Gotenberg</td>\n<td>Chromium-based server-side PDF compilation</td>\n</tr>\n<tr>\n<td><strong>Testing Framework</strong></td>\n<td>Pest 5</td>\n<td>Feature and unit tests running in parallel against in-memory SQLite</td>\n</tr>\n<tr>\n<td><strong>Documentation Site</strong></td>\n<td>Astro 5 + Starlight</td>\n<td>MDX collections, Pagefind search, single-source sync</td>\n</tr>\n</tbody></table>\n<h2>Open Source &amp; Licensing</h2>\n<p>KoAkademy is licensed under <strong><a href="https://github.com/yukazakiri/koakademy/blob/master/LICENSE.md">GNU AGPL-3.0-or-later</a></strong>. Commercial restrictions, artificial telemetry, or hidden paywalls are not included. All institutional data remains strictly on your chosen infrastructure.</p>\n<p>A stock installation makes <strong>no outbound analytics or error-reporting calls</strong>. Analytics providers are opt-in per instance from System Management → Analytics, and Sentry, Nightwatch, and SimpleStats are all disabled by default — each needs an explicit environment variable or setting to activate. See <a href="/docs/user-guide/admin-portal#analytics-providers">Admin Portal</a> for the provider list.</p>\n'
 ---
 
 <DocsLayout
   title="Introduction"
   path="/docs/start-here/introduction"
-  description="What KoAkademy is, the stack it runs on, and which path to pick."
+  description="What KoAkademy is, the stack it runs on, and where to go next."
 >
-  <h2>What KoAkademy is</h2>
-  <p>
-    KoAkademy is a <strong
-      >self-hosted school administration and learning platform</strong
-    >: a production-capable beta that ships as one deployable container. The
-    repository provides a supported deployment topology and automated
-    validation, while each operator remains responsible for staging, backup,
-    monitoring, privacy, and recovery.
-  </p>
-
-  <h2>The stack at a glance</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Layer</th>
-        <th>Technology</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Backend</td>
-        <td>PHP 8.5, Laravel 12, Octane (FrankenPHP)</td>
-      </tr>
-      <tr>
-        <td>Administration</td>
-        <td>Filament 5 with Shield permissions</td>
-      </tr>
-      <tr>
-        <td>Portals</td>
-        <td>Inertia 3, React 19, Tailwind CSS 4, shadcn/ui</td>
-      </tr>
-      <tr>
-        <td>Data</td>
-        <td>PostgreSQL; Redis for cache, sessions, and queues</td>
-      </tr>
-      <tr>
-        <td>Documents</td>
-        <td><code>spatie/laravel-pdf</code> with Gotenberg</td>
-      </tr>
-      <tr>
-        <td>Tests</td>
-        <td>Pest 4 (parallel, SQLite in-memory)</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2>Pick your path</h2>
-  <ul>
-    <li>
-      <strong>New contributor?</strong> Start with
-      <a href="/dev/development-setup">Development setup</a>, read the
-      <a href="/docs/start-here/architecture">Architecture overview</a>, then
-      dive into <strong>System Internals</strong>, beginning with the
-      <a href="/docs/system/architecture-domain">domain model</a>.
-    </li>
-    <li>
-      <strong>Maintainer?</strong> The <strong>Maintainers</strong> section documents
-      the <a href="/docs/maintainers/ci">CI pipeline</a>, the
-      <a href="/docs/maintainers/releases">release and versioning process</a>,
-      <a href="/docs/maintainers/automation">repository automation</a>, and the
-      <a href="/docs/maintainers/documentation">documentation system</a>.
-    </li>
-    <li>
-      <strong>Self-hosting?</strong> Begin with
-      <a href="/docs/self-hosting/installation">Installation</a>, then follow
-      <a href="/docs/self-hosting/deployment">Deployment</a> and
-      <a href="/docs/self-hosting/configuration">Configuration</a>. The
-      supported default is one HTTPS hostname with administration at <code
-        >/admin</code
-      >.
-    </li>
-    <li>
-      <strong>Operating a school?</strong> The
-      <a href="/docs/user-guide/introduction">User Guide</a> covers daily staff workflows,
-      and <a href="/docs/enrollment-policies/overview">Enrollment Blueprints</a> covers
-      no-code enrollment configuration.
-    </li>
-    <li>
-      <strong>Integrating?</strong> Only the tested beta subset is a supported contract:
-      public settings, authenticated settings, and authenticated student verification.
-      See the <a href="/api/api-overview">API overview</a>.
-    </li>
-  </ul>
-
-  <div class="doc-callout doc-callout-caution">
-    <p class="doc-callout-label">Supported versions</p>
-    <p>
-      Only the latest stable release is supported. KoAkademy is licensed under
-      <strong>GNU AGPL-3.0-or-later</strong>.
-    </p>
-  </div>
+  <Fragment set:html={html} />
 </DocsLayout>
